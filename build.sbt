@@ -76,7 +76,8 @@ lazy val core =
     .dependsOn(domain.jvm % Cctt)
     .settings(
       libraryDependencies ++= Seq(
-        Library.catsEffect.value
+        Library.catsEffect.value,
+        Library.xml.value
       )
     )
 

@@ -1,6 +1,7 @@
 import sbt.*
 
 import org.portablescala.sbtplatformdeps.PlatformDepsPlugin.autoImport.*
+import scala.xml.dtd.DEFAULT
 
 object Dependencies {
   object Version {
@@ -16,8 +17,9 @@ object Dependencies {
     val log4cats = "2.7.1"
     val laminar = "17.2.1"
     val chimney = "1.8.1"
+    val xml = "2.4.0"
 
-    //config
+    // config
     val ciris = "3.9.0"
 
     // test
@@ -65,7 +67,8 @@ object Dependencies {
     val skunkCirce = "org.tpolecat" %% "skunk-circe" % Version.skunk
     val skunkCore = "org.tpolecat" %% "skunk-core" % Version.skunk
     val squants = Def.setting("org.typelevel" %%% "squants" % Version.squants)
-
+    val xml =
+      Def.setting("org.scala-lang.modules" %%% "scala-xml" % Version.xml)
     // config library
     val ciris = "is.cir" %% "ciris" % Version.ciris
 
