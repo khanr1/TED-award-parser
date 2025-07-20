@@ -1,6 +1,7 @@
-package io.github.khanr1.tedawardparser.repository
+package io.github.khanr1.tedawardparser
+package repository
 
-trait NoticeRepository[F[_]] {
-  // stream all XMl element
-  def streamXMLElements: fs2.Stream[F, xml.Elem]
+trait NoticeRepository[F[_], A] {
+  // stream all A element
+  def streamElements: fs2.Stream[F, A]
 }

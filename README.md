@@ -18,3 +18,6 @@ the program will produce an award noticed from the XML TED_export and UBL will b
 - The winner
 - the estimate value 
 - the currency 
+
+
+usefull link : https://github.com/OP-TED/eForms-SDK/blob/develop/notice-types/notice-types.json 
