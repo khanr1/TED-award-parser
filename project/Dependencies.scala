@@ -18,6 +18,7 @@ object Dependencies {
     val laminar = "17.2.1"
     val chimney = "1.8.1"
     val xml = "2.4.0"
+    val fs2IO = "3.12.0"
 
     // config
     val ciris = "3.9.0"
@@ -50,6 +51,7 @@ object Dependencies {
       Def.setting("org.http4s" %% "http4s-ember-client" % Version.http4s)
 
     val chimney = Def.setting("io.scalaland" %% "chimney" % Version.chimney)
+    val fs2IO = Def.setting("co.fs2" %%% "fs2-io" % Version.fs2IO)
 
     val iron = Def.setting("io.github.iltotore" %%% "iron" % Version.iron)
     val ironCat =
