@@ -87,51 +87,41 @@ class TedExportR208[F[_]: Applicative] extends XMLParser[F] {
 
   override def parseContractingAuthorityName(
       elem: Elem
-  ): F[Either[ParsingError, ContractingAuthorityName]] =
-    elem
-      .getText(
-        (delegatedPurchaseBasicPath :+ "ORGANISATION" :+ "OFFICIALNAME")*
-      )
-      .orElse(
-        elem
-          .getText(
-            (directPurchaseBasicPath :+ "ORGANISATION" :+ "OFFICIALNAME")*
-          )
-      )
-      .orElse(
-        elem
-          .getText(
-            (veatPurchaseBasicPath :+ "ORGANISATION" :+ "OFFICIALNAME")*
-          )
-      )
+  ): F[Either[ParsingError, ContractingAuthorityName]] = {
+    val namePaths = List(
+      delegatedPurchaseBasicPath,
+      directPurchaseBasicPath,
+      veatPurchaseBasicPath
+    ).map(_ :+ "ORGANISATION" :+ "OFFICIALNAME")
+
+    val maybeName = namePaths.iterator.map(p => elem.getText(p*)).collectFirst {
+      case Some(value) => value
+    }
+
+    maybeName
       .toRight(ParsingError.NoContractingAuthorityName)
       .map(ContractingAuthorityName(_))
       .pure[F]
 
-  override def parseCountry(elem: Elem): F[Either[ParsingError, Country]] = {
-    val result = elem
-      .getAttr(
-        "VALUE",
-        (delegatedPurchaseBasicPath :+ "COUNTRY")*
-      )
-      .orElse(
-        elem
-          .getAttr(
-            "VALUE",
-            (directPurchaseBasicPath :+ "COUNTRY")*
-          )
-      )
-      .orElse(
-        elem
-          .getAttr("VALUE", (veatPurchaseBasicPath :+ "COUNTRY")*)
-      )
+  }
 
-    result
-      .toRight(
-        ParsingError.NoContractingAuthorityCountry
-      )
-      .map(Country.toDomain(_))
+  override def parseCountry(elem: Elem): F[Either[ParsingError, Country]] = {
+    val coutryPaths = List(
+      delegatedPurchaseBasicPath,
+      directPurchaseBasicPath,
+      veatPurchaseBasicPath
+    ).map(x => x :+ "COUNTRY")
+
+    val maybeCountry =
+      coutryPaths.iterator.map(p => elem.getAttr("VALUE", p*)).collectFirst {
+        case Some(value) => value
+      }
+
+    maybeCountry
+      .toRight(ParsingError.NoContractingAuthorityCountry)
+      .map(Country.toDomain)
       .pure[F]
+
   }
 
   override def parseContractingAuthority(
