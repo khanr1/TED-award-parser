@@ -3,12 +3,21 @@ package io.github.khanr1.tedawardparser
 import cats.{Show, Eq}
 
 final case class TenderLot(
+    id: ContractID,
     title: Title,
     description: Description,
     value: squants.Money,
     awardedSupplier: Option[AwardedSupplier],
     justification: Justification
 )
+
+opaque type ContractID = String
+
+object ContractID:
+  def apply(s: String): ContractID = s
+  extension (contractID: ContractID) def value: String = contractID
+  given Eq[ContractID] = Eq.fromUniversalEquals
+  given Show[ContractID] = Show.show(contractID => contractID.value)
 
 opaque type Title = String
 

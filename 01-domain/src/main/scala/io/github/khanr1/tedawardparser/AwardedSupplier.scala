@@ -12,5 +12,6 @@ opaque type AwardedSupplierName = String
 object AwardedSupplierName:
   def apply(s: String): AwardedSupplierName = s
   extension (name: AwardedSupplierName) def value: String = name
+
   given Eq[AwardedSupplierName] = Eq.fromUniversalEquals
   given Show[AwardedSupplierName] = Show.show(name => name.value)

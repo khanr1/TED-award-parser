@@ -19,6 +19,7 @@ object NoticeServiceSuite extends SimpleIOSuite:
       ContractingAuthority(ContractingAuthorityName("Authority A"), Country.FR),
     lots = List(
       TenderLot(
+        id = ContractID("id"),
         title = Title("Super, \"Complex\" Lot"),
         description = Description("Some description,\nmultiline"),
         value = Money(12345.67, EUR),
@@ -52,7 +53,6 @@ object NoticeServiceSuite extends SimpleIOSuite:
       .toList
 
     resultIO.map { rows =>
-      println(rows)
       expect(
         rows.head.contains(
           "Notice ID,Publication date,Contracting authority name"
@@ -67,10 +67,10 @@ object NoticeServiceSuite extends SimpleIOSuite:
 
   test("toCSV should produce full correct CSV output") {
     val expected =
-      """Notice ID,Publication date,Contracting authority name,Contracting authority country code,Title,Description,Value,Currency,Awarded supplier,Awarded supplier country code,Justification
-        |N-001,2024-05-01,Authority A,FR,"Super, ""Complex"" Lot","Some description,
+      """Notice ID,Publication date,Contracting authority name,Contracting authority country code,ContractID,Title,Description,Value,Currency,Awarded supplier,Awarded supplier country code,Justification
+        |N-001,2024-05-01,Authority A,FR,id,"Super, ""Complex"" Lot","Some description,
         |multiline",12345.67,EUR,"Supplier A, Ltd.",DE,Lowest price
-        |N-002,2024-06-01,Authority B,IT,the notice does not have lots,the notice does not have lots,the notice does not have lots,the notice does not have lots,the notice does not have lots,the notice does not have lots,the notice does not have lots""".stripMargin
+        |N-002,2024-06-01,Authority B,IT,the notice does not have lots,the notice does not have lots,the notice does not have lots,the notice does not have lots,the notice does not have lots,the notice does not have lots,the notice does not have lots,the notice does not have lots""".stripMargin
 
     Stream(dummyNoticeWithLots, dummyNoticeWithoutLots)
       .through(service.toCSV)

@@ -3,15 +3,19 @@ package repository
 package file
 
 import scala.xml.{Elem, NodeSeq}
+import scala.collection.mutable.CollisionProofHashMap.Node
 
 extension (elem: Elem)
-  def resolvePath(path: String*) = path
+
+  def resolvePath(paths: String*) = paths
     .foldLeft(elem: NodeSeq)(_ \ _)
-    .headOption
-  def getText(paths: String*): Option[String] = resolvePath(paths: _*)
-    .map(_.text.replaceAll("\\s+", " ").trim())
+
+  def getText(paths: String*): Option[String] =
+    resolvePath(paths: _*).headOption
+      .map(_.text.replaceAll("\\s+", " ").trim())
+
   def getAttributes(attribute: String, paths: String*): Option[List[String]] =
-    resolvePath(paths: _*) match
+    resolvePath(paths: _*).headOption match
       case None => None
       case Some(nodes) =>
         Some(

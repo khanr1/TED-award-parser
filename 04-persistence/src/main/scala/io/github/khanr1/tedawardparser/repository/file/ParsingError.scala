@@ -7,3 +7,8 @@ enum ParsingError:
   case NoOJSID
   case NoContractingAuthorityName
   case NoContractingAuthorityCountry
+  case NoContractID
+  case NoTitle
+  case NoDescription
+  case NoValue
+  case NoAwardedSupplier

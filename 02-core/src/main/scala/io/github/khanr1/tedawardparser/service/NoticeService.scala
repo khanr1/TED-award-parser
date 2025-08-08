@@ -24,6 +24,7 @@ object NoticeService:
         "Publication date",
         "Contracting authority name",
         "Contracting authority country code",
+        "ContractID",
         "Title",
         "Description",
         "Value",
@@ -46,6 +47,7 @@ object NoticeService:
           notice.publicationDate.toString(),
           notice.contractingAuthority.name.toString(),
           notice.contractingAuthority.countryCode.toString(),
+          tenderLot.id.show,
           tenderLot.title.show,
           tenderLot.description.show,
           tenderLot.value.amount.toString,
@@ -65,7 +67,7 @@ object NoticeService:
                 notice.publicationDate.toString(),
                 notice.contractingAuthority.name.toString(),
                 notice.contractingAuthority.countryCode.toString()
-              ) ++ List.fill(7)("the notice does not have lots")
+              ) ++ List.fill(8)("the notice does not have lots")
             )
           case lots => lots.map(lot => rowForLot(notice, lot))
       }
