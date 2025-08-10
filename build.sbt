@@ -46,7 +46,8 @@ lazy val domain =
         Library.squants.value,
         Library.circe.value,
         Library.circeGeneric.value,
-        Library.circeParser.value
+        Library.circeParser.value,
+        Library.fs2IO.value
       )
     )
     .jsSettings(
