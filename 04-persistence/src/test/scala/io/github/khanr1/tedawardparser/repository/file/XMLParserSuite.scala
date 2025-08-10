@@ -179,6 +179,31 @@ object XMLParserSuite extends SimpleIOSuite {
       Right(AwardedSupplierName("Oxford Instruments GmbH"))
     )
   )
+  val justification: List[List[Either[ParsingError, Justification]]] = List(
+    List(),
+    List(),
+    List(),
+    List(),
+    List(),
+    List(Left(ParsingError.NoJustification)),
+    List(
+      Right(
+        Justification(
+          "— technically compatible with the existing Oxford Instruments Triton 200 machine, so that the existing hardware (sample holders, measurement cables, noise filters, etc.) and software built for this machine, as well as the accumulated know-hows to modify and operate the cryofree dilution, will be effectively utilized without any compatibility problem, — integrated superconducting vector magnet and cryogen-free dilution refrigerator must be designed, manufactured, systemized and guaranteed by a single vendor. The magnet must be capable of producing at least 6/1/1 tesla along the z/x/y direction, and the magnetic field orientation should be easily controlled in the 3D space with a suitable magnet power supply, — Base Temperature: <10 mK measured in vacuum on the base of the mixing chamber, not in liquid or inside mixing chamber, — Continuous temperature control from base temperature to 30 K with the integrated magnet at full field, — The temperature stability: +/-1 mK for 1–100 mK and +/-1 % for 0.1–30 K or better, — For efficient precooling, precooling line which utilizes the Helium mixture, — Cooling Power: >250 μW at 100 mK measured in vacuum on the base of the mixing chamber, — Diameter of the mixing chamber plate: at least 290 mm, — System must include integrated, cryogen-free cool down accelerator for time-efficient operation (In the case of Oxford Instrument Triton system, this is realized by UK Patent GB248567B and US patent US20130319019), — The vibrations caused by the pulse tube stage must be sufficiently dumped or isolated, so that the displacement measured at the Mixing Chamber Plate is <100 nm at 0.1, 1.0, 10 and 100 Hz. Measured data must be provided by the vendor in the form of an amplitude spectrum (μm) or spectral density function (μm/sqrt-Hz) as a function of frequency from 0.1–500 Hz. The measured data should have sampling frequency of 1 kHz with frequency resolution of 0.01 Hz or better, — The System must incorporate a bottom-loading sample exchange mechanism with the sample in vacuum using a load-lock sample puck. The loading arm must be removable. Usage of an electro-motor for sample loading is not accepted. Wiring to the sample puck must be heat-sunk to the dilution refrigerator’s low-temperature plates. Suitable radiation baffles must be permanently mounted on the dilution insert radiation shields. (In the case of Oxford Instrument Triton system, this is realized by US Patent No US2012/0102975A1 and US2014/0202179A1, EU Patent No EP2742299A2 and EP2409096A2). Because the reliability of the bottom-loading mechanism is crucial for protecting the delicate nanodevice samples, the vendor must show the track record of delivering more than 50 such systems."
+        )
+      )
+    ),
+    List(),
+    List(
+      Right(
+        Justification(
+          "A research group of Leiden University intends to purchase an upgrade to a low vibration cryostat. Only with a combination of capabilities, tailored to the high-end needs of the group, their research questions can be addressed. The ‘Oosterkamp’ research group investigates quantum matter using scanning probe microscopes at ultra low temperatures of 1 mK - 4K. The experiments require a combination of the very low temperatures of a dilution refrigerator with very low vibrations and a large experimental space. A large space which can only be achieved for reasonable operating costs if a refrigeration scheme is used that does not require a source of liquid Helium. Because the compressor that provides the cooling causes a lot of vibrations, the experimental goals can only be achieved with state of the art vibration isolation. The Oosterkamp research group is the 1st and to our knowledge is so far the only group which managed to obtain atomic resolution inside a pulse tube dilution refrigerator: A.M.J. den Haan et al., Atomic resolution scanning tunnelling microscopy in a cryogen free dilution refrigerator at 15 mK. Rev. Sci. Instrum. 85 (2014) 035112, http://dx.doi.org/10.1063/1.4868684 It has achieved this by implementing a range of vibration isolation measures. To improve on this further, the group has developed a special frame and tested this concept on a Leiden Cryogenics 4K pulse tube refrigerator system. After a successful test we would like to upgrade this system to milli-Kelvin temperatures. This upgrade can only be done by the manufacturer of the 4K system, which is Leiden Cryogenics B.V."
+        )
+      )
+    ),
+    List()
+  )
+
   val path: Path = Path(
     "/Users/raphaelkhan/Developer/ted-award-parser/04-persistence/src/test/resources/r208"
   )
@@ -278,6 +303,11 @@ object XMLParserSuite extends SimpleIOSuite {
   test("Parsing Awarded Supplier Name") {
     val expectIO = awardedSupplerName
     assertListParser(parse.parseTenderLotAwardedSupplierName, expectIO)
+  }
+
+  test("Parsing justification") {
+    val expectIO = justification
+    assertListParser(parse.parseTenderLotJustification, expectIO)
   }
 
 }

@@ -47,7 +47,9 @@ trait XMLParser[F[_]]:
   def parseTenderLotAwardedSupplier(
       elem: Elem
   ): F[List[Either[ParsingError, AwardedSupplier]]]
-  def parseTenderLotJustification: F[List[Either[ParsingError, Justification]]]
+  def parseTenderLotJustification(
+      e: Elem
+  ): F[List[Either[ParsingError, Justification]]]
 
 class TedExportR208[F[_]: Monad] extends XMLParser[F] {
 
@@ -103,6 +105,25 @@ class TedExportR208[F[_]: Monad] extends XMLParser[F] {
     "VOLUNTARY_EX_ANTE_TRANSPARENCY_NOTICE",
     "FD_VOLUNTARY_EX_ANTE_TRANSPARENCY_NOTICE",
     "AWARD_OF_CONTRACT_DEFENCE"
+  )
+  private val awardContractjustification = List(
+    "FORM_SECTION",
+    "CONTRACT_AWARD",
+    "FD_CONTRACT_AWARD",
+    "PROCEDURE_DEFINITION_CONTRACT_AWARD_NOTICE",
+    "TYPE_OF_PROCEDURE_DEF",
+    "F03_AWARD_WITHOUT_PRIOR_PUBLICATION",
+    "ANNEX_D"
+  )
+  private val veatAwardContractjustification = List(
+    "FORM_SECTION",
+    "VOLUNTARY_EX_ANTE_TRANSPARENCY_NOTICE",
+    "FD_VOLUNTARY_EX_ANTE_TRANSPARENCY_NOTICE",
+    "PROCEDURE_DEFINITION_VEAT",
+    "TYPE_OF_PROCEDURE_DEF_F15",
+    "F15_PT_NEGOTIATED_WITHOUT_COMPETITION",
+    "ANNEX_D_F15",
+    "ANNEX_D1"
   )
   override def dateFormatter: DateTimeFormatter =
     DateTimeFormatter.ofPattern("yyyyMMdd")
@@ -293,13 +314,54 @@ class TedExportR208[F[_]: Monad] extends XMLParser[F] {
 
   override def parseTenderLotAwardedSupplierCountry(
       elem: Elem
-  ): F[List[Either[ParsingError, Country]]] = ???
+  ): F[List[Either[ParsingError, Country]]] = {
+    val pathNameSupplieCountry = List(
+      "ECONOMIC_OPERATOR_NAME_ADDRESS",
+      "CONTACT_DATA_WITHOUT_RESPONSIBLE_NAME"
+    )
+    val validPath = List(awardContractBasicPath, veatAwardContractBasicPath)
+    val resolvedPath =
+      validPath.flatMap(p => elem.resolvePath(p*)).collect { case x: Elem => x }
+    val coutries =
+      resolvedPath.map(e =>
+        e.getAttr("VALUE", "COUNTRY").map(Country.toDomain(_))
+      )
+
+    coutries.map(l => l.toRight(ParsingError.NoAwardedSupplierCountry)).pure[F]
+  }
 
   override def parseTenderLotAwardedSupplier(
       elem: Elem
-  ): F[List[Either[ParsingError, AwardedSupplier]]] = ???
+  ): F[List[Either[ParsingError, AwardedSupplier]]] = {
+    val fName = parseTenderLotAwardedSupplierName(elem)
+    val fCountry = parseTenderLotAwardedSupplierCountry(elem)
 
-  override def parseTenderLotJustification
-      : F[List[Either[ParsingError, Justification]]] = ???
+    (fName, fCountry).mapN((l1, l2) =>
+      l1.zip(l2)
+        .map((maybeName, maybeCountry) =>
+          (maybeName, maybeCountry) match
+            case (Right(name), Right(country)) =>
+              Right(AwardedSupplier(name, country))
+            case _ => Left(ParsingError.NoAwardedSupplier)
+        )
+    )
+
+  }
+
+  override def parseTenderLotJustification(
+      elem: Elem
+  ): F[List[Either[ParsingError, Justification]]] = {
+    val validPath =
+      List(awardContractjustification, veatAwardContractjustification)
+    val resolvedPath =
+      validPath.flatMap(p => elem.resolvePath(p*)).collect { case x: Elem => x }
+
+    val justificaton =
+      resolvedPath.map(e =>
+        e.getText("REASON_CONTRACT_LAWFUL").map(Justification(_))
+      )
+
+    justificaton.map(e => e.toRight(ParsingError.NoJustification)).pure[F]
+  }
 
 }
