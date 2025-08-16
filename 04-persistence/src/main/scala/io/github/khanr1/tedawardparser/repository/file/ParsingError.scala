@@ -1,31 +1,35 @@
 package io.github.khanr1.tedawardparser.repository.file
 
-import cats.kernel.Eq
-import cats.effect.kernel.Par
-import scala.annotation.meta.param
+import scala.util.control.NoStackTrace
 
-enum ParsingError(msg: String):
-  def getMessage: String = msg
-  case NoPublicationDate
-      extends ParsingError(msg = "No publication date could not be parsed")
-  case NoOJSID
-      extends ParsingError(msg = " No OJS reference ID could not be parsed")
-  case NoContractingAuthorityName
-      extends ParsingError(
-        msg = "No contracting authority Name could not be parsed"
+enum ParserError(val message: String, val path: Option[String])
+    extends NoStackTrace:
+
+  /** A required field is absent at the expected location. */
+  case MissingField(field: String, at: Option[String] = None)
+      extends ParserError(s"Missing required field: $field", at)
+
+  /** A field exists but cannot be converted to the expected type/format. */
+  case InvalidFormat(
+      field: String,
+      expected: String,
+      found: String,
+      at: Option[String] = None
+  ) extends ParserError(
+        s"Invalid $field: expected $expected, found: $found",
+        at
       )
-  case NoContractingAuthorityCountry
-      extends ParsingError(msg = "No contracting authority could not be parsed")
-  case NoContractID extends ParsingError(msg = "No contract ID could be parsed")
-  case NoTitle extends ParsingError(msg = "No tender's title could be parsed")
-  case NoDescription
-      extends ParsingError(msg = "No tender's description could be parse")
-  case NoValue extends ParsingError("No value for the tender could be parsed")
-  case NoAwardedSupplier
-      extends ParsingError("No awarded supplier could be parsed")
-  case NoAwardedSupplierCountry
-      extends ParsingError(
-        "No country for the awarded supplier could be parsed"
-      )
-  case NoJustification
-      extends ParsingError("No tender award justification could be parsed")
+
+  /** More than one value was found where one was expected. */
+  case MultipleValues(field: String, at: Option[String] = None)
+      extends ParserError(s"Multiple values for $field (expected one)", at)
+
+  /** The structure contains a node we don’t support (version drift, wrong form,
+    * etc.).
+    */
+  case UnexpectedNode(node: String, at: Option[String] = None)
+      extends ParserError(s"Unexpected node: $node", at)
+
+  /** Fallback for unforeseen issues that are still parse-related. */
+  case Unknown(why: String, at: Option[String] = None)
+      extends ParserError(why, at)
