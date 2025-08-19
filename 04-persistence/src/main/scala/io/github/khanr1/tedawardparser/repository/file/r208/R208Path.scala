@@ -45,4 +45,18 @@ object R208Path {
       "DESCRIPTION_AWARD_NOTICE_INFORMATION"
   val VeatAwardInfo = VEAT / "OBJECT_VEAT" / "DESCRIPTION_VEAT"
 
+  // Award Justification
+  val ContractAwardJustification = ContractAward /
+    "PROCEDURE_DEFINITION_CONTRACT_AWARD_NOTICE" /
+    "TYPE_OF_PROCEDURE_DEF" /
+    "F03_AWARD_WITHOUT_PRIOR_PUBLICATION" /
+    "ANNEX_D"
+
+  val VeatAwardJustification = VEAT /
+    "PROCEDURE_DEFINITION_VEAT" /
+    "TYPE_OF_PROCEDURE_DEF_F15" /
+    "F15_PT_NEGOTIATED_WITHOUT_COMPETITION" /
+    "ANNEX_D_F15" /
+    "ANNEX_D1"
+
 }

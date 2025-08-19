@@ -3,15 +3,16 @@ package repository
 package file
 package r208
 
-import weaver.SimpleIOSuite
 import cats.effect.IO
 import cats.syntax.all.*
-import fs2.io.file.{Path, Files}
+import Country.*
 import fs2.{text, Pipe}
-import scala.xml.{Elem, XML}
+import fs2.io.file.{Path, Files}
+import io.github.khanr1.tedawardparser.repository.file.r208.R208Path.*
 import java.time.LocalDate
-import io.github.khanr1.tedawardparser.repository.file.r208.R208Path.ContractAwardInfo
-import io.github.khanr1.tedawardparser.repository.file.r208.R208Path.VeatAwardInfo
+import scala.xml.{Elem, XML}
+import squants.market.*
+import weaver.SimpleIOSuite
 
 object TedExportR208Suite extends SimpleIOSuite {
 
@@ -171,7 +172,88 @@ object TedExportR208Suite extends SimpleIOSuite {
         Right(Description(s))
     )
   )
-
+  // Money
+  val values: List[List[Either[ParserError, Money]]] = List(
+    List(Right(Money(6.1292e+5, GBP))),
+    List(
+      Left(
+        ParserError.MissingField("Amount", None)
+      )
+    ),
+    List(
+      Left(
+        ParserError.MissingField("Amount", None)
+      )
+    ),
+    List(
+      Left(
+        ParserError.MissingField("Amount", None)
+      )
+    ),
+    List(
+      Left(
+        ParserError.MissingField("Amount", None)
+      ),
+      Left(
+        ParserError.MissingField("Amount", None)
+      )
+    ),
+    List(Right(Money(4.98e+5, EUR))),
+    List(
+      Left(
+        ParserError.MissingField("Amount", None)
+      )
+    ),
+    List(Right(Money(4.48e+5, EUR))),
+    List(Right(Money(2.8e+5, EUR))),
+    List(Right(Money(9.2451e+5, EUR)), Right(Money(9.2451e+5, EUR)))
+  )
+  // Awarded Supplier
+  val awardedSupplerName: List[List[Either[ParserError, AwardedSupplierName]]] =
+    List(
+      List(
+        Right(
+          AwardedSupplierName("Oxford Instruments Nanotechnology Tools Ltd")
+        )
+      ),
+      List(Right(AwardedSupplierName("BlueFors"))),
+      List(Right(AwardedSupplierName("BlueFors Cryogenics Oy Ltd"))),
+      List(Right(AwardedSupplierName("BLueFors Cryogenics Oy"))),
+      List(
+        Right(AwardedSupplierName("BlueFors Cryogenics Oy Ltd")),
+        Right(AwardedSupplierName("BlueFors Cryogenics Oy Ltd"))
+      ),
+      List(Right(AwardedSupplierName("Oxford Instruments Nanotechnology"))),
+      List(Right(AwardedSupplierName("BlueFors Cryogenics Oy Ltd"))),
+      List(Right(AwardedSupplierName("Oxford Instruments GmbH"))),
+      List(Right(AwardedSupplierName("Leiden Cryogenics BV"))),
+      List(
+        Right(AwardedSupplierName("Oxford Instruments GmbH")),
+        Right(AwardedSupplierName("Oxford Instruments GmbH"))
+      )
+    )
+  // Awarded Supplier Country
+  val supplierCountry = List(
+    List(Right(UK)),
+    List(Right(FI)),
+    List(Right(FI)),
+    List(
+      Left(
+        ParserError.MissingField(
+          "Awarded Supplier Country",
+          Some(
+            List(AwardOfContract, VeatAwardOfContact).map(_.show).mkString("|")
+          )
+        )
+      )
+    ),
+    List(Right(FI), Right(FI)),
+    List(Right(UK)),
+    List(Right(FI)),
+    List(Right(DE)),
+    List(Right(NL)),
+    List(Right(DE), Right(DE))
+  )
   // Tests
   test("Parsing the OJSNumber") {
     assertParser(parser.parseOJSNoticeID, contractOJSIDs, Elems)
@@ -296,6 +378,23 @@ object TedExportR208Suite extends SimpleIOSuite {
   }
   test("Parsing the Contract Description") {
     assertListParser(parser.parseTenderLotDescription, description, Elems)
+  }
+  test("Parsing the Contract Value") {
+    assertListParser(parser.parseTenderLotValue, values, Elems)
+  }
+  test("Parsing the Awarded Supplier Name") {
+    assertListParser(
+      parser.parseTenderLotAwardedSupplierName,
+      awardedSupplerName,
+      Elems
+    )
+  }
+  test("Parsing the Awarded Supplier Country") {
+    assertListParser(
+      parser.parseTenderLotAwardedSupplierCountry,
+      supplierCountry,
+      Elems
+    )
   }
 
 }
