@@ -54,7 +54,7 @@ class TedExportR208[F[_]: Monad] extends XMLParser[F] {
       DelegatedPurchaseContractingAuthority,
       DirectPurchaseContractingAuthority,
       VeatPurchaseContractingAuthority
-    ).map(p => p / "ORGANISATION" / "OFFICIALNAME")
+    ).map(p => p ++ OrgOfficialName)
 
     elem
       .firstTextOrError(validPath, "Contracting Authority Name")
@@ -69,7 +69,7 @@ class TedExportR208[F[_]: Monad] extends XMLParser[F] {
       DelegatedPurchaseContractingAuthority,
       DirectPurchaseContractingAuthority,
       VeatPurchaseContractingAuthority
-    ).map(p => p / "COUNTRY").map(p => p attr ("VALUE"))
+    ).map(p => p ++ CountryValue)
 
     elem
       .firstAttrOrError(validPath, "Contracting Authority Country")
@@ -92,7 +92,7 @@ class TedExportR208[F[_]: Monad] extends XMLParser[F] {
 
     val validPath = List(AwardOfContract, VeatAwardOfContact)
     val children = elem.childrenAtAll(validPath)
-    val paths = List(XMLPath("CONTRACT_NUMBER"), XMLPath("LOT_NUMBER"))
+    val paths = List(ContractNumber, LotNumber)
 
     children
       .map(e =>
@@ -106,7 +106,7 @@ class TedExportR208[F[_]: Monad] extends XMLParser[F] {
   ): F[List[Either[ParserError, Title]]] = {
     val validPath = List(ContractAwardInfo, VeatAwardInfo)
     val children = elem.childrenAtAll(validPath)
-    val item = XMLPath("TITLE_CONTRACT")
+    val item = TitleContract
 
     children
       .getTextsAt(validPath, item, "Title")
@@ -121,7 +121,7 @@ class TedExportR208[F[_]: Monad] extends XMLParser[F] {
 
     val validPath = List(ContractAwardInfo, VeatAwardInfo)
     val children = elem.childrenAtAll(validPath)
-    val item = XMLPath("SHORT_CONTRACT_DESCRIPTION")
+    val item = ShortContractDescription
 
     children
       .getTextsAt(validPath, item, "Description")
@@ -208,12 +208,7 @@ class TedExportR208[F[_]: Monad] extends XMLParser[F] {
     children
       .getTextsAt(
         validPath,
-        XMLPath(
-          "ECONOMIC_OPERATOR_NAME_ADDRESS",
-          "CONTACT_DATA_WITHOUT_RESPONSIBLE_NAME",
-          "ORGANISATION",
-          "OFFICIALNAME"
-        ),
+        EconomicOperator.OrganisationOfficialName,
         "Awarded Supplier Name"
       )
       .map(either => either.map(s => AwardedSupplierName(s)))
@@ -229,11 +224,7 @@ class TedExportR208[F[_]: Monad] extends XMLParser[F] {
     children
       .getAttrsAt(
         validPath,
-        XMLPath(
-          "ECONOMIC_OPERATOR_NAME_ADDRESS",
-          "CONTACT_DATA_WITHOUT_RESPONSIBLE_NAME",
-          "COUNTRY"
-        ) attr "VALUE",
+        EconomicOperator.CountryValue,
         "Awarded Supplier Country"
       )
       .map(either => either.map(s => Country.toDomain(s)))
@@ -268,7 +259,7 @@ class TedExportR208[F[_]: Monad] extends XMLParser[F] {
     val children = e.childrenAtAll(validPath)
 
     children
-      .getTextsAt(validPath, XMLPath("REASON_CONTRACT_LAWFUL"), "Justification")
+      .getTextsAt(validPath, JustificationReason, "Justification")
       .map(either => either.map(s => Justification(s)))
       .pure[F]
   }
