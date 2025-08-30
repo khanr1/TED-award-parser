@@ -8,12 +8,13 @@ import cats.syntax.all.*
 import Country.*
 import fs2.{text, Pipe}
 import fs2.io.file.{Path, Files}
-import io.github.khanr1.tedawardparser.repository.file.r209.R209Path.*
+import io.github.khanr1.tedawardparser.repository.file.r209.*
 
 import java.time.LocalDate
 import scala.xml.{Elem, XML}
 import squants.market.*
 import weaver.SimpleIOSuite
+import io.github.khanr1.tedawardparser.repository.file.XMLPathUtils.showAltPath
 
 object TedExportR209Suite extends SimpleIOSuite {
 
@@ -141,7 +142,9 @@ object TedExportR209Suite extends SimpleIOSuite {
             ParserError.MissingField(
               "Description",
               Some(
-                List(ContractAwardInfo, VeatAwardInfo).map(_.show).mkString("|")
+                List(R209Path.ContractAwardInfo, R209Path.VeatAwardInfo)
+                  .map(_.show)
+                  .mkString("|")
               )
             )
           )
@@ -156,10 +159,10 @@ object TedExportR209Suite extends SimpleIOSuite {
         ParserError.MissingField(
           "Amount",
           Some(
-            (List(AwardOfContract, VeatAwardOfContact) ++ List(
-              ContractAwardInfo,
-              VeatAwardInfo
-            )).map(_.show).mkString("|")
+            (List(
+              R209Path.ContractAwardInfo,
+              R209Path.VeatAwardInfo
+            )).showAltPath()
           )
         )
       )

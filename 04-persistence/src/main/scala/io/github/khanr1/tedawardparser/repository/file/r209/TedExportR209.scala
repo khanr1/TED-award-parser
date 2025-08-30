@@ -7,7 +7,7 @@ import cats.data.EitherT
 import cats.Monad
 import cats.syntax.all.*
 import io.github.khanr1.tedawardparser.repository.file.Matching.attrValue
-import io.github.khanr1.tedawardparser.repository.file.r209.R209Path.*
+import io.github.khanr1.tedawardparser.repository.file.r209.*
 import io.github.khanr1.tedawardparser.repository.file.XMLPathUtils.*
 import java.time.format.DateTimeFormatter
 import java.time.LocalDate
@@ -15,6 +15,7 @@ import scala.util.Try
 import scala.xml.Elem
 import squants.market.*
 import squants.market.defaultMoneyContext.*
+import io.github.khanr1.tedawardparser.repository.file.r209.R209Path.ContractValue
 
 class TedExportR209[F[_]: Monad] extends XMLParser[F] {
 
@@ -113,18 +114,14 @@ class TedExportR209[F[_]: Monad] extends XMLParser[F] {
   override def parseOJSNoticeID(
       elem: Elem
   ): F[Either[ParserError, OJSNoticeID]] = elem
-    .textAt(OjsID)
-    .toRight(ParserError.MissingField("OjsID", Some(OjsID.show)))
+    .textAtOrError(R209Path.OjsID, "OjsID")
     .map(s => OJSNoticeID(s))
     .pure[F]
 
   override def parsePublicationDate(
       elem: Elem
   ): F[Either[ParserError, LocalDate]] = elem
-    .textAt(PublicationDate)
-    .toRight(
-      ParserError.MissingField("Publication Date", Some(PublicationDate.show))
-    )
+    .textAtOrError(R209Path.PublicationDate, "Publication Date")
     .flatMap { s =>
       Either
         .catchNonFatal(LocalDate.parse(s, dateFormatter))
@@ -133,7 +130,7 @@ class TedExportR209[F[_]: Monad] extends XMLParser[F] {
             "Publication Date",
             "yyyyMMdd",
             s,
-            Some(PublicationDate.show)
+            Some(R209Path.PublicationDate.show)
           )
         )
     }
@@ -143,18 +140,12 @@ class TedExportR209[F[_]: Monad] extends XMLParser[F] {
       elem: Elem
   ): F[Either[ParserError, ContractingAuthorityName]] = {
     val validPath = List(
-      DirectPurchaseContractingAuthority,
-      VeatPurchaseContractingAuthority
-    ).map(p => p / "OFFICIALNAME")
+      R209Path.DirectPurchaseContractingAuthority,
+      R209Path.VeatPurchaseContractingAuthority
+    ).map(p => p ++ R209Path.EconomicOperator.OfficialNameLeaf)
 
     elem
-      .firstText(validPath)
-      .toRight(
-        ParserError.MissingField(
-          "Contracting Authority Name",
-          Some(validPath.map(_.show).mkString("|"))
-        )
-      )
+      .firstTextOrError(validPath, "Contracting Authority Name")
       .map(s => ContractingAuthorityName(s))
       .pure[F]
   }
@@ -163,18 +154,12 @@ class TedExportR209[F[_]: Monad] extends XMLParser[F] {
       elem: Elem
   ): F[Either[ParserError, Country]] = {
     val validPath = List(
-      DirectPurchaseContractingAuthority,
-      VeatPurchaseContractingAuthority
-    ).map(p => p / "COUNTRY").map(p => p attr ("VALUE"))
+      R209Path.DirectPurchaseContractingAuthority,
+      R209Path.VeatPurchaseContractingAuthority
+    ).map(p => p ++ R209Path.EconomicOperator.CountryValue)
 
     elem
-      .firstAttr(validPath)
-      .toRight(
-        ParserError.MissingField(
-          "Contracting Authority Country",
-          Some(validPath.map(_.show).mkString("|"))
-        )
-      )
+      .firstAttrOrError(validPath, "Contracting Authority Country")
       .map(s => Country.toDomain(s))
       .pure[F]
   }
@@ -191,74 +176,71 @@ class TedExportR209[F[_]: Monad] extends XMLParser[F] {
   override def parseContractID(
       elem: Elem
   ): F[List[Either[ParserError, ContractID]]] = {
-    val validPath = List(AwardOfContract, VeatAwardOfContact)
+    val validPath = List(R209Path.AwardOfContract, R209Path.VeatAwardOfContact)
     val children = validPath.flatMap(p => elem.childrenAt(p))
-    val ids: List[Option[ContractID]] = children.map(e => {
-      val lot = e.textAt(XMLPath("LOT_NO")).map(ContractID(_))
-      val contract = e.textAt(XMLPath("CONTRACT_NO")).map(ContractID(_))
-      val item =
-        elem.firstAttr(validPath.map(p => p.attr("ITEM"))).map(ContractID(_))
-      contract.orElse(lot) orElse (item)
-    })
-    ids
-      .map(x =>
-        x.toRight(
-          ParserError.MissingField(
-            "Contract/Lot ID",
-            Some(validPath.map(_.show).mkString("|"))
+    val paths = List(R209Path.LotNo, R209Path.ContractNo)
+    val ids: List[Option[ContractID]] = children.map { e =>
+      val lot = e.textAt(R209Path.LotNo).map(ContractID.apply)
+      val contract = e.textAt(R209Path.ContractNo).map(ContractID.apply)
+      // ITEM is on the award containers (roots), not on each child:
+      val item = elem
+        .firstAttr(
+          List(
+            R209Path.AwardOfContract attr "ITEM",
+            R209Path.VeatAwardOfContact attr "ITEM"
           )
+        )
+        .map(ContractID.apply)
+      contract.orElse(lot).orElse(item)
+    }
+    ids
+      .map(
+        _.toRight(
+          ParserError
+            .MissingField("Contract/Lot ID", Some(validPath.showAltPath()))
         )
       )
       .pure[F]
-
   }
 
   override def parseTenderLotTitle(
       elem: Elem
-  ): F[List[Either[ParserError, Title]]] = extractManyWithFallback(
-    elem,
-    List(AwardOfContract, VeatAwardOfContact),
-    List(ContractAwardInfo, VeatAwardInfo),
-    XMLPath("TITLE"),
-    XMLPath("TITLE"),
-    "Title"
-  )(Title.apply).pure[F]
+  ): F[List[Either[ParserError, Title]]] = elem
+    .extractManyWithFallback(
+      List(R209Path.AwardOfContract, R209Path.VeatAwardOfContact),
+      List(R209Path.ContractAwardInfo, R209Path.VeatAwardInfo),
+      R209Path.Title,
+      R209Path.Title,
+      "Title"
+    )
+    .map(e => e.map(Title(_)))
+    .pure[F]
 
   override def parseTenderLotDescription(
       elem: Elem
   ): F[List[Either[ParserError, Description]]] = {
     val validPath =
-      List(ContractAwardInfo, VeatAwardInfo).map(p => p / "OBJECT_DESCR")
-    val description = elem
-      .allTextAt(validPath, XMLPath("SHORT_DESCR"))
-      .map(maybeDescr =>
-        maybeDescr
-          .toRight(
-            ParserError.MissingField(
-              "Description",
-              Some(validPath.map(x => x.show).mkString("|"))
-            )
-          )
-          .map(x => Description(x))
+      List(R209Path.ContractAwardInfo, R209Path.VeatAwardInfo).map(p =>
+        p ++ R209Path.ObjectDescr
       )
+    val description = elem
+      .allTextAtOrError(validPath, R209Path.ShortDescr, "Description")
+      .map(either => either.map(s => Description(s)))
+
     description.pure[F]
   }
 
   override def parseTenderLotValue(
       elem: Elem
   ): F[List[Either[ParserError, Money]]] = {
-    val values = extractManyWithFallback(
-      elem,
-      List(AwardOfContract, VeatAwardOfContact),
-      List(ContractAwardInfo, VeatAwardInfo),
-      XMLPath(
-        "AWARDED_CONTRACT",
-        "VALUES",
-        "VAL_TOTAL"
-      ),
-      XMLPath("VAL_TOTAL"),
-      "Amount"
-    )((x: String) => x)
+    val values = elem
+      .extractManyWithFallback(
+        List(R209Path.AwardOfContract, R209Path.VeatAwardOfContact),
+        List(R209Path.ContractAwardInfo, R209Path.VeatAwardInfo),
+        R209Path.ContractValue.PrimaryValueTotal,
+        R209Path.ContractValue.FallbackValueTotal,
+        "Amount"
+      )
       .map(either =>
         either.flatMap(s =>
           Try(
@@ -270,48 +252,50 @@ class TedExportR209[F[_]: Monad] extends XMLParser[F] {
                 "number",
                 s,
                 Some(
-                  (List(AwardOfContract, VeatAwardOfContact) ++ List(
-                    ContractAwardInfo,
-                    VeatAwardInfo
-                  )).map(_.show).mkString("|")
+                  (List(
+                    R209Path.AwardOfContract,
+                    R209Path.VeatAwardOfContact
+                  ) ++ List(
+                    R209Path.ContractAwardInfo,
+                    R209Path.VeatAwardInfo
+                  )).showAltPath()
                 )
               )
             )
         )
       )
 
-    val currencies = extractManyAttrWithFallback(
-      elem,
-      List(AwardOfContract, VeatAwardOfContact),
-      List(ContractAwardInfo, VeatAwardInfo),
-      XMLPath(
-        "AWARDED_CONTRACT",
-        "VALUES",
-        "VAL_TOTAL"
-      ),
-      XMLPath("VAL_TOTAL"),
-      "CURRENCY",
-      "CURRENCY",
-      "Currency"
-    )((x: String) => x).map(either =>
-      either.flatMap(s =>
-        Currency(s.replace(" ", "").replace(",", "."))(
-          defaultMoneyContext
-        ).toEither.leftMap(t =>
-          ParserError.InvalidFormat(
-            "Currency",
-            "Number",
-            s,
-            Some(
-              (List(AwardOfContract, VeatAwardOfContact) ++ List(
-                ContractAwardInfo,
-                VeatAwardInfo
-              )).map(_.show).mkString("|")
+    val currencies = elem
+      .extractManyAttrWithFallback(
+        List(R209Path.AwardOfContract, R209Path.VeatAwardOfContact),
+        List(R209Path.ContractAwardInfo, R209Path.VeatAwardInfo),
+        R209Path.ContractValue.PrimaryCurrencyAttr,
+        ContractValue.FallbackCurrencyAttr,
+        "CURRENCY",
+        "Currency"
+      )
+      .map(either =>
+        either.flatMap(s =>
+          Currency(s.replace(" ", "").replace(",", "."))(
+            defaultMoneyContext
+          ).toEither.leftMap(t =>
+            ParserError.InvalidFormat(
+              "Currency",
+              "Number",
+              s,
+              Some(
+                (List(
+                  R209Path.AwardOfContract,
+                  R209Path.VeatAwardOfContact
+                ) ++ List(
+                  R209Path.ContractAwardInfo,
+                  R209Path.VeatAwardInfo
+                )).showAltPath()
+              )
             )
           )
         )
       )
-    )
 
     values
       .zip(currencies)
@@ -324,20 +308,22 @@ class TedExportR209[F[_]: Monad] extends XMLParser[F] {
       .pure[F]
 
   }
-
+  // TODO
   override def parseTenderLotAwardedSupplierName(
       elem: Elem
   ): F[List[Either[ParserError, AwardedSupplierName]]] = {
-    val primaryPath = List(AwardOfContract, VeatAwardOfContact).map(p =>
-      p / "AWARDED_CONTRACT" /
-        "CONTRACTORS" /
-        "CONTRACTOR" /
-        "ADDRESS_CONTRACTOR"
-    )
-    val fallback = List(AwardOfContract, VeatAwardOfContact).map(p =>
-      p / "AWARDED_CONTRACT" / "CONTRACTOR" /
-        "ADDRESS_CONTRACTOR"
-    )
+    val primaryPath =
+      List(R209Path.AwardOfContract, R209Path.VeatAwardOfContact).map(p =>
+        p / "AWARDED_CONTRACT" /
+          "CONTRACTORS" /
+          "CONTRACTOR" /
+          "ADDRESS_CONTRACTOR"
+      )
+    val fallback =
+      List(R209Path.AwardOfContract, R209Path.VeatAwardOfContact).map(p =>
+        p / "AWARDED_CONTRACT" / "CONTRACTOR" /
+          "ADDRESS_CONTRACTOR"
+      )
     val names = extractManyWithFallback(
       elem,
       primary = primaryPath,
@@ -353,16 +339,18 @@ class TedExportR209[F[_]: Monad] extends XMLParser[F] {
   override def parseTenderLotAwardedSupplierCountry(
       elem: Elem
   ): F[List[Either[ParserError, Country]]] = {
-    val primaryPath = List(AwardOfContract, VeatAwardOfContact).map(p =>
-      p / "AWARDED_CONTRACT" /
-        "CONTRACTORS" /
-        "CONTRACTOR" /
-        "ADDRESS_CONTRACTOR"
-    )
-    val fallback = List(AwardOfContract, VeatAwardOfContact).map(p =>
-      p / "AWARDED_CONTRACT" / "CONTRACTOR" /
-        "ADDRESS_CONTRACTOR"
-    )
+    val primaryPath =
+      List(R209Path.AwardOfContract, R209Path.VeatAwardOfContact).map(p =>
+        p / "AWARDED_CONTRACT" /
+          "CONTRACTORS" /
+          "CONTRACTOR" /
+          "ADDRESS_CONTRACTOR"
+      )
+    val fallback =
+      List(R209Path.AwardOfContract, R209Path.VeatAwardOfContact).map(p =>
+        p / "AWARDED_CONTRACT" / "CONTRACTOR" /
+          "ADDRESS_CONTRACTOR"
+      )
     val countries = extractManyAttrWithFallback(
       elem,
       primary = primaryPath,
@@ -400,7 +388,8 @@ class TedExportR209[F[_]: Monad] extends XMLParser[F] {
   override def parseTenderLotJustification(
       e: Elem
   ): F[List[Either[ParserError, Justification]]] = {
-    val validPath = List(ContractAwardProcedure, VeatAwardProcedure)
+    val validPath =
+      List(R209Path.ContractAwardProcedure, R209Path.VeatAwardProcedure)
     val tagelem = XMLPath(
       "DIRECTIVE_2014_24_EU",
       "PT_NEGOTIATED_WITHOUT_PUBLICATION",

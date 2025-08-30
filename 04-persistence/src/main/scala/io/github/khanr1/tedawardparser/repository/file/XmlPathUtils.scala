@@ -180,6 +180,59 @@ object XMLPathUtils:
       val prim = e.childrenAtAll(primary, ns)
       if prim.nonEmpty then prim else e.childrenAtAll(fallback, ns)
 
+    def extractManyWithFallback(
+        primaryRoots: List[XMLPath],
+        fallbackRoots: List[XMLPath],
+        primaryItem: XMLPath, // e.g. ContractValue.PrimaryValueTotal or Title
+        fallbackItem: XMLPath, // e.g. ContractValue.FallbackValueTotal or Title
+        field: String, // for MissingField
+        ns: Ns = Ns.empty
+    ): List[Either[ParserError, String]] =
+      val primParents = e.childrenAtAll(primaryRoots, ns)
+      val prim = primParents.getTextsAt(
+        primaryRoots,
+        item = primaryItem,
+        field = field,
+        ns = ns
+      )
+      if prim.exists(_.isRight) || fallbackRoots.isEmpty then prim
+      else
+        val fbParents = e.childrenAtAll(fallbackRoots, ns)
+        fbParents.getTextsAt(
+          fallbackRoots,
+          item = fallbackItem,
+          field = field,
+          ns = ns
+        )
+
+    /** Attribute under award/info sections with fallback between section roots.
+      */
+    def extractManyAttrWithFallback(
+        primaryRoots: List[XMLPath],
+        fallbackRoots: List[XMLPath],
+        primaryItem: XMLPath, // base path that owns the attr
+        fallbackItem: XMLPath, // base path that owns the attr
+        attrName: String, // attribute name for both branches
+        field: String, // for MissingField
+        ns: Ns = Ns.empty
+    ): List[Either[ParserError, String]] =
+      val primParents = e.childrenAtAll(primaryRoots, ns)
+      val prim = primParents.getAttrsAt(
+        primaryRoots,
+        item = primaryItem,
+        field = field,
+        ns = ns
+      )
+      if prim.exists(_.isRight) || fallbackRoots.isEmpty then prim
+      else
+        val fbParents = e.childrenAtAll(fallbackRoots, ns)
+        fbParents.getAttrsAt(
+          fallbackRoots,
+          item = fallbackItem,
+          field = field,
+          ns = ns
+        )
+
   extension (l: List[Elem])
     def getTextsAt(
         paths: List[XMLPath],
