@@ -313,25 +313,24 @@ class TedExportR209[F[_]: Monad] extends XMLParser[F] {
       elem: Elem
   ): F[List[Either[ParserError, AwardedSupplierName]]] = {
     val primaryPath =
-      List(R209Path.AwardOfContract, R209Path.VeatAwardOfContact).map(p =>
-        p / "AWARDED_CONTRACT" /
-          "CONTRACTORS" /
-          "CONTRACTOR" /
-          "ADDRESS_CONTRACTOR"
+      List(
+        R209Path.AwardOfContract ++ R209Path.FormSection.ContractAward.EconomicOperator.PrimaryBase,
+        R209Path.VeatAwardOfContact ++ R209Path.FormSection.Veat.EconomicOperator.PrimaryBase
       )
     val fallback =
-      List(R209Path.AwardOfContract, R209Path.VeatAwardOfContact).map(p =>
-        p / "AWARDED_CONTRACT" / "CONTRACTOR" /
-          "ADDRESS_CONTRACTOR"
+      List(
+        R209Path.AwardOfContract ++ R209Path.FormSection.ContractAward.EconomicOperator.FallbackBase,
+        R209Path.VeatAwardOfContact ++ R209Path.FormSection.Veat.EconomicOperator.FallbackBase
       )
-    val names = extractManyWithFallback(
-      elem,
-      primary = primaryPath,
-      fallback = fallback,
-      XMLPath("OFFICIALNAME"),
-      XMLPath("OFFICIALNAME"),
-      "Awarded Supplier Name"
-    )(s => AwardedSupplierName(s))
+    val names = elem
+      .extractManyWithFallback(
+        primaryPath,
+        fallback,
+        R209Path.EconomicOperator.OfficialNameLeaf,
+        R209Path.EconomicOperator.OfficialNameLeaf,
+        "Awarded Supplier Name"
+      )
+      .map(either => either.map(s => AwardedSupplierName(s)))
 
     names.pure[F]
   }
@@ -340,27 +339,25 @@ class TedExportR209[F[_]: Monad] extends XMLParser[F] {
       elem: Elem
   ): F[List[Either[ParserError, Country]]] = {
     val primaryPath =
-      List(R209Path.AwardOfContract, R209Path.VeatAwardOfContact).map(p =>
-        p / "AWARDED_CONTRACT" /
-          "CONTRACTORS" /
-          "CONTRACTOR" /
-          "ADDRESS_CONTRACTOR"
+      List(
+        R209Path.AwardOfContract ++ R209Path.FormSection.ContractAward.EconomicOperator.PrimaryBase,
+        R209Path.VeatAwardOfContact ++ R209Path.FormSection.Veat.EconomicOperator.PrimaryBase
       )
     val fallback =
-      List(R209Path.AwardOfContract, R209Path.VeatAwardOfContact).map(p =>
-        p / "AWARDED_CONTRACT" / "CONTRACTOR" /
-          "ADDRESS_CONTRACTOR"
+      List(
+        R209Path.AwardOfContract ++ R209Path.FormSection.ContractAward.EconomicOperator.FallbackBase,
+        R209Path.VeatAwardOfContact ++ R209Path.FormSection.Veat.EconomicOperator.FallbackBase
       )
-    val countries = extractManyAttrWithFallback(
-      elem,
-      primary = primaryPath,
-      fallback = fallback,
-      XMLPath("COUNTRY"),
-      XMLPath("COUNTRY"),
-      "VALUE",
-      "VALUE",
-      "Awarded Supplier Country"
-    )(s => Country.toDomain(s))
+    val countries = elem
+      .extractManyAttrWithFallback(
+        primaryPath,
+        fallback,
+        R209Path.EconomicOperator.CountryValue,
+        R209Path.EconomicOperator.CountryValue,
+        "VALUE",
+        "Awarded Supplier Country"
+      )
+      .map(either => either.map(s => Country.toDomain(s)))
 
     countries.pure[F]
   }
@@ -390,27 +387,15 @@ class TedExportR209[F[_]: Monad] extends XMLParser[F] {
   ): F[List[Either[ParserError, Justification]]] = {
     val validPath =
       List(R209Path.ContractAwardProcedure, R209Path.VeatAwardProcedure)
-    val tagelem = XMLPath(
-      "DIRECTIVE_2014_24_EU",
-      "PT_NEGOTIATED_WITHOUT_PUBLICATION",
-      "D_JUSTIFICATION"
-    )
+    val tagelem = R209Path.ProcedureDirective.JustificationLeaf
     val justification = e
-      .allTextAt(
+      .allTextAtOrError(
         validPath,
-        tagelem
+        tagelem,
+        "Justification"
       )
-      .map(maybeString =>
-        maybeString
-          .toRight(
-            ParserError
-              .MissingField(
-                "Justification",
-                Some((validPath.map(x => x ++ tagelem)).show.mkString("|"))
-              )
-          )
-          .map(s => Justification(s))
-      )
+      .map(either => either.map(s => Justification(s)))
+
     justification.pure[F]
   }
 
