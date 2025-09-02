@@ -9,6 +9,7 @@ import cats.effect.IO
 import fs2.Stream
 import squants.market.Money
 import squants.market.EUR
+import java.time.LocalDate
 
 object NoticeServiceSuite extends SimpleIOSuite:
 
@@ -40,6 +41,35 @@ object NoticeServiceSuite extends SimpleIOSuite:
   )
 
   class InMemoryRepo extends NoticeRepository[IO]:
+
+    override def getPublicationDate: Stream[IO, LocalDate] = ???
+
+    override def getContractingAuthorityName
+        : Stream[IO, ContractingAuthorityName] = ???
+
+    override def getContractingAuthorityCountry: Stream[IO, Country] = ???
+
+    override def getContractingAuthority: Stream[IO, ContractingAuthority] = ???
+
+    override def getContractIDs: Stream[IO, List[ContractID]] = ???
+
+    override def getTenderLotTitles: Stream[IO, List[Title]] = ???
+
+    override def getTenderLotDescriptions: Stream[IO, List[Description]] = ???
+
+    override def getTenderLotValue: Stream[IO, List[squants.Money]] = ???
+
+    override def getTenderLotAwardedSupplierName
+        : Stream[IO, List[AwardedSupplierName]] = ???
+
+    override def getTenderLotAwardedSupplierCountry: Stream[IO, List[Country]] =
+      ???
+
+    override def getTenderLotAwardedSupplier
+        : Stream[IO, List[AwardedSupplier]] = ???
+
+    override def getTenderLotJustification: Stream[IO, Justification] = ???
+
     val streamElements =
       Stream(dummyNoticeWithLots, dummyNoticeWithoutLots)
     override def getAll: Stream[IO, Notice] = streamElements
