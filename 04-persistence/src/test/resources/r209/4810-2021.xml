@@ -1,0 +1,1486 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TED_EXPORT xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://publications.europa.eu/resource/schema/ted/R2.0.9/publication"
+    xmlns:n2016="http://publications.europa.eu/resource/schema/ted/2016/nuts"
+    xsi:schemaLocation="http://publications.europa.eu/resource/schema/ted/R2.0.9/publication TED_EXPORT.xsd"
+    VERSION="R2.0.9.S03.E01" DOC_ID="004810-2021" EDITION="2021005">
+    <TECHNICAL_SECTION>
+        <RECEPTION_ID>21-002108-001</RECEPTION_ID>
+        <DELETION_DATE>20210414</DELETION_DATE>
+        <FORM_LG_LIST>HU </FORM_LG_LIST>
+        <COMMENTS>From Convertor</COMMENTS>
+    </TECHNICAL_SECTION>
+    <LINKS_SECTION>
+        <XML_SCHEMA_DEFINITION_LINK xlink:type="simple" xlink:href="http://ted.europa.eu"
+            xlink:title="TED WEBSITE" />
+        <OFFICIAL_FORMS_LINK xlink:type="simple" xlink:href="http://ted.europa.eu" />
+        <FORMS_LABELS_LINK xlink:type="simple" xlink:href="http://ted.europa.eu" />
+        <ORIGINAL_CPV_LINK xlink:type="simple" xlink:href="http://ted.europa.eu" />
+        <ORIGINAL_NUTS_LINK xlink:type="simple" xlink:href="http://ted.europa.eu" />
+    </LINKS_SECTION>
+    <CODED_DATA_SECTION>
+        <REF_OJS>
+            <COLL_OJ>S</COLL_OJ>
+            <NO_OJ>5</NO_OJ>
+            <DATE_PUB>20210108</DATE_PUB>
+        </REF_OJS>
+        <NOTICE_DATA>
+            <NO_DOC_OJS>2021/S 005-004810</NO_DOC_OJS>
+            <URI_LIST>
+                <URI_DOC LG="HU">http://ted.europa.eu/udl?uri=TED:NOTICE:004810-2021:TEXT:HU:HTML</URI_DOC>
+            </URI_LIST>
+            <LG_ORIG>HU</LG_ORIG>
+            <ISO_COUNTRY VALUE="HU" />
+            <IA_URL_GENERAL>http://www.bszc.hu</IA_URL_GENERAL>
+            <ORIGINAL_CPV CODE="39162000">Educational equipment</ORIGINAL_CPV>
+            <ORIGINAL_CPV CODE="39160000">School furniture</ORIGINAL_CPV>
+            <n2016:PERFORMANCE_NUTS CODE="HU332">Békés</n2016:PERFORMANCE_NUTS>
+            <n2016:CA_CE_NUTS CODE="HU332">Békés</n2016:CA_CE_NUTS>
+            <REF_NOTICE>
+                <NO_DOC_OJS>2020/S 232-569646</NO_DOC_OJS>
+            </REF_NOTICE>
+        </NOTICE_DATA>
+        <CODIF_DATA>
+            <DS_DATE_DISPATCH>20210104</DS_DATE_DISPATCH>
+            <AA_AUTHORITY_TYPE CODE="6">Body governed by public law</AA_AUTHORITY_TYPE>
+            <TD_DOCUMENT_TYPE CODE="7">Contract award notice</TD_DOCUMENT_TYPE>
+            <NC_CONTRACT_NATURE CODE="2">Supplies</NC_CONTRACT_NATURE>
+            <PR_PROC CODE="1">Open procedure</PR_PROC>
+            <RP_REGULATION CODE="4">European Union</RP_REGULATION>
+            <TY_TYPE_BID CODE="9">Not applicable</TY_TYPE_BID>
+            <AC_AWARD_CRIT CODE="2">The most economic tender</AC_AWARD_CRIT>
+            <MA_MAIN_ACTIVITIES CODE="L">Education</MA_MAIN_ACTIVITIES>
+            <HEADING>01B03</HEADING>
+            <INITIATOR>01</INITIATOR>
+        </CODIF_DATA>
+    </CODED_DATA_SECTION>
+    <TRANSLATION_SECTION>
+        <ML_TITLES>
+            <ML_TI_DOC LG="BG">
+                <TI_CY>Унгapия</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Оборудване за обучение</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+            <ML_TI_DOC LG="CS">
+                <TI_CY>Maďarsko</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Vzdělávací vybavení</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+            <ML_TI_DOC LG="DA">
+                <TI_CY>Ungarn</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Pædagogisk udstyr</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+            <ML_TI_DOC LG="DE">
+                <TI_CY>Ungarn</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Lehrmaterial</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+            <ML_TI_DOC LG="EL">
+                <TI_CY>Ουγγαρία</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Εποπτικά μέσα</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+            <ML_TI_DOC LG="EN">
+                <TI_CY>Hungary</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Educational equipment</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+            <ML_TI_DOC LG="ES">
+                <TI_CY>Hungría</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Equipamiento de enseñanza</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+            <ML_TI_DOC LG="ET">
+                <TI_CY>Ungari</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Pedagoogilised tarvikud</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+            <ML_TI_DOC LG="FI">
+                <TI_CY>Unkari</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Kasvatukseen liittyvät laitteet</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+            <ML_TI_DOC LG="FR">
+                <TI_CY>Hongrie</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Matériel d'enseignement</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+            <ML_TI_DOC LG="GA">
+                <TI_CY>Ungáir, an</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Educational equipment</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+            <ML_TI_DOC LG="HR">
+                <TI_CY>Mađarska</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Nastavna oprema</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+            <ML_TI_DOC LG="HU">
+                <TI_CY>Magyarország</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Oktatási berendezések</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+            <ML_TI_DOC LG="IT">
+                <TI_CY>Ungheria</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Attrezzatura scolastica</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+            <ML_TI_DOC LG="LT">
+                <TI_CY>Vengrija</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Mokymo įranga</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+            <ML_TI_DOC LG="LV">
+                <TI_CY>Ungārija</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Izglītības iestāžu aprīkojums</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+            <ML_TI_DOC LG="MT">
+                <TI_CY>l-Ungerija</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Apparat edukattiv</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+            <ML_TI_DOC LG="NL">
+                <TI_CY>Hongarije</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Onderwijsuitrusting</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+            <ML_TI_DOC LG="PL">
+                <TI_CY>Węgry</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Pomoce naukowe</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+            <ML_TI_DOC LG="PT">
+                <TI_CY>Hungria</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Equipamento pedagógico</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+            <ML_TI_DOC LG="RO">
+                <TI_CY>Ungaria</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Material de instruire</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+            <ML_TI_DOC LG="SK">
+                <TI_CY>Maďarsko</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Vzdelávacie vybavenie</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+            <ML_TI_DOC LG="SL">
+                <TI_CY>Madžarska</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Oprema za izobraževalne namene</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+            <ML_TI_DOC LG="SV">
+                <TI_CY>Ungern</TI_CY>
+                <TI_TOWN>Békéscsaba</TI_TOWN>
+                <TI_TEXT>
+                    <P>Skolutrustning</P>
+                </TI_TEXT>
+            </ML_TI_DOC>
+        </ML_TITLES>
+        <ML_AA_NAMES>
+            <AA_NAME LG="HU">Békéscsabai Szakképzési Centrum</AA_NAME>
+        </ML_AA_NAMES>
+    </TRANSLATION_SECTION>
+    <FORM_SECTION>
+        <F03_2014 CATEGORY="ORIGINAL" FORM="F03" LG="HU">
+            <LEGAL_BASIS VALUE="32014L0024" />
+            <CONTRACTING_BODY>
+                <ADDRESS_CONTRACTING_BODY>
+                    <OFFICIALNAME>Békéscsabai Szakképzési Centrum</OFFICIALNAME>
+                    <NATIONALID>EKRSZ_73046671</NATIONALID>
+                    <ADDRESS>Gyulai út 32/1.</ADDRESS>
+                    <TOWN>Békéscsaba</TOWN>
+                    <POSTAL_CODE>5600</POSTAL_CODE>
+                    <COUNTRY VALUE="HU" />
+                    <CONTACT_POINT>Berecz Orsolya Zsuzsa</CONTACT_POINT>
+                    <PHONE>+36 204101981</PHONE>
+                    <E_MAIL>drbereczorsolya@gmail.com</E_MAIL>
+                    <FAX>+36 14801180</FAX>
+                    <n2016:NUTS CODE="HU332" />
+                    <URL_GENERAL>http://www.bszc.hu</URL_GENERAL>
+                    <URL_BUYER>http://www.bszc.hu</URL_BUYER>
+                </ADDRESS_CONTRACTING_BODY>
+                <CA_TYPE VALUE="BODY_PUBLIC" />
+                <CA_ACTIVITY VALUE="EDUCATION" />
+            </CONTRACTING_BODY>
+            <OBJECT_CONTRACT>
+                <TITLE>
+                    <P>Kétegyházi úti tanműhelyfejlesztés eszközbeszerzés</P>
+                </TITLE>
+                <REFERENCE_NUMBER>EKR000967602020</REFERENCE_NUMBER>
+                <CPV_MAIN>
+                    <CPV_CODE CODE="39162000" />
+                </CPV_MAIN>
+                <TYPE_CONTRACT CTYPE="SUPPLIES" />
+                <SHORT_DESCR>
+                    <P>“Kétegyházi úti tanműhelyfejlesztés eszközbeszerzése”</P>
+                </SHORT_DESCR>
+                <LOT_DIVISION />
+                <OBJECT_DESCR ITEM="1">
+                    <TITLE>
+                        <P>Termelő gépek</P>
+                    </TITLE>
+                    <LOT_NO>1</LOT_NO>
+                    <CPV_ADDITIONAL>
+                        <CPV_CODE CODE="39162000" />
+                    </CPV_ADDITIONAL>
+                    <n2016:NUTS CODE="HU332" />
+                    <MAIN_SITE>
+                        <P>5600 Békéscsaba, Kétegyházi út 1. A, B és C épületek</P>
+                    </MAIN_SITE>
+                    <SHORT_DESCR>
+                        <P>A Békéscsaba, Kétegyházi út 1. sz. alatti volt képzőközpont működéséhez
+                            szükséges tárgyi eszközök beszerzése. Az 1. részajánlat a termelő
+                            eszközöket tartalmazza. A beszerzendő eszközök listája:</P>
+                        <P>5 tengelyes függőleges CNC megmunkáló központ-"IDD főorsó kialakítás;</P>
+                        <P>30 helyes szerszámtár karos cserélővel;</P>
+                        <P>2-tengely mentén elforduló min. d380 mm-es körasztal;</P>
+                        <P>Előfeszített, edzett, köszörült golyósorsók;</P>
+                        <P>A szervo-motorok közvetlenül hajtják a golyósorsókat;</P>
+                        <P>X, Y, Z tengelyeken THK NR-típusú lineáris vezetékek;</P>
+                        <P>Automatikus központi olajozás;</P>
+                        <P>Min. 240 literes hűtőrendszer olajleválasztóval;</P>
+                        <P>Főorsó hűtés;</P>
+                        <P>Főorsó belső levegőkifúvatása;</P>
+                        <P>A gép fő részei MEEHANITE öntvényből készül;</P>
+                        <P>Mozgásellenőrzés JERK-funkcióval;</P>
+                        <P>AC-digitalis főorsó szervó hajtással;</P>
+                        <P>RS232 és RS424 Interface csatlakozás;</P>
+                        <P>Asztalterhelés max. 200 kg</P>
+                        <P>X-löket: min. 700 mm, Y-löket: min. 520 mm, Z-löket: min. 480 mm</P>
+                        <P>A billenő tengely: 150 (+30 ~-120) fok</P>
+                        <P>C forgó tegngely: 0 ~ 360 fok</P>
+                        <P>Főorsó teljesítménye: min. 22.5 kW</P>
+                        <P>Fordulatszáma: min. 12 000 f/min</P>
+                        <P>Főorsókúp nagysága: 40</P>
+                        <P>Gyorsjáratok X / Y / Z: 36 / 36 / 24 m/min</P>
+                        <P>Előtolás legalább: 10 m/min</P>
+                        <P>Főorsó kúp kialakítás: ISO40</P>
+                        <P>Vezérlés: FANUC</P>
+                        <P>Programtár kapacitás: min. 512 Kbyte"</P>
+                        <P>— 1 db</P>
+                        <P>CNC eszterga-megmunkáló központ FANUC-200FA vezérléssel-"vezérlés FANUC,
+                            programozása RS 232, SRAM flash kártyán, valamint hálózati kártyán
+                            keresztül</P>
+                        <P>Esztergálási méretek:</P>
+                        <P>Elforduló átmérő az ágy felett min. Ø710 mm</P>
+                        <P>Elforduló átmérő a szán felett min. Ø545 mm</P>
+                        <P>Esztergálható átmérő legalább min. Ø320 mm</P>
+                        <P>Esztergálható hossz legalább 320 / 650 mm</P>
+                        <P>Főorsó homlok-csúcstávolság 585 / 915 mm</P>
+                        <P>Főorsóközép magassága 1060 mm</P>
+                        <P>Tokmány átmérője 6"" mm</P>
+                        <P>Főorsó végződése A2-5 mm</P>
+                        <P>Mellső csapágy átmérője Ø100 mm</P>
+                        <P>Főorsó áteresztése Ø62 mm</P>
+                        <P>Rúdátmérő a főorsóban legalább Ø52 mm</P>
+                        <P>Főorsó fordulatszáma 6 000 f/min</P>
+                        <P>Nyomaték a főorsón legalább 91 Nm</P>
+                        <P>X-irányú elmozdulás 175 (160+15) mm</P>
+                        <P>Z-irányú elmozdulás 320 / 650 mm</P>
+                        <P>B-irányú elmozdulás 320 / 650 mm</P>
+                        <P>Gyorsjárat X/Z/B - irányban 30 / 36 /20 m/min</P>
+                        <P>Előtolás X/Y/Z/B-tengelyen 1 - 10 000 m/min</P>
+                        <P>Hajtás szervohajtás hidr. rögzítéssel</P>
+                        <P>Szerszámhelyek száma 12 db</P>
+                        <P>Szerszámcsatlakozás Standard</P>
+                        <P>Szerszámszár mérete Ø40/20x20 mm</P>
+                        <P>Revolverfej elforduló átmérője Ø490/530 mm</P>
+                        <P>Szegnyereg csúcs MT-4 forgócsúcs"</P>
+                        <P>— 1 db</P>
+                        <P>CNC palástköszörű- "vezérlés: SIEMENS vagy FANUC</P>
+                        <P>Csúcsmagasság: 135 mm</P>
+                        <P>Max/Min. köszörűlhető átmérő: 2</P>
+                        <P>Max/Min. köszörűlhető furat: 100</P>
+                        <P>Furat mélysége: 125 mm</P>
+                        <P>Csúcstávolság: 550 mm</P>
+                        <P>Köszörülés hossza: 500 mm</P>
+                        <P>Köszörűszán lökete: 160 mm</P>
+                        <P>Munkadarab súly: min. 50 kg</P>
+                        <P>Asztal elfordíthatósága: 12</P>
+                        <P>Főorsó elfordíthatósága jobbra/balra: 360 <FT TYPE="SUP">o</FT></P>
+                        <P>Köszörűkorong elfordíthatóság: legalább 210 <FT TYPE="SUP">o</FT></P>
+                        <P>Asztal sebessége hosszirányban: min. 4000 m/min</P>
+                        <P>Főorsó fokozatok db / fordulatszám 1/min: fokozatmentes 40-460</P>
+                        <P>Palástköszörűkő fordulatszám: min. 1670 1/min</P>
+                        <P>Furatköszörűkő fordulatszám: min. 15000 1/min</P>
+                        <P>Főorsókúp: MT 4</P>
+                        <P>Szegnyereg kúp: MT 4"- 1db</P>
+                        <P>Univerzális-vízvágóberendezés-"Üzem ajtó legalább 895mm széles és 1705mm
+                            magas legyen.</P>
+                        <P>Munkatér X tengely 810 mm</P>
+                        <P>Munkatér Y tengely 510 mm</P>
+                        <P>Z- löket manuálisan 0-50 mm állítható</P>
+                        <P>Pozicionálási pontosság +/- 0,05 mm/m bei 20<FT TYPE="SUP">o</FT>C</P>
+                        <P>Ismétlési pontosság &lt; 0,04 mm DIN 28206 szerint</P>
+                        <P>Mozgássebesség 0-4000 mm/min</P>
+                        <P>Grafikus kezelőfelület</P>
+                        <P>A vágás előtt a teljes megmunkálás szimulálható</P>
+                        <P>Távoli asztali segítségnyújtás a vezérlő-PC-n keresztül"</P>
+                        <P>— 1 db</P>
+                        <P>Hagyományos eszterga-"Orsó-felvétel DIN 55029, D1 - 6</P>
+                        <P>Fordulatszám tartomány, 2 fokozat 30 - 550 / 550 - 3000 ford./perc</P>
+                        <P>Hosszanti-előretolási tartomány (17) 0,05 - 1,7 mm/ford.</P>
+                        <P>Síkelőretolási tartomány (17) 0,025 - 0,85 mm/ford.</P>
+                        <P>Metrikus menet (42) 0,2 - 14 mm</P>
+                        <P>Collmenet (45) 2 - 72 Gg/1“</P>
+                        <P>Szegnyereg-átmérő 50 mm</P>
+                        <P>Szegnyereg-táv 120 mm</P>
+                        <P>Szegnyereg-felvétel MK 4</P>
+                        <P>3-tengelyes-helyzetmutató ES-12 V LCD-Display-el</P>
+                        <P>3-pofás-acéltokmány PO3-200 mm / D6</P>
+                        <P>Befogótárcsa 350 mm</P>
+                        <P>Rögzített lünetta - fogás diam. max. 135 mm</P>
+                        <P>Együttfutó lünetta - fogás diam. max. 65 mm</P>
+                        <P>Lábpedál fékfunkcióval CE-szerint</P>
+                        <P>Négyes-szerszámtartó</P>
+                        <P>Védőberendezés a négyes-szerszámtartónál</P>
+                        <P>Mikrométer hosszanti-ütköző</P>
+                        <P>Revolverütköző finom-beállítással</P>
+                        <P>Frekvenciaváltó, Hűtőanyag-berendezés</P>
+                        <P>Csúszókuplung, Menetóra, LED-géplámpa</P>
+                        <P>Váltókerekek, Szűkítőhüvely</P>
+                        <P>2 központozócsúcs</P>
+                        <P>Forgácshátfal</P>
+                        <P>Alkalmazási szerszám"</P>
+                        <P>— 3 db</P>
+                        <P>Univerzális marógép- "Asztal-nagyság min. 1270 x 300 mm</P>
+                        <P>Orsó-felvétel ISO 40 mm</P>
+                        <P>Orsó-fordulatszám (11) 45 - 1660 ford./perc</P>
+                        <P>Eljárási táv - hosszanti (x) 720 mm</P>
+                        <P>Eljárási táv - keresztirányú (y) 280 mm</P>
+                        <P>Eljárási táv - függőleges (z) 400 mm</P>
+                        <P>Orsó / asztal távolság 60 - 460 mm</P>
+                        <P>Hatósugár 95 - 575 mm</P>
+                        <P>Elfordítható asztal -45<FT TYPE="SUP">o</FT> -tól +45<FT TYPE="SUP">o</FT>
+                            -ig</P>
+                        <P>Max. munkadarab-súly 250 kg</P>
+                        <P>Előretolási tartomány - hosszanti / keresztirányú (8) 30 - 830 mm/perc</P>
+                        <P>Előretolási tartomány - függőleges (8) 23 - 625 mm/perc</P>
+                        <P>Gyorsmenet x-, y- és z-tengely 1000 / 1000 / 750 mm/perc</P>
+                        <P>T-horony (db.szám / szélesség / távolság) 3 / 14 mm / 80 mm</P>
+                        <P>3-tengelyes-helyzetmutató ES-12 H LCD-Display-el</P>
+                        <P>Szorítóorsó M16</P>
+                        <P>LED-géplámpa</P>
+                        <P>Előretoló az x-, y- és z-tengelyhez</P>
+                        <P>Hűtőanyag-berendezés, Ellencsapágy</P>
+                        <P>Hosszú marótüske ISO 40 / 27 mm</P>
+                        <P>Kombi-feltűző-marótüske ISO 40 / 27 mm</P>
+                        <P>Hűtőanyag-kád, Beállítható védőberendezés</P>
+                        <P>Központi kenés az x-, y- és z-tengelyhez</P>
+                        <P>Alkalmazási szerszám"</P>
+                        <P>— 3 db</P>
+                        <P>Forgácsoló szerszámok és készülékek-Forgácsoló szerszámok és készülékek a
+                            kiválasztásra kerülő forgácsológépek típusához, a vele szállított
+                            tartozékokhoz igazítva kerülnek meghatározásra.- 1 db</P>
+                        <P>A részletes műszaki követelményeket a közbeszerzési dokumentáció
+                            elválaszthatatlan részét képező műszaki excel táblázat tartalmazza.</P>
+                    </SHORT_DESCR>
+                    <AC>
+                        <AC_QUALITY>
+                            <AC_CRITERION>2.Szakszervíz és alkatrészbiztosítási reakció idő órában
+                                kifejezve (min. 2 óra, maximum 12 óra)</AC_CRITERION>
+                            <AC_WEIGHTING>5</AC_WEIGHTING>
+                        </AC_QUALITY>
+                        <AC_QUALITY>
+                            <AC_CRITERION>3. Jótállás időtartama a 12 hónap jótálláson felül (hónap)
+                                (többletjótállás ideje minimum 0 hónap, max 24 hónap)</AC_CRITERION>
+                            <AC_WEIGHTING>5</AC_WEIGHTING>
+                        </AC_QUALITY>
+                        <AC_QUALITY>
+                            <AC_CRITERION>4. Műszaki többlettartalom 4 kiemelt termék esetében</AC_CRITERION>
+                            <AC_WEIGHTING>20</AC_WEIGHTING>
+                        </AC_QUALITY>
+                        <AC_PRICE>
+                            <AC_WEIGHTING>70</AC_WEIGHTING>
+                        </AC_PRICE>
+                    </AC>
+                    <NO_OPTIONS />
+                    <NO_EU_PROGR_RELATED />
+                    <INFO_ADD>
+                        <P>II.2.5)"Értékelési szempontok" ponthoz: Ár értékelési szempont: 1. Nettó
+                            ajánlati ár (Ft-ban megadva) - Súlyszám: 70</P>
+                        <P>4. értékelési szempont:</P>
+                        <P>5 tengelyes függőleges CNC megmunkáló központ "Szerszámtárhely</P>
+                        <P>31 db-ostól - 35 db-osig (1 pont)</P>
+                        <P>36 db-ostól - 40 db-osig (2 pont)</P>
+                        <P>41 db-ostól - 45 db-osig (3 pont)</P>
+                        <P>46 db-ostól - 50 db-osig (4 pont)</P>
+                        <P>51 db-os felett (5 pont)- Súlyszám: 5"</P>
+                        <P>CNC eszterga-megmunkáló központ FANUC-200FA vezérléssel "Főorsó
+                            áteresztése:</P>
+                        <P>Átm. 63 mm-től átm. 70 mm-ig (1 pont)</P>
+                        <P>Átm. 71 mm-től átm. 80 mm-ig (2 pont)</P>
+                        <P>Átm. 81 mm-től átm. 90 mm-ig (3 pont)</P>
+                        <P>Átm. 91 mm-től átm. 100 mm-ig (4 pont)</P>
+                        <P>Átm. 100 mm felett (5 pont)- Súlyszám: 5"</P>
+                        <P>CNC palástköszörű "Asztal sebessége hosszirányban:</P>
+                        <P>4001 m/min-től 4200 m/min-ig (1 pont)</P>
+                        <P>4201 m/min-től 4400 m/min-ig (2 pont)</P>
+                        <P>4401 m/min-től 4600 m/min-ig (3 pont)</P>
+                        <P>4601 m/min-től 4800 m/min-ig (4 pont)</P>
+                        <P>4800 m/min felett (5 pont)- Súlyszám: 5"</P>
+                        <P>Univerzális-vízvágóberendezés "Z- löket beállíthatósága:</P>
+                        <P>0-60 mm-ig (1 pont)</P>
+                        <P>0-70 mm-ig (2 pont)</P>
+                        <P>0-80 mm-ig (3 pont)</P>
+                        <P>0-90 mm-ig (4 pont)</P>
+                        <P>0-100 mm felett (5 pont)- Súlyszám: 5"</P>
+                        <P>SÚLYSZÁMOK ÖSSZESEN: 20</P>
+                    </INFO_ADD>
+                </OBJECT_DESCR>
+                <OBJECT_DESCR ITEM="2">
+                    <TITLE>
+                        <P>Mérő és vizsgáló eszközök</P>
+                    </TITLE>
+                    <LOT_NO>2</LOT_NO>
+                    <CPV_ADDITIONAL>
+                        <CPV_CODE CODE="39162000" />
+                    </CPV_ADDITIONAL>
+                    <n2016:NUTS CODE="HU332" />
+                    <MAIN_SITE>
+                        <P>5600 Békéscsaba, Kétegyházi út 1. A, B és C épületek</P>
+                    </MAIN_SITE>
+                    <SHORT_DESCR>
+                        <P>A Békéscsaba, Kétegyházi út 1. sz. alatti volt képzőközpont működéséhez
+                            szükséges tárgyi eszközök beszerzése. A 2. részajánlat a mérő és
+                            vizsgáló eszközöket tartalmazza. A beszerzendő eszközök listája:</P>
+                        <P>Anyagvizsgáló inverz ipari mikroszkóp- "CFI60 optikai rendszer</P>
+                        <P>Nagyítás: 10x - 1500x (CFI 10x okulár használatával)</P>
+                        <P>25 mm átmérőjű látótér az új fejlesztésű T Plan EPI 1x objektívvel</P>
+                        <P>Pormentes, antisztatikus mikroszkóp test</P>
+                        <P>Áteső fényű megvilágítási módok: világos látótér, DIC</P>
+                        <P>Ráeső fényű megvilágítási módok: világos látótér, sötét látótér, egyszerű
+                            polarizáció, DIC, fluoreszcencia</P>
+                        <P>Intelligens objektív revolverfej és mikroszkóp váz</P>
+                        <P>A mikroszkóp frontján elhelyezett kezelőszervek"</P>
+                        <P>— 2 db</P>
+                        <P>Szerszámbemérő - "Maximum szerszámhossz legalább Z = 350 mm</P>
+                        <P>Maximum szerszám átmérő legalább D = 320 mm</P>
+                        <P>Szerszámtartó főorsó ISO 50</P>
+                        <P>Főorsó forgás 360<FT TYPE="SUP">o</FT> és 4x90<FT TYPE="SUP">o</FT></P>
+                        <P>Beépített kalibráló éllel</P>
+                        <P>Géptartó állvány</P>
+                        <P>Egysoros adaptertálca</P>
+                        <P>Mérőszoftver</P>
+                        <P>Képfeldolgozó szoftver"</P>
+                        <P>— 1 db</P>
+                        <P>Charpy ingás ütőmű-"1. Alapgép</P>
+                        <P>Fémipari ingásütőmű 150J mérés tartománnyal</P>
+                        <P>Mérési tartomány váltás a kalapács cseréjével</P>
+                        <P>Kézi próbatest adagolás</P>
+                        <P>RS 232 adatkimenet</P>
+                        <P>Analóg és Digitális kijelzés</P>
+                        <P>Kétkezes inditás</P>
+                        <P>Biztonsági keret</P>
+                        <P>2. Kiértékelő szoftver</P>
+                        <P>Mért értékek kijelzése és tárolása</P>
+                        <P>Statisztika és diagram készítése</P>
+                        <P>Jegyzőkönyv készítés és nyomtatás</P>
+                        <P>3. Kiértékelő számítógép"</P>
+                        <P>— 1 db</P>
+                        <P>Szakítógép-"2 játékmentes golyósorsó</P>
+                        <P>4 keménykrómozott vezető oszlop</P>
+                        <P>Vizsgáló tér szélessége: 415 mm</P>
+                        <P>Vizsgáló tér magassága: 1050 mm</P>
+                        <P>Külső méretek: 500 x 700 x 2000 mm</P>
+                        <P>50 kN erőmérő cella</P>
+                        <P>Számítógép, LabMaster univerzális anyagvizsgáló szoftver adatgyűjtéssel
+                            és jegyzőkönyvezéssel.</P>
+                        <P>Erő/ pozíció/ nyúlás szerinti vezérlés</P>
+                        <P>Electromotive AC-servo motor 900W</P>
+                        <P>Erőmérés kalibrációja</P>
+                        <P>Erőmérés felbontása: ±180,000 pont</P>
+                        <P>Erőmérés pontossága: 1. osztály EN ISO 7500 szerint a névleges tartomány
+                            0.4 % - 100 % között</P>
+                        <P>PC csatlakozás: USB 2.0 vagy LAN</P>
+                        <P>Ékes befogófej, befogópofa lapos próbatestekhez.</P>
+                        <P>MFA 25 mm-es mozgástartományú felcsiptethető nyúlásmérő szerkezet."</P>
+                        <P>— 1 db</P>
+                        <P>Keménységmérő-"Nagy terhelés tartománnyal (0,5-250kg), a DIN, EN, ISO, és
+                            ASTM szabványoknak megfelelően fejlesztve</P>
+                        <P>Elektronikus keménységmérő Brinell, Vickers eljárással</P>
+                        <P>Kézi magasság beállítás</P>
+                        <P>Automatikus terhelési fokozatválasztás</P>
+                        <P>Elektronikus szervomotoros terhelésvezérlés</P>
+                        <P>Erőérzékelés elektronikus, nagypontosságú erőmérő cellákkal</P>
+                        <P>Kombinált optikai digitális kiértékelés: kiértékelés a rendszerbe
+                            integrált 5 Mpix CCD videokamerával és a képernyőre felvitt digitális
+                            vonalakkal</P>
+                        <P>Automatikus vizsgálati folyamatvezérlés, azonnali digitális
+                            eredménykijelzés</P>
+                        <P>Színes LCD képernyő-20""</P>
+                        <P>Programozható adatbevitel és adatfeldolgozás</P>
+                        <P>50 komplett keménységmérő program tárolás</P>
+                        <P>Konvertálás keménységi skálák között</P>
+                        <P>Automatikus felületi érdességkorrektúra</P>
+                        <P>Tűrési határok kijelzése</P>
+                        <P>Statisztikai funkciók</P>
+                        <P>KB Harwin XL Video szoftver</P>
+                        <P>Win 10 Pc Panel, 20"" érintő képernyő</P>
+                        <P>5 Mpixel kamera 2500x 1920 (Magas precizitás)</P>
+                        <P>10 x objectiv HV2 (1000HV)- HB 2,5/187,5 (95 HB) (kb.: 0,06-1,5 mm) egyéb
+                            mérésekhez opcionális objektív szükséges</P>
+                        <P>Kiegészítők: Benyomótestek"</P>
+                        <P>— 1 db</P>
+                        <P>Ultrahang -"PRF: Hz 20-2000Hz, lépcsők: 20Hz</P>
+                        <P>Csillapítás: Alacsony/Magas</P>
+                        <P>Működési frekvencia tartomány: MHz 0.5-10, 7 lépcsővel
+                            1-4/0.5-10/1/2.5/4/5/10</P>
+                        <P>Erősítés állítás: dB 0 - 110, 0.5 / 2 / 6 / 12 lépcsőkkel</P>
+                        <P>Érzékelési tartomány: 0 - 13000 mm</P>
+                        <P>Kijelző késleltetés: 10 - 1000 mm</P>
+                        <P>Auto erősítés: automatikusan állítható a kijelző 80 %-os magasságára</P>
+                        <P>Szögtartomány beállítás: a szögvizsgálófejnek megfelelően</P>
+                        <P>Anyag sebesség: 400 - 15000 m/s</P>
+                        <P>Atomatikus kalibráció: miden esetben két falvastagságra beállítható, DAC
+                            görbe: 8 lépéses kiértékelőgörbe felvétel</P>
+                        <P>AVG / DGS görbe: AVG / DGS görbe felvétele/beállítása</P>
+                        <P>Kapu: két egymástól független kapu használata</P>
+                        <P>Kijelző késleltetés: 5.7"" magas fényerejű TFT LCD, 320 x 240 pixel
+                            felbontás</P>
+                        <P>Mérési egységek: Inch/ mm</P>
+                        <P>Áramforrás: V 12 DC (külső tápforrás); 7.4 (akkumulátor)</P>
+                        <P>Akkumulátor működési idő: 7 óra, Működési hőmérséklet: -10 - +40, IP
+                            védelem: IP65</P>
+                        <P>Súly: kg Kb. 1.2 (akkumulátorral együtt)</P>
+                        <P>Méretek: 152 X 240 X 52 mm (SzxHxm)</P>
+                        <P>Kalibróló testek: ET1 + ET2</P>
+                        <P>Vizsgálófejek: 2 Mhz, 45<FT TYPE="SUP">o</FT>60<FT TYPE="SUP">o</FT>70<FT
+                                TYPE="SUP">o</FT>, 4Mhz adó vevő</P>
+                        <P>Kábelek: Hajlékony, ellenálló, törésgátlóval felszerelt, Lemo00 és Lemo
+                            01 csatlakozással, egy és kéteres kivitel"</P>
+                        <P>— 1 db</P>
+                        <P>Mágneses repedésvizsgálati oktatócsomag- "1./ Vizsgáló anyagok:</P>
+                        <P>— Pfinder 251 fekete mágneses vizsgáló anyag 2 db</P>
+                        <P>— Pfinder 280 fehér kontraszt anyag 3 db</P>
+                        <P>— Pfinder 890 lemosó 5 db</P>
+                        <P>2./ Vizsgáló eszköz:</P>
+                        <P>— Pfinder 15-0 AC- járommágnes 1 db</P>
+                        <P>3./ Ellenőrző eszközök:</P>
+                        <P>— Bertold tárcsa 1 db</P>
+                        <P>— Maradék mágnesesség-mérő 1 db</P>
+                        <P>— MTU tárcsa 1 db"</P>
+                        <P>— 1 db</P>
+                        <P>Mérőeszközök- "Digitális mélységmérő</P>
+                        <P>Digitális mélységmérő mikrométer</P>
+                        <P>Digitális külső mikrométer 0-25</P>
+                        <P>Digitális külső mikrométer 25-50</P>
+                        <P>Digitális külső mikrométer 50-75</P>
+                        <P>Órás ellenőrző mikrométer, 0-25 mm,</P>
+                        <P>Órás ellenőrző mikrométer, 25-50 mm,</P>
+                        <P>Nóniuszos menetmérő mikrométer, 0-25 mm</P>
+                        <P>Nóniuszos 3-pontos furatmikrométer készlet, 3 db-os, 6-12 mm</P>
+                        <P>Nóniuszos 3-pontos furatmikrométer készlet, 2 db-os, 12-20 mm</P>
+                        <P>Nóniuszos 3-pontos furatmikrométer készlet, 4 db-os, 20-50 mm</P>
+                        <P>Nóniuszos 3-pontos furatmikrométer készlet, 4 db-os, 50-100 mm</P>
+                        <P>Digitális mérőóra, 12,7 mm/0,5""</P>
+                        <P>Digitális mérőóra, 25,4 mm/1"",</P>
+                        <P>Idomszer állvány</P>
+                        <P>Mérőhasáb készlet,</P>
+                        <P>Digitális szint- és szögmérő</P>
+                        <P>Kézi mérőeszköz készlet, 13 db-os</P>
+                        <P>Gránit mérőasztallap, méret: 400x250x60 mm,</P>
+                        <P>Nullpont beállító, magasság: 50 mm,</P>
+                        <P>V-prizma készlet, mágneses (75 kgf), 2 db-os</P>
+                        <P>3D-s mérő, 1,5 mm, felbontás: 0,01 mm"</P>
+                        <P>— 12 db</P>
+                        <P>Horizontális projektor-"Masszív fém kivitel</P>
+                        <P>200 db mérési eredményt képes tárolni</P>
+                        <P>400 mm átmérőjű képernyő, szálkereszttel és kalibrálási jelekkel</P>
+                        <P>Méréstartomány 254 x 100 mm</P>
+                        <P>Precíziós munka asztal mérete 480 x 120mm</P>
+                        <P>Mérendő munkadarab max 25kg</P>
+                        <P>Rögzítő hornyok befogók számára</P>
+                        <P>Digitális szögmérő</P>
+                        <P>10x, 20x, 25x, 31.25x, 50x, és 100x nagyítási lehetőség Precíziós befogó
+                            satu"</P>
+                        <P>— 1 db</P>
+                        <P>3D mérőgép-"passzív VAST XXT TL3 ID Scanning mérőfej</P>
+                        <P>Tapintótár (3 helyes)</P>
+                        <P>Alaptapintó készlet</P>
+                        <P>Kalibrálógömb</P>
+                        <P>Tapintó készlet: min. alapfelszereltség furat, tengely</P>
+                        <P>Hőmérséklet érzékelés: külső és a munkadarab hőmérséklet"</P>
+                        <P>— 1 db</P>
+                        <P>Kiegyensúlyozógép - "Alkalmazás: tengelyek / karimák kiegyensúlyozása</P>
+                        <P>Kiegyensúlyozó test max .: 300 kg</P>
+                        <P>Kiegyensúlyozó test átmérője megmunkáló egység nélkül: 600 mm</P>
+                        <P>Védőeszköz / ház / csúszóvédelem padlósínnel"</P>
+                        <P>— 1 db</P>
+                        <P>A részletes műszaki követelményeket a közbeszerzési dokumentáció
+                            elválaszthatatlan részét képező műszaki excel táblázat tartalmazza.</P>
+                    </SHORT_DESCR>
+                    <AC>
+                        <AC_QUALITY>
+                            <AC_CRITERION>2.Szakszervíz és alkatrészbiztosítási reakció idő órában
+                                kifejezve (min. 2 óra, maximum 12 óra)</AC_CRITERION>
+                            <AC_WEIGHTING>5</AC_WEIGHTING>
+                        </AC_QUALITY>
+                        <AC_QUALITY>
+                            <AC_CRITERION>3. Jótállás időtartama a 12 hónap jótálláson felül (hónap)
+                                (többletjótállás ideje minimum 0 hónap, max 24 hónap)</AC_CRITERION>
+                            <AC_WEIGHTING>5</AC_WEIGHTING>
+                        </AC_QUALITY>
+                        <AC_QUALITY>
+                            <AC_CRITERION>4. Műszaki többlettartalom 6 kiemelt termék esetében</AC_CRITERION>
+                            <AC_WEIGHTING>30</AC_WEIGHTING>
+                        </AC_QUALITY>
+                        <AC_PRICE>
+                            <AC_WEIGHTING>60</AC_WEIGHTING>
+                        </AC_PRICE>
+                    </AC>
+                    <NO_OPTIONS />
+                    <NO_EU_PROGR_RELATED />
+                    <INFO_ADD>
+                        <P>II.2.5)"Értékelési szempontok" ponthoz: Ár értékelési szempont: 1. Nettó
+                            ajánlati ár (Ft-ban megadva) - Súlyszám: 60</P>
+                        <P>A 4. értékelési szemponthoz:</P>
+                        <P>Anyagvizsgáló inverz ipari mikroszkóp "Nagyítás maximális értéke:</P>
+                        <P>1501x-től 1600x-ig (1 pont)</P>
+                        <P>1601x-től 1700x-ig (2 pont)</P>
+                        <P>1701x-től 1800x-ig (3 pont)</P>
+                        <P>1801x-től 1900x-ig (4 pont)</P>
+                        <P>1901x felett (5 pont)- Súlyszám: 5"</P>
+                        <P>Charpy ingás ütőmű "Mérés tartomány:</P>
+                        <P>151J-160J (1 pont)</P>
+                        <P>161J-170J (2 pont)</P>
+                        <P>171J-180J (3 pont)</P>
+                        <P>181J-190J (4 pont)</P>
+                        <P>191J felett (5 pont)-Súlyszám: 5"</P>
+                        <P>Szakítógép "Vizsgáló tér szélessége x magassága:</P>
+                        <P>416 mm x 1051 mm - 430 mm x 1050 mm között (1 pont)</P>
+                        <P>431 mm x 1051 mm - 450 mm x 1050 mm között (2 pont)</P>
+                        <P>451 mm x 1051 mm - 450 mm x 1100 mm között (3 pont)</P>
+                        <P>451 mm x 1101 mm - 500 mm x 1200 mm között (4 pont)</P>
+                        <P>501 mm x 1201 mm -nél nagyobb (5 pont)-Súlyszám: 5"</P>
+                        <P>Keménységmérő "Változtatható terhelési idő:</P>
+                        <P>31s-tól 40s-ig (1 pont)</P>
+                        <P>41s-tól 50s-ig (2 pont)</P>
+                        <P>51s-tól 60s-ig (3 pont)</P>
+                        <P>61s-tól 70s-ig (4 pont)</P>
+                        <P>71s-tól (5 pont)- Súlyszám: 5"</P>
+                        <P>Horizontális projektor "A kijelző geometriai számításokra képes szög,
+                            rádiusz, két kör vagy egyenes metszéspont érintő, középvonal, átmérő.</P>
+                        <P>Tulajdonságonként +1 pont (max. 5 pont)-Súlyszám: 5"</P>
+                        <P>3D mérőgép "Hőmérséklet stabilitás:</P>
+                        <P>+17<FT TYPE="SUP">o</FT>C-tól +31<FT TYPE="SUP">o</FT>C-ig (1 pont)</P>
+                        <P>+16<FT TYPE="SUP">o</FT>C-tól +32<FT TYPE="SUP">o</FT>C-ig (2 pont)</P>
+                        <P>+15<FT TYPE="SUP">o</FT>C-tól +33<FT TYPE="SUP">o</FT>C-ig (3 pont)</P>
+                        <P>+14<FT TYPE="SUP">o</FT>C-tól +34<FT TYPE="SUP">o</FT>C-ig (4 pont)</P>
+                        <P>+13<FT TYPE="SUP">o</FT>C-alatt +35<FT TYPE="SUP">o</FT>C felett (5
+                            pont)- Súlyszám: 5"</P>
+                        <P>SÚLYSZÁMOK ÖSSZESEN: 30</P>
+                    </INFO_ADD>
+                </OBJECT_DESCR>
+                <OBJECT_DESCR ITEM="3">
+                    <TITLE>
+                        <P>Oktató gépek, oktató szoftverek</P>
+                    </TITLE>
+                    <LOT_NO>3</LOT_NO>
+                    <CPV_ADDITIONAL>
+                        <CPV_CODE CODE="39162000" />
+                    </CPV_ADDITIONAL>
+                    <n2016:NUTS CODE="HU332" />
+                    <MAIN_SITE>
+                        <P>5600 Békéscsaba, Kétegyházi út 1. A, B és C épületek</P>
+                    </MAIN_SITE>
+                    <SHORT_DESCR>
+                        <P>A Békéscsaba, Kétegyházi út 1. sz. alatti volt képzőközpont működéséhez
+                            szükséges tárgyi eszközök beszerzése. A 3. részajánlat az oktató
+                            gépeket, oktató eszközöket tartalmazza. A beszerzendő eszközök listája:</P>
+                        <P>CNC oktató eszterga FANUC 0iT vezérléssel "Max. esztergálható átmérő
+                            legalább 360 mm</P>
+                        <P>Szán felett elforduló átmérő 150 mm</P>
+                        <P>Csúcs távolság 450 mm</P>
+                        <P>X löket 180 mm</P>
+                        <P>Z löket 400 mm</P>
+                        <P>Fordulatszáma 150-2500 fordulat / perc között fokozatmentesen
+                            szabályozható.</P>
+                        <P>4 állású elektromos szerszámtartóval."- 1 db</P>
+                        <P>Függőleges oktató CNC megmunkáló központ "Könnyű megmunkálási célokra
+                            kifejlesztett CNC megmunkálóközpont</P>
+                        <P>— kis helyigényű,</P>
+                        <P>— kompact kialakítású CNC megmunkálóközpont,</P>
+                        <P>— Görgős vezetékek mindháron tengelyen</P>
+                        <P>— szánvédő burkolatok</P>
+                        <P>— 10 férőhelyes ernyő rendszerű szerszámtár</P>
+                        <P>— 8 000 fodulat/perc főorsó fordulat</P>
+                        <P>— SIEMENS hajtások és motorok</P>
+                        <P>X-tengely löket 250 mm</P>
+                        <P>Y-tengely löket 200 mm</P>
+                        <P>Z-tengely löket 300 mm</P>
+                        <P>Asztal terhelhetőség 150 kg</P>
+                        <P>Főorsó kúp ISO/BT/CAT BT 30</P>
+                        <P>Főorsó fordulat 8000 1/min"- 1 db</P>
+                        <P>CNC Szimulátor "hordozható</P>
+                        <P>FANUC CNC Szimulátor - szimulátor egység</P>
+                        <P>FANUC CNC Szimulátor - szimulátor szoftver</P>
+                        <P>Ethernet, USB"- 4db</P>
+                        <P>Fanuc oktató szoftver FANUC CNC GUIDE ACADEMIC PACK 16 gépre- 1db</P>
+                        <P>Fanuc robot szoftver ROBOGUIDE EDUCATIONAL PACKAGE- 1db</P>
+                        <P>CNC Szimulátor "szimulátor hardver: 22”-es multitouch érintőképernyővel-
+                            2db</P>
+                        <P>Sinumerik 840Dsl 720.3B NCU CNC vezérlővel</P>
+                        <P>MCP 398C gépi vezérlőpulttal, IPC 427E ipari PC Windows 10-zel"- 1db</P>
+                        <P>Siemens oktató szoftver SinuTrain trainer package XL 18 gépre- 1 db</P>
+                        <P>Digitális CNC oktatóbázis "5 db SSCNC Oktatószoftver CNC programozásához
+                            és gépkezeléshez</P>
+                        <P>1 db SERVER hálózati</P>
+                        <P>Tanári vizsgáztató modul"- 1 db</P>
+                        <P>Redundáns szerver infrastruktúra + CATIA v5 szoftver "30 felhasználóra</P>
+                        <P>Egy redundáns szerver infrastruktúra kiépítés megfelelő processzorokkal,
+                            RAM-mal és lehetőség szerint RAID5-be kötött SSD HDD Storage
+                            megoldással"</P>
+                        <P>A részletes műszaki követelményeket a közbeszerzési dokumentáció
+                            elválaszthatatlan részét képező műszaki excel táblázat tartalmazza.</P>
+                    </SHORT_DESCR>
+                    <AC>
+                        <AC_QUALITY>
+                            <AC_CRITERION>2.Szakszervíz és alkatrészbiztosítási reakció idő órában
+                                kifejezve (min. 2 óra, maximum 12 óra)</AC_CRITERION>
+                            <AC_WEIGHTING>5</AC_WEIGHTING>
+                        </AC_QUALITY>
+                        <AC_QUALITY>
+                            <AC_CRITERION>3. Jótállás időtartama a 12 hónap jótálláson felül (hónap)
+                                (többletjótállás ideje minimum 0 hónap, max 24 hónap)</AC_CRITERION>
+                            <AC_WEIGHTING>5</AC_WEIGHTING>
+                        </AC_QUALITY>
+                        <AC_QUALITY>
+                            <AC_CRITERION>4. A teljesítésbe bevonásra kerül 1 fő olyan szakember,
+                                aki logisztikai és/vagy szállítmányozási feladatok ellátásában
+                                szerzett gyakorlattal rendelkezik (igen/ nem)</AC_CRITERION>
+                            <AC_WEIGHTING>10</AC_WEIGHTING>
+                        </AC_QUALITY>
+                        <AC_PRICE>
+                            <AC_WEIGHTING>80</AC_WEIGHTING>
+                        </AC_PRICE>
+                    </AC>
+                    <NO_OPTIONS />
+                    <NO_EU_PROGR_RELATED />
+                    <INFO_ADD>
+                        <P>II.2.5)"Értékelési szempontok" ponthoz: Ár értékelési szempont: 1. Nettó
+                            ajánlati ár (Ft-ban megadva) - Súlyszám: 80</P>
+                    </INFO_ADD>
+                </OBJECT_DESCR>
+                <OBJECT_DESCR ITEM="4">
+                    <TITLE>
+                        <P>Asztali és kézi szerszámgépek, kéziszerszámok</P>
+                    </TITLE>
+                    <LOT_NO>4</LOT_NO>
+                    <CPV_ADDITIONAL>
+                        <CPV_CODE CODE="39162000" />
+                    </CPV_ADDITIONAL>
+                    <n2016:NUTS CODE="HU332" />
+                    <MAIN_SITE>
+                        <P>5600 Békéscsaba, Kétegyházi út 1. A, B, és C épületek</P>
+                    </MAIN_SITE>
+                    <SHORT_DESCR>
+                        <P>A Békéscsaba, Kétegyházi út 1. sz. alatti volt képzőközpont működéséhez
+                            szükséges tárgyi eszközök, bútorok beszerzése mindhárom épületben. A 4.
+                            részajánlat az asztali és kézi szerszámgépeket, kéziszerszámokat
+                            tartalmaz. A beszerzendő eszközök listája:</P>
+                        <P>Fém hőkezelő kemence "Szabályozó műszerrel, állványzattal, hőálló
+                            lemezből készült tálcával</P>
+                        <P>Kemencetér méretei: legalább 350 x 500 x 250 mm (szél x mély x mag)</P>
+                        <P>Feszültség: 400 V 1/N</P>
+                        <P>Elektr. teljesítmény: min. 15 kW</P>
+                        <P>Tmax hőfok legalább: 1280 <FT TYPE="SUP">o</FT>C</P>
+                        <P>Hőálló lemezből készült tálcával</P>
+                        <P>Egyszerű, individuális programozás</P>
+                        <P>Szöveges állapot kijelzés</P>
+                        <P>Felhasználóbarát kezelés</P>
+                        <P>Skip-funkció a szegmens átugráshoz</P>
+                        <P>Az egyes emelkedő szakaszok beírhatók</P>
+                        <P>Gradiensként (pl. 100 K/h 600 <FT TYPE="SUP">o</FT>C-ig)</P>
+                        <P>Idő és hőfok megadásával (pl. 6 óra alatt 600 <FT TYPE="SUP">o</FT>C-ig)</P>
+                        <P>USB csatlakozási pont"- 1db</P>
+                        <P>Oszlopos fúrógép "Fúrható átmérő max legalább: 40mm</P>
+                        <P>Fúrható menet max legalább: M24</P>
+                        <P>Fúróorsó belső kúpja legalább: MK4</P>
+                        <P>Fúróorsó lökete max legalább: 180mm</P>
+                        <P>Orsókinyúlás: legalább 345mm</P>
+                        <P>Asztalméret: legalább 555x555mm</P>
+                        <P>Fúróorsó-alaplap táv.: legalább 1200mm</P>
+                        <P>Fúróorsó fordulatszámok: 50-1450U/min</P>
+                        <P>Gépi előtolás sebességek: 0,1 / 0,2mm/U"- 1db</P>
+                        <P>Asztali fúrógép "Fúrható átmérő max: 16mm</P>
+                        <P>Fúróorsó belső kúpja: MK2</P>
+                        <P>Fúróorsó kinyúlása: legalább 180mm</P>
+                        <P>Legnagyobb orsólöket: legalább 95mm</P>
+                        <P>Gépi előtolás fokozatok: 0,1 / 0,14 / 0,17 / 0,25 mm/U</P>
+                        <P>Asztalméret: legalább 310x280mm</P>
+                        <P>Orsófordulatok: U/min 290-2000"- 1db</P>
+                        <P>Asztali fúrógép "Fúrható átmérő max legalább: 25mm</P>
+                        <P>Fúróorsó belső kúpja: MK3</P>
+                        <P>Fúróorsó kinyúlása: legalább 180mm</P>
+                        <P>Legnagyobb orsólöket: legalább 95mm</P>
+                        <P>Asztalméret: legalább 310x280mm</P>
+                        <P>Orsófordulatok: U/min 240-1820"- 1db</P>
+                        <P>Kézi szerszámgépek "Sarokcsiszoló</P>
+                        <P>5 db, 1 700 W/2,4 kg, 125 mm-es tárcsaátmérő, lágyindítás</P>
+                        <P>5 db, 2 200 W/5,2 kg, Tárcsa-Ø: 230 mm, lágyindítás</P>
+                        <P>Fúrógép, forgásirányváltós</P>
+                        <P>10 db, 750 W, 2,4 kg, 6,8 Nm forg.nyomaték, 2 seb.fokozat, 13 mm-es
+                            gyorsbefogó fúrótokmány</P>
+                        <P>Polírozógép</P>
+                        <P>5 db 1 400 W/3,5 kg; 750 - 3 000 1/perc ford.szám</P>
+                        <P>Szalagcsiszoló</P>
+                        <P>5 db, 710W, 350m/perc, 75 x 533 mm</P>
+                        <P>Asztali gyorsdaraboló</P>
+                        <P>1 db, 2 400 W/18,1 kg, 355 mm vágókorong, lágyindítás</P>
+                        <P>Manuális sorjátlanító</P>
+                        <P>2 db, teherbíró sorjázó és fémhántoló készlet</P>
+                        <P>Akkumulátoros csavarbehajtó</P>
+                        <P>5 db, 18V-os"- 1 tétel</P>
+                        <P>Szalagfűrészgép "Golyóscsapágyas szalagvezetők</P>
+                        <P>Automatikus végálláskapcsoló</P>
+                        <P>Kézi keretemelés</P>
+                        <P>A fűrészkeret süllyesztési sebessége hidraulikus csillapítóhenger
+                            segítségével fokozatmentesen szabályozható</P>
+                        <P>+45 - 0 - 45 fokig fordítható fűrészkeret</P>
+                        <P>Kézi szorítású gépsatu gyorsszorítóval</P>
+                        <P>Mm 90<FT TYPE="SUP">o</FT> 45<FT TYPE="SUP">o</FT></P>
+                        <P>Vágható átmérő max: 205 143</P>
+                        <P>Vágható kocka max: 205x205 143x143</P>
+                        <P>Vágható hasábméret max: 215x205 115x143</P>
+                        <P>Fűrészszalag mérete: 2360x0,9x20mm</P>
+                        <P>Fűrészszalag sebessége: 24 / 41 / 61 / 82m/min"- 1db</P>
+                        <P>Szalagcsiszológép "Csiszolószalag mérete: 150x2000mm</P>
+                        <P>Szalagsebesség: 29m/min</P>
+                        <P>Szalagkerék mérete DxSZ: 200x155mm</P>
+                        <P>Csiszolóasztal mérete: min. 460x150mm"- 1db</P>
+                        <P>Kombinált szalag- és áthatás csiszológép "Csiszolószalag mérete:
+                            100x2000mm</P>
+                        <P>Szalagsebesség: 15 / 30m/min</P>
+                        <P>Szalagkerék mérete DxSZ: 195x100mm</P>
+                        <P>Csiszolható cső átmérője min/max 20 / 76mm</P>
+                        <P>Csiszolóasztal mérete: min. 400x100mm"- 1db</P>
+                        <P>Szerszámköszörűgép "Munkadarab átmérője: legalább 175mm</P>
+                        <P>Csúcstávolság: min. 320mm</P>
+                        <P>Asztalméret: min. 535x130mm</P>
+                        <P>Asztal mozgása X: min. 320mm</P>
+                        <P>Asztal mozgása Y: min. 170mm</P>
+                        <P>Köszörűkorong fordulatszáma: min. 2800U/min"</P>
+                        <P>Szerszámköszörűgép "Fazékkorong mérete: 100x50x20mm</P>
+                        <P>Köszörűkorong fordulatszáma: 5000U/min</P>
+                        <P>Tartozékok:</P>
+                        <P>Fazékkorong, gyémánttárcsa, korongszabályozó, szorítópatronok 4, 6, 8,
+                            10, 12mm,</P>
+                        <P>Csigafúróbefogó, maróbefogó, esztergakésbefogó, tartalék meghajtószíj,
+                            géplámpa"- 1 db</P>
+                        <P>Fűrészszalagélezőgép "fém szalagfűrészlapok élezéséhez</P>
+                        <P>Egyszerűen beállítható és kezelhető</P>
+                        <P>Gépállvány</P>
+                        <P>"- 1db</P>
+                        <P>Asztali köszörűgép "Gépállvánnyal, porelszívóval</P>
+                        <P>Köszörűkorong mérete: 300x50x75mm</P>
+                        <P>Köszörűkorong fordulatszáma: min. 1450U/min"- 3 db</P>
+                        <P>Szemcseszóró kabin "Munkatér mérete: min. 1220x615x580mm</P>
+                        <P>Levegőszükséglet: 400l/min</P>
+                        <P>Üzemi nyomás: 2,7-5,5bar</P>
+                        <P>Gumikesztyű nyílás átmérője: 180mm</P>
+                        <P>Levegőcsatlakozó: 1/4''</P>
+                        <P>Tartozékok: szórópisztoly csatlakozótömlővel, 2db kerámiafúvóka (6/7mm),
+                            munkatér világítás,</P>
+                        <P>Kémlelőablak, biztonsági gumikesztyű, lábpedál"- 1db</P>
+                        <P>Csavarkompresszor "Légszállítás 8 bár (liter/perc) min. 560</P>
+                        <P>Légszállítás 10 bár (liter/perc) min. 450</P>
+                        <P>Légszállítás 13 bár (liter/perc) min. 400</P>
+                        <P>Tartály térfogat min. 200 / 270</P>
+                        <P>Maximum környezeti hőmérséklet (<FT TYPE="SUP">o</FT>C) 46</P>
+                        <P>Minimum környezeti hőmérséklet (<FT TYPE="SUP">o</FT>C) 5</P>
+                        <P>Sűrített levegő csatlakozás mérete 1/2""</P>
+                        <P>Méretek és súly (270 literes tartályon)</P>
+                        <P>Hosszúság (mm) 1450</P>
+                        <P>Magasság (mm) 1180</P>
+                        <P>Szélesség (mm) 540</P>
+                        <P>Beépített hűtve szárító</P>
+                        <P>Sűrített levegő harmatpontja (<FT TYPE="SUP">o</FT>C) 3"- 1db</P>
+                        <P>Karbantartás, fenntartás, tisztántartás eszközei "1 db Önjáró
+                            gyalogkíséretű padlótisztító gép</P>
+                        <P>1 db Melegvizes ipari nagynyomású mosó</P>
+                        <P>1 db Fűnyíró</P>
+                        <P>1 db Magassági ágvágó</P>
+                        <P>1 db Sövényvágó</P>
+                        <P>1 db Fűkasza"- 1 készlet</P>
+                        <P>Fémipari szerszámkészletek "Karctű 250 mm 70<FT TYPE="SUP">o</FT> és
+                            egyenes véggel, 10 db</P>
+                        <P>Pontozó, 10 db</P>
+                        <P>Lyukasztó és kiütő készlet, 10 készlet</P>
+                        <P>Lakatos talpas derékszög 250 mm, 400 mm, 10-10 db</P>
+                        <P>Fémkörző 20 cm, 30 cm, 10-10 db</P>
+                        <P>Mérőszalag 2 m, 3 m, 10-10 db</P>
+                        <P>Acél szögmérő 120mm, 200 mm, 10-10 db</P>
+                        <P>Digitális tolómérő 150 mm, 300 mm, 12-12 db</P>
+                        <P>Lapos fémreszelő 200 mm, 10 db</P>
+                        <P>Négyszög reszelő közepes 200 mm, 10 db</P>
+                        <P>Háromszög reszelő 200 mm, 10 db</P>
+                        <P>Félkerek reszelő 200 mm, 10 db</P>
+                        <P>Kerek reszelő 200 mm, 10 db</P>
+                        <P>10 db-os tűreszelő készlet 140 mm, 10 készlet</P>
+                        <P>Hidegvágó készlet lapos 150 mm/200 mm/300 mm, 10 készlet</P>
+                        <P>Keresztvágó 10 db</P>
+                        <P>Fémfűrészkeret 300 mm, 10 db</P>
+                        <P>Karos lemezolló 2 db</P>
+                        <P>Kézi lemezolló 250 mm 10 db</P>
+                        <P>Lakatos kalapács 0,5/1,0/1,5/2,0 kg 10-10-10-10 db</P>
+                        <P>Gumi kalapács 75 mm, 10 db"</P>
+                        <P>Fémipari szerszámkészletek, satuk, egyengető lap "Harapó fogó 200 mm, 10
+                            db</P>
+                        <P>Svéd csőfogó 3/2”, 10 db</P>
+                        <P>Oldal csípőfogó 200 mm, 10 db</P>
+                        <P>Kombinált fogó, 10 db</P>
+                        <P>Homlok csípőfogó, 10 db</P>
+                        <P>Erő-vágó (csapszegvágó) 450 mm, 10 db</P>
+                        <P>Vízpumpafogó 240 mm, 10 db</P>
+                        <P>Patentfogó egyenes 225 mm, 10 db</P>
+                        <P>Gripp fogó (állítható önzáró fogó ívelt) 250 mm, 10 db</P>
+                        <P>Fogókészlet hőkezeléshez, a kemence méretének megfelelően, 5 db</P>
+                        <P>Csavarhúzó készlet 15-20 db-os, 10 készlet</P>
+                        <P>Hatszögkulcs (imbusz) készlet, gömbfejű, 13 részes 10 db</P>
+                        <P>Torx kulcs készlet, 10 db</P>
+                        <P>Csillag-villáskulcs készlet, 15 részes, 10 db</P>
+                        <P>Fúrószár készlet átm. 16 mm-ig, 10 db</P>
+                        <P>Menetvágó, menet metsző készlet, 10-10 készlet</P>
+                        <P>100 l medence hőkezeléshez, 3 db</P>
+                        <P>Köszörű korong szabályzó, 3 db</P>
+                        <P>Tapétavágó kés (snitzer), 10 db</P>
+                        <P>Egyengető lap 400x400x60 mm, 5 db</P>
+                        <P>150/110 mm-es lakatos satu, 3 db"- 1 készlet</P>
+                        <P>Szigetelt szerszámok, elektromos kéziszerszámok, műszerek "Szigetelt
+                            csavarhúzókészlet (7 db-os), 6 db</P>
+                        <P>Szigetelt fogókészlet (oldalcsípő, telefon, kombinált, blankoló), 6 db</P>
+                        <P>Saruzó fogó, 6 db</P>
+                        <P>Érvéghüvely fogó, 6 db</P>
+                        <P>RJ-45 krimpelő fogó, 6 db</P>
+                        <P>Speciális csavarozó bitkészlet adapterrel (min. 100 db-os), 6 db</P>
+                        <P>Lézeres hőmérő, 2 db</P>
+                        <P>Digitális multiméter, 6 db"- 1 készlet</P>
+                        <P>A részletes műszaki követelményeket a közbeszerzési dokumentáció
+                            elválaszthatatlan részét képező műszaki excel táblázat tartalmazza.</P>
+                    </SHORT_DESCR>
+                    <AC>
+                        <AC_QUALITY>
+                            <AC_CRITERION>2.Szakszervíz és alkatrészbiztosítási reakció idő órában
+                                kifejezve (min. 2 óra, maximum 12 óra)</AC_CRITERION>
+                            <AC_WEIGHTING>5</AC_WEIGHTING>
+                        </AC_QUALITY>
+                        <AC_QUALITY>
+                            <AC_CRITERION>3. Jótállás időtartama a 12 hónap jótálláson felül (hónap)
+                                (többletjótállás ideje minimum 0 hónap, max 24 hónap)</AC_CRITERION>
+                            <AC_WEIGHTING>5</AC_WEIGHTING>
+                        </AC_QUALITY>
+                        <AC_QUALITY>
+                            <AC_CRITERION>4. Műszaki többlettartalom 1 kiemelt termék esetében</AC_CRITERION>
+                            <AC_WEIGHTING>5</AC_WEIGHTING>
+                        </AC_QUALITY>
+                        <AC_PRICE>
+                            <AC_WEIGHTING>85</AC_WEIGHTING>
+                        </AC_PRICE>
+                    </AC>
+                    <NO_OPTIONS />
+                    <NO_EU_PROGR_RELATED />
+                    <INFO_ADD>
+                        <P>II.2.5)"Értékelési szempontok" ponthoz: Ár értékelési szempont: 1. Nettó
+                            ajánlati ár (Ft-ban megadva) - Súlyszám: 85</P>
+                        <P>A 4. értékelési szemponthoz:</P>
+                        <P>Csavarkompresszor "Légszállítás 10 bár (liter/perc)</P>
+                        <P>451-500 (1 pont)</P>
+                        <P>501-550 (2 pont)</P>
+                        <P>551-600 (3 pont)</P>
+                        <P>601-650 (4 pont)</P>
+                        <P>650 felett (5 pont)- Súlyszám: 5"</P>
+                        <P>SÚLYSZÁMOK ÖSSZESEN: 5</P>
+                    </INFO_ADD>
+                </OBJECT_DESCR>
+                <OBJECT_DESCR ITEM="5">
+                    <TITLE>
+                        <P>Automatizált gyártósor kialakítás</P>
+                    </TITLE>
+                    <LOT_NO>5</LOT_NO>
+                    <CPV_ADDITIONAL>
+                        <CPV_CODE CODE="39162000" />
+                    </CPV_ADDITIONAL>
+                    <n2016:NUTS CODE="HU332" />
+                    <MAIN_SITE>
+                        <P>5600 Békéscsaba, Kétegyházi út 1. A, B, és C épületek</P>
+                    </MAIN_SITE>
+                    <SHORT_DESCR>
+                        <P>A Békéscsaba, Kétegyházi út 1. sz. alatti volt képzőközpont működéséhez
+                            szükséges tárgyi eszközök, bútorok beszerzése mindhárom épületben. Az 5.
+                            részajánlat az automatizált gyártósor kialakítását tartalmazza.</P>
+                        <P>Műszaki sajátosságok:</P>
+                        <P>"Automatizált gyártósor kialakítás</P>
+                        <P>MPS sor, Szerelő robot állomás; Easy Port,</P>
+                        <P>SimuBox és kiegészítői;</P>
+                        <P>Siemens PLC és kiegészítői;</P>
+                        <P>Pneumatika, Elektropneumatika készletek</P>
+                        <P>Kiegészítők, tananyagok, bútor;</P>
+                        <P>TP260 Digitalizált Pneumatika készlet"- 1 db</P>
+                        <P>A részletes műszaki követelményeket a közbeszerzési dokumentáció
+                            elválaszthatatlan részét képező műszaki excel táblázat tartalmazza.</P>
+                    </SHORT_DESCR>
+                    <AC>
+                        <AC_QUALITY>
+                            <AC_CRITERION>2.Szakszervíz és alkatrészbiztosítási reakció idő órában
+                                kifejezve (min. 2 óra, maximum 12 óra)</AC_CRITERION>
+                            <AC_WEIGHTING>5</AC_WEIGHTING>
+                        </AC_QUALITY>
+                        <AC_QUALITY>
+                            <AC_CRITERION>3. Jótállás időtartama a 12 hónap jótálláson felül (hónap)
+                                (többletjótállás ideje minimum 0 hónap, max 24 hónap)</AC_CRITERION>
+                            <AC_WEIGHTING>5</AC_WEIGHTING>
+                        </AC_QUALITY>
+                        <AC_QUALITY>
+                            <AC_CRITERION>4. A teljesítésbe bevonásra kerül 1 fő olyan szakember,
+                                aki logisztikai és/vagy szállítmányozási feladatok ellátásában
+                                szerzett gyakorlattal rendelkezik (igen/ nem)</AC_CRITERION>
+                            <AC_WEIGHTING>10</AC_WEIGHTING>
+                        </AC_QUALITY>
+                        <AC_PRICE>
+                            <AC_WEIGHTING>80</AC_WEIGHTING>
+                        </AC_PRICE>
+                    </AC>
+                    <NO_OPTIONS />
+                    <NO_EU_PROGR_RELATED />
+                    <INFO_ADD>
+                        <P>II.2.5)"Értékelési szempontok" ponthoz: Ár értékelési szempont: 1. Nettó
+                            ajánlati ár (Ft-ban megadva) - Súlyszám: 80</P>
+                    </INFO_ADD>
+                </OBJECT_DESCR>
+                <OBJECT_DESCR ITEM="6">
+                    <TITLE>
+                        <P>Épületautomatizálás oktatócsomag</P>
+                    </TITLE>
+                    <LOT_NO>6</LOT_NO>
+                    <CPV_ADDITIONAL>
+                        <CPV_CODE CODE="39162000" />
+                    </CPV_ADDITIONAL>
+                    <n2016:NUTS CODE="HU332" />
+                    <MAIN_SITE>
+                        <P>5600 Békéscsaba, Kétegyházi út 1., A, B és C épület</P>
+                    </MAIN_SITE>
+                    <SHORT_DESCR>
+                        <P>A Békéscsaba, Kétegyházi út 1. sz. alatti volt képzőközpont működéséhez
+                            szükséges tárgyi eszközök, bútorok beszerzése mindhárom épületben. A 6.
+                            részajánlat az épületautomatizálás oktatócsomagot tartalmazza.</P>
+                        <P>Műszaki sajátosságok:</P>
+                        <P>"KNX</P>
+                        <P>7 bőröndös oktatócsomag</P>
+                        <P>1. Hálózat,</P>
+                        <P>2. Táp és központ,</P>
+                        <P>3. Árnyékolás-fűtés-hűtés,</P>
+                        <P>4. Kazán és hőszivattyú,</P>
+                        <P>5. Szellőzés és klíma,</P>
+                        <P>6. Világítás,</P>
+                        <P>7. Kezelők"- 1 db</P>
+                        <P>A részletes műszaki követelményeket a közbeszerzési dokumentáció
+                            elválaszthatatlan részét képező műszaki excel táblázat tartalmazza.</P>
+                    </SHORT_DESCR>
+                    <AC>
+                        <AC_QUALITY>
+                            <AC_CRITERION>2.Szakszervíz és alkatrészbiztosítási reakció idő órában
+                                kifejezve (min. 2 óra, maximum 12 óra)</AC_CRITERION>
+                            <AC_WEIGHTING>5</AC_WEIGHTING>
+                        </AC_QUALITY>
+                        <AC_QUALITY>
+                            <AC_CRITERION>3. Jótállás időtartama a 12 hónap jótálláson felül (hónap)
+                                (többletjótállás ideje minimum 0 hónap, max 24 hónap)</AC_CRITERION>
+                            <AC_WEIGHTING>5</AC_WEIGHTING>
+                        </AC_QUALITY>
+                        <AC_QUALITY>
+                            <AC_CRITERION>4. A teljesítésbe bevonásra kerül 1 fő olyan szakember,
+                                aki logisztikai és/vagy szállítmányozási feladatok ellátásában
+                                szerzett gyakorlattal rendelkezik (igen/ nem)</AC_CRITERION>
+                            <AC_WEIGHTING>10</AC_WEIGHTING>
+                        </AC_QUALITY>
+                        <AC_PRICE>
+                            <AC_WEIGHTING>80</AC_WEIGHTING>
+                        </AC_PRICE>
+                    </AC>
+                    <NO_OPTIONS />
+                    <NO_EU_PROGR_RELATED />
+                    <INFO_ADD>
+                        <P>II.2.5)"Értékelési szempontok" ponthoz: Ár értékelési szempont: 1. Nettó
+                            ajánlati ár (Ft-ban megadva) - Súlyszám: 80</P>
+                    </INFO_ADD>
+                </OBJECT_DESCR>
+                <OBJECT_DESCR ITEM="7">
+                    <TITLE>
+                        <P>Felületkezelés tanműhely és laboratórium</P>
+                    </TITLE>
+                    <LOT_NO>7</LOT_NO>
+                    <CPV_ADDITIONAL>
+                        <CPV_CODE CODE="39162000" />
+                    </CPV_ADDITIONAL>
+                    <n2016:NUTS CODE="HU332" />
+                    <MAIN_SITE>
+                        <P>5600 Békéscsaba, Kétegyházi út 1., A, B és C épület</P>
+                    </MAIN_SITE>
+                    <SHORT_DESCR>
+                        <P>A Békéscsaba, Kétegyházi út 1. sz. alatti volt képzőközpont működéséhez
+                            szükséges tárgyi eszközök, bútorok beszerzése mindhárom épületben. A 7.
+                            részajánlat a felületkezelési tanműhelyt és a laboratóriumot
+                            tartalmazza.</P>
+                        <P>Műszaki sajátosságok:</P>
+                        <P>"A felületkezelő műhelyben 12 db, egyenként 100-150 literes kád
+                            elhelyezése a következő technológiákhoz:</P>
+                        <P>Felület előkezelés, Galvanizálás (fém ionjait tartalmazó sókban,
+                            oldatokban), Kémiai fémleválasztás</P>
+                        <P>Cementálás, Utókezelések: Konverziós kezelés, Lakkozás, Anódos oxidálás</P>
+                        <P>Öblítés</P>
+                        <P>Eszköz igény ezen kívül:</P>
+                        <P>Spektrométer, Rawness teszter melyek kiválasztása a a beépíteni kívánt
+                            technológiától függ."- 1db</P>
+                        <P>A részletes műszaki követelményeket a közbeszerzési dokumentáció
+                            elválaszthatatlan részét képező műszaki excel táblázat tartalmazza.</P>
+                    </SHORT_DESCR>
+                    <AC>
+                        <AC_QUALITY>
+                            <AC_CRITERION>2.Szakszervíz és alkatrészbiztosítási reakció idő órában
+                                kifejezve (min. 2 óra, maximum 12 óra)</AC_CRITERION>
+                            <AC_WEIGHTING>5</AC_WEIGHTING>
+                        </AC_QUALITY>
+                        <AC_QUALITY>
+                            <AC_CRITERION>3. Jótállás időtartama a 12 hónap jótálláson felül (hónap)
+                                (többletjótállás ideje minimum 0 hónap, max 24 hónap)</AC_CRITERION>
+                            <AC_WEIGHTING>5</AC_WEIGHTING>
+                        </AC_QUALITY>
+                        <AC_QUALITY>
+                            <AC_CRITERION>4. A teljesítésbe bevonásra kerül 1 fő olyan szakember,
+                                aki logisztikai és/vagy szállítmányozási feladatok ellátásában
+                                szerzett gyakorlattal rendelkezik (igen/ nem)</AC_CRITERION>
+                            <AC_WEIGHTING>10</AC_WEIGHTING>
+                        </AC_QUALITY>
+                        <AC_PRICE>
+                            <AC_WEIGHTING>80</AC_WEIGHTING>
+                        </AC_PRICE>
+                    </AC>
+                    <NO_OPTIONS />
+                    <NO_EU_PROGR_RELATED />
+                    <INFO_ADD>
+                        <P>II.2.5)"Értékelési szempontok" ponthoz: Ár értékelési szempont: 1. Nettó
+                            ajánlati ár (Ft-ban megadva) - Súlyszám: 80</P>
+                    </INFO_ADD>
+                </OBJECT_DESCR>
+                <OBJECT_DESCR ITEM="8">
+                    <TITLE>
+                        <P>Bútorok</P>
+                    </TITLE>
+                    <LOT_NO>8</LOT_NO>
+                    <CPV_ADDITIONAL>
+                        <CPV_CODE CODE="39160000" />
+                    </CPV_ADDITIONAL>
+                    <n2016:NUTS CODE="HU332" />
+                    <MAIN_SITE>
+                        <P>5600 Békéscsaba, Kétegyházi út 1., A, B és C épület</P>
+                    </MAIN_SITE>
+                    <SHORT_DESCR>
+                        <P>A Békéscsaba, Kétegyházi út 1. sz. alatti volt képzőközpont működéséhez
+                            szükséges tárgyi eszközök, bútorok beszerzése mindhárom épületben. A 8.
+                            részajánlat a bútorok beszerzését tartalmazza.</P>
+                        <P>Beszerzendő eszközök listája:</P>
+                        <P>Műhelyasztal- "Az asztalváz egy szekrény részből és a szilárd lábazatból
+                            áll.</P>
+                        <P>A szekrény öt hengerzárral zárható fiókot tartalmaz.</P>
+                        <P>A masszív lábazat U - profilból készült.</P>
+                        <P>A fém részek felületkezelése porszórásos lakkozással</P>
+                        <P>Méretek ma x szé x mé: 84 x 200 x 80 cm</P>
+                        <P>A munkalap méretei ma x szé x mé: 4 x 200 x 80 cm</P>
+                        <P>A szekrény méretei ma x szé x mé: 80 x 51 x 59 cm</P>
+                        <P>Teherbírása: 500 kg"- 13 db</P>
+                        <P>Műhelyasztal- "A munkaasztal munkalapja 40 mm vastag táblásított bükkből
+                            készül, és legömbölyített élekkel rendelkezik.</P>
+                        <P>A masszív lábazat U - profilból készült.</P>
+                        <P>A fém részek felületkezelése porszórásos lakkozással</P>
+                        <P>Méretek ma x szé x mé: 84 x 200 x 80 cm</P>
+                        <P>A munkalap méretei ma x szé x mé: 4 x 200 x 80 cm</P>
+                        <P>Teherbírása: 500 kg"</P>
+                        <P>— 3 db</P>
+                        <P>Műhelyasztal- "A munkaasztal munkalapja 40 mm vastag táblásított bükkből
+                            készül, és legömbölyített élekkel rendelkezik.</P>
+                        <P>A masszív lábazat U - profilból készült.</P>
+                        <P>A fém részek felületkezelése porszórásos lakkozással</P>
+                        <P>Méretek ma x szé x mé: 84 x 150 x 80 cm</P>
+                        <P>A munkalap méretei ma x szé x mé: 4 x 150 x 80 cm</P>
+                        <P>Teherbírása: 500 kg"- 7 db</P>
+                        <P>Műhelyszék-"stoki, fémvázzal</P>
+                        <P>Műgyantával átitatott, préselt fa ülőfelület</P>
+                        <P>Szélesség: 40</P>
+                        <P>Magasság: 45</P>
+                        <P>Mélység: 40</P>
+                        <P>Ülésmagasság: 45</P>
+                        <P>Rakásolható"-12 db</P>
+                        <P>10 fiókos műhelyszekrény- 10 db</P>
+                        <P>Fém műhelyszekrény- 10 db</P>
+                        <P>Tanulói szék-"bükk rétegelt lemez, natúr lakkozott, rakásolható</P>
+                        <P>Csúszásgátló műanyag papucsokkal</P>
+                        <P>Ülő- és háttámla: bükk rétegelt lemez, natúr lakkozott kivitel</P>
+                        <P>Szélesség: 39 cm</P>
+                        <P>Magasság: 86 cm</P>
+                        <P>Mélység: 36 cm</P>
+                        <P>Ülésmagasság: 50 cm"</P>
+                        <P>— 72 db</P>
+                        <P>Tanulói asztal-"egy személyes tanulói asztal, akasztóval</P>
+                        <P>Csúszásgátló műanyag papucsokkal</P>
+                        <P>Asztallap alá füzettartó polc</P>
+                        <P>Szélesség: 70cm</P>
+                        <P>Magasság: 76 cm</P>
+                        <P>Mélység: 50cm</P>
+                        <P>Kerekített élek."</P>
+                        <P>— 44 db</P>
+                        <P>Tanulói számítógép asztal-"egy személyes tanulói asztal</P>
+                        <P>Csúszásgátló műanyag papucsokkal</P>
+                        <P>Szélesség: 80cm</P>
+                        <P>Magasság: 75cm</P>
+                        <P>Mélység: 68cm"</P>
+                        <P>— 28 db</P>
+                        <P>Tároló-szekrények- "korpusz és ajtók: 18 mm vastag laminált bútorlap,</P>
+                        <P>2 mm vastag ABS élzárás,</P>
+                        <P>Hátfal: 3 mm vastag fehér színű HDF,</P>
+                        <P>Középen osztott, mindkét részben 4-4 polcos,</P>
+                        <P>Két ajtós, biztonsági zárral szerelt kivitel.</P>
+                        <P>Szélesség: 100cm</P>
+                        <P>Magasság: 180cm</P>
+                        <P>Mélység: 55cm"- 30 db</P>
+                        <P>Akasztós szekrények-Nyitott akasztó szekrény kabátok, táskák részére (pl.
+                            2000x1800x600)- 9 db</P>
+                        <P>Öltöző szekrények, öltöző padok- "Z ajtós öltözőszekrény 80 főre:</P>
+                        <P>Z ajtós osztott 4 személyes kivitelekből összeállítva.</P>
+                        <P>Struktúr felületű elektrosztatikus porszórással festett I. osztályú
+                            acéllemezből készül.</P>
+                        <P>Kétkulcsos fémbetétes hengerzárral szerelt.</P>
+                        <P>RAL 7035 világosszürke színben.</P>
+                        <P>Szélesség: 80 cm</P>
+                        <P>Magasság: 180 cm</P>
+                        <P>Mélység: 50 cm</P>
+                        <P>Akasztós öltözőpadok 20 főre:</P>
+                        <P>A vázszerkezet elektosztatikus porszórással felületkezelt 30x30 mm-es
+                            zártszelvényből készül, rugalmas ruhaakasztó kampóval.</P>
+                        <P>A szintezhető lábdugók segítenek kiküszöbölni a padló egyenetlenségeit.</P>
+                        <P>Az ülőfelület és a háttámla lakkozott I. osztályú borovi fenyő lécekből
+                            készül.</P>
+                        <P>Magasság: 175 cm</P>
+                        <P>Mélység: 41 cm</P>
+                        <P>Ülésmagasság: 40 cm"- 1 tétel</P>
+                        <P>Étkező asztalok, székek- "Étkező asztalok 20 főre:</P>
+                        <P>Krómozott acélváz, íves talppal,</P>
+                        <P>Laminált lap asztalfelület, ABS élzárás,</P>
+                        <P>Összecsukható</P>
+                        <P>Szélesség: 160cm</P>
+                        <P>Magasság: 74cm</P>
+                        <P>Mélység: 80cm</P>
+                        <P>Székek 20 főre:</P>
+                        <P>Tömör fa ülő -és hátlapos acélvázas szék.</P>
+                        <P>Szélesség: 40cm</P>
+                        <P>Magasság: 86cm</P>
+                        <P>Mélység: 43cm</P>
+                        <P>Ülésmagasság: 45cm</P>
+                        <P>Rakásolható"- 1 tétel</P>
+                        <P>Iroda bútorzat-"Egyedi formájú íróasztal, állítható magasságú szék</P>
+                        <P>Tárgyalóasztal + kárpitozott szék 6 személyre</P>
+                        <P>Irattároló szekrény egyedi</P>
+                        <P>Akasztós szekrény egyedi</P>
+                        <P>Kávé, teafőző</P>
+                        <P>Mikrohullámú sütő, 2 db</P>
+                        <P>Hűtőszekrény, 2 db</P>
+                        <P>Csésze, pohár, kistányér, tálca 6 személyre"- 1 tétel</P>
+                        <P>Tanári szék-"bükk rétegelt lemez, rakásolható</P>
+                        <P>Csúszásgátló műanyag papucsokkal</P>
+                        <P>Kárpitozott ülő és hátlap</P>
+                        <P>Szélesség: 39 cm</P>
+                        <P>Magasság: 86 cm</P>
+                        <P>Mélység: 36 cm</P>
+                        <P>Ülésmagasság: 50 cm"- 12 db</P>
+                        <P>Tanári asztal-"zárható szekrénnyel</P>
+                        <P>Csúszásgátló műanyag papucsokkal</P>
+                        <P>Számítógépnek hely</P>
+                        <P>Szélesség: 160cm</P>
+                        <P>Magasság: 75cm</P>
+                        <P>Mélység: 70cm"- 12 db</P>
+                        <P>Fehér falitábla"Filccel írható és vetíthető, fehér színű, mágnesezhető.</P>
+                        <P>Méret: 200x120cm"- 8 db</P>
+                        <P>Flipchart tábla-70x100 cm tábla- 5 db</P>
+                        <P>A részletes műszaki követelményeket a közbeszerzési dokumentáció
+                            elválaszthatatlan részét képező műszaki excel táblázat tartalmazza.</P>
+                    </SHORT_DESCR>
+                    <AC>
+                        <AC_QUALITY>
+                            <AC_CRITERION>A teljesítésbe bevonásra kerül 1 fő olyan szakember, aki
+                                logisztikai és/vagy szállítmányozási feladatok ellátásában szerzett
+                                gyakorlattal rendelkezik (igen/ nem)</AC_CRITERION>
+                            <AC_WEIGHTING>10</AC_WEIGHTING>
+                        </AC_QUALITY>
+                        <AC_PRICE>
+                            <AC_WEIGHTING>90</AC_WEIGHTING>
+                        </AC_PRICE>
+                    </AC>
+                    <NO_OPTIONS />
+                    <NO_EU_PROGR_RELATED />
+                    <INFO_ADD>
+                        <P>II.2.5)"Értékelési szempontok" ponthoz: Ár értékelési szempont: 1. Nettó
+                            ajánlati ár (Ft-ban megadva) - Súlyszám: 90</P>
+                    </INFO_ADD>
+                </OBJECT_DESCR>
+            </OBJECT_CONTRACT>
+            <PROCEDURE>
+                <PT_OPEN />
+                <NO_CONTRACT_COVERED_GPA />
+                <NOTICE_NUMBER_OJ>2020/S 232-569646</NOTICE_NUMBER_OJ>
+            </PROCEDURE>
+            <AWARD_CONTRACT ITEM="1">
+                <LOT_NO>1</LOT_NO>
+                <TITLE>
+                    <P>Termelő gépek</P>
+                </TITLE>
+                <NO_AWARDED_CONTRACT>
+                    <PROCUREMENT_DISCONTINUED />
+                </NO_AWARDED_CONTRACT>
+            </AWARD_CONTRACT>
+            <AWARD_CONTRACT ITEM="2">
+                <LOT_NO>2</LOT_NO>
+                <TITLE>
+                    <P>Mérő és vizsgáló eszközök</P>
+                </TITLE>
+                <NO_AWARDED_CONTRACT>
+                    <PROCUREMENT_DISCONTINUED />
+                </NO_AWARDED_CONTRACT>
+            </AWARD_CONTRACT>
+            <AWARD_CONTRACT ITEM="3">
+                <LOT_NO>3</LOT_NO>
+                <TITLE>
+                    <P>Oktató gépek, oktató szoftverek</P>
+                </TITLE>
+                <NO_AWARDED_CONTRACT>
+                    <PROCUREMENT_DISCONTINUED />
+                </NO_AWARDED_CONTRACT>
+            </AWARD_CONTRACT>
+            <AWARD_CONTRACT ITEM="4">
+                <LOT_NO>4</LOT_NO>
+                <TITLE>
+                    <P>Asztali és kézi szerszámgépek, kéziszerszámok</P>
+                </TITLE>
+                <NO_AWARDED_CONTRACT>
+                    <PROCUREMENT_DISCONTINUED />
+                </NO_AWARDED_CONTRACT>
+            </AWARD_CONTRACT>
+            <AWARD_CONTRACT ITEM="5">
+                <LOT_NO>5</LOT_NO>
+                <TITLE>
+                    <P>Automatizált gyártósor kialakítás</P>
+                </TITLE>
+                <NO_AWARDED_CONTRACT>
+                    <PROCUREMENT_DISCONTINUED />
+                </NO_AWARDED_CONTRACT>
+            </AWARD_CONTRACT>
+            <AWARD_CONTRACT ITEM="6">
+                <LOT_NO>6</LOT_NO>
+                <TITLE>
+                    <P>Épületautomatizálás oktatócsomag</P>
+                </TITLE>
+                <NO_AWARDED_CONTRACT>
+                    <PROCUREMENT_DISCONTINUED />
+                </NO_AWARDED_CONTRACT>
+            </AWARD_CONTRACT>
+            <AWARD_CONTRACT ITEM="7">
+                <LOT_NO>7</LOT_NO>
+                <TITLE>
+                    <P>Felületkezelés tanműhely és laboratórium</P>
+                </TITLE>
+                <NO_AWARDED_CONTRACT>
+                    <PROCUREMENT_DISCONTINUED />
+                </NO_AWARDED_CONTRACT>
+            </AWARD_CONTRACT>
+            <AWARD_CONTRACT ITEM="8">
+                <LOT_NO>8</LOT_NO>
+                <TITLE>
+                    <P>Bútorok</P>
+                </TITLE>
+                <NO_AWARDED_CONTRACT>
+                    <PROCUREMENT_DISCONTINUED />
+                </NO_AWARDED_CONTRACT>
+            </AWARD_CONTRACT>
+            <COMPLEMENTARY_INFO>
+                <INFO_ADD>
+                    <P>Az eljárást Ajánlatkérő visszavonta a nagy mennyiségű kiegészítő
+                        tájékoztatásra tekintettel, mivel ezek az árazatlan költségvetéseket, a
+                        műszaki dokumentációt is nagy mértékben befolyásolták.</P>
+                </INFO_ADD>
+                <ADDRESS_REVIEW_BODY>
+                    <OFFICIALNAME>Közbeszerzési Hatóság Közbeszerzési Döntőbizottság</OFFICIALNAME>
+                    <ADDRESS>Riadó u. 5.</ADDRESS>
+                    <TOWN>Budapest</TOWN>
+                    <POSTAL_CODE>1026</POSTAL_CODE>
+                    <COUNTRY VALUE="HU" />
+                    <PHONE>+36 18828592</PHONE>
+                    <E_MAIL>dontobizottsag@kt.hu</E_MAIL>
+                    <FAX>+36 18828593</FAX>
+                </ADDRESS_REVIEW_BODY>
+                <REVIEW_PROCEDURE>
+                    <P>2015. évi CXLIII. törvény (Kbt.) 148. §-a szerint.</P>
+                </REVIEW_PROCEDURE>
+                <ADDRESS_REVIEW_INFO>
+                    <OFFICIALNAME>Közbeszerzési Hatóság Közbeszerzési Döntőbizottság</OFFICIALNAME>
+                    <ADDRESS>Riadó u. 5.</ADDRESS>
+                    <TOWN>Budapest</TOWN>
+                    <POSTAL_CODE>1026</POSTAL_CODE>
+                    <COUNTRY VALUE="HU" />
+                    <PHONE>+36 18828592</PHONE>
+                    <E_MAIL>dontobizottsag@kt.hu</E_MAIL>
+                    <FAX>+36 18828593</FAX>
+                </ADDRESS_REVIEW_INFO>
+                <DATE_DISPATCH_NOTICE>2021-01-04</DATE_DISPATCH_NOTICE>
+            </COMPLEMENTARY_INFO>
+        </F03_2014>
+    </FORM_SECTION>
+</TED_EXPORT>

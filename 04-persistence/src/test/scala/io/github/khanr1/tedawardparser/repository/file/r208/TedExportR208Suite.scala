@@ -13,6 +13,7 @@ import java.time.LocalDate
 import scala.xml.{Elem, XML}
 import squants.market.*
 import weaver.SimpleIOSuite
+import io.github.khanr1.tedawardparser.repository.file.XMLPathUtils.showAltPath
 
 object TedExportR208Suite extends SimpleIOSuite {
 
@@ -164,7 +165,7 @@ object TedExportR208Suite extends SimpleIOSuite {
           ParserError.MissingField(
             "Description",
             Some(
-              List(ContractAwardInfo, VeatAwardInfo).map(_.show).mkString("|")
+              List(ContractAwardInfo, VeatAwardInfo).showAltPath()
             )
           )
         )
@@ -177,31 +178,49 @@ object TedExportR208Suite extends SimpleIOSuite {
     List(Right(Money(6.1292e+5, GBP))),
     List(
       Left(
-        ParserError.MissingField("Amount", None)
+        ParserError.MissingField(
+          "Amount",
+          Some(List(AwardOfContract, VeatAwardOfContact).showAltPath())
+        )
       )
     ),
     List(
       Left(
-        ParserError.MissingField("Amount", None)
+        ParserError.MissingField(
+          "Amount",
+          Some(List(AwardOfContract, VeatAwardOfContact).showAltPath())
+        )
       )
     ),
     List(
       Left(
-        ParserError.MissingField("Amount", None)
+        ParserError.MissingField(
+          "Amount",
+          Some(List(AwardOfContract, VeatAwardOfContact).showAltPath())
+        )
       )
     ),
     List(
       Left(
-        ParserError.MissingField("Amount", None)
+        ParserError.MissingField(
+          "Amount",
+          Some(List(AwardOfContract, VeatAwardOfContact).showAltPath())
+        )
       ),
       Left(
-        ParserError.MissingField("Amount", None)
+        ParserError.MissingField(
+          "Amount",
+          Some(List(AwardOfContract, VeatAwardOfContact).showAltPath())
+        )
       )
     ),
     List(Right(Money(4.98e+5, EUR))),
     List(
       Left(
-        ParserError.MissingField("Amount", None)
+        ParserError.MissingField(
+          "Amount",
+          Some(List(AwardOfContract, VeatAwardOfContact).showAltPath())
+        )
       )
     ),
     List(Right(Money(4.48e+5, EUR))),
@@ -242,7 +261,7 @@ object TedExportR208Suite extends SimpleIOSuite {
         ParserError.MissingField(
           "Awarded Supplier Country",
           Some(
-            List(AwardOfContract, VeatAwardOfContact).map(_.show).mkString("|")
+            List(AwardOfContract, VeatAwardOfContact).showAltPath()
           )
         )
       )

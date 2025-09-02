@@ -14,7 +14,7 @@ import weaver.Expectations
 // Ordering for comparing streams
 given ordering[A]: Ordering[Either[ParserError, A]] = Ordering.by(e =>
   e match
-    case Left(value)  => (0, value.toString())
+    case Left(value)  => (0, value.message)
     case Right(value) => (1, value.toString())
 )
 

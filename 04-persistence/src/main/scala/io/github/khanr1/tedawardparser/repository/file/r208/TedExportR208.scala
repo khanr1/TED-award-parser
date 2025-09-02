@@ -15,6 +15,7 @@ import scala.util.Try
 import scala.xml.Elem
 import squants.market.*
 import squants.market.defaultMoneyContext.*
+import cats.syntax.validated
 
 class TedExportR208[F[_]: Monad] extends XMLParser[F] {
 
@@ -24,18 +25,14 @@ class TedExportR208[F[_]: Monad] extends XMLParser[F] {
   override def parseOJSNoticeID(
       elem: Elem
   ): F[Either[ParserError, OJSNoticeID]] = elem
-    .textAt(OjsID)
-    .toRight(ParserError.MissingField("OjsID", Some(OjsID.show)))
+    .textAtOrError(OjsID, "OjsID")
     .map(s => OJSNoticeID(s))
     .pure[F]
 
   override def parsePublicationDate(
       elem: Elem
   ): F[Either[ParserError, LocalDate]] = elem
-    .textAt(PublicationDate)
-    .toRight(
-      ParserError.MissingField("Publication Date", Some(PublicationDate.show))
-    )
+    .textAtOrError(PublicationDate, "Publication Date")
     .flatMap { s =>
       Either
         .catchNonFatal(LocalDate.parse(s, dateFormatter))
@@ -57,16 +54,10 @@ class TedExportR208[F[_]: Monad] extends XMLParser[F] {
       DelegatedPurchaseContractingAuthority,
       DirectPurchaseContractingAuthority,
       VeatPurchaseContractingAuthority
-    ).map(p => p / "ORGANISATION" / "OFFICIALNAME")
+    ).map(p => p ++ OrgOfficialName)
 
     elem
-      .firstText(validPath)
-      .toRight(
-        ParserError.MissingField(
-          "Contracting Authority Name",
-          Some(validPath.map(_.show).mkString("|"))
-        )
-      )
+      .firstTextOrError(validPath, "Contracting Authority Name")
       .map(s => ContractingAuthorityName(s))
       .pure[F]
   }
@@ -78,16 +69,10 @@ class TedExportR208[F[_]: Monad] extends XMLParser[F] {
       DelegatedPurchaseContractingAuthority,
       DirectPurchaseContractingAuthority,
       VeatPurchaseContractingAuthority
-    ).map(p => p / "COUNTRY").map(p => p attr ("VALUE"))
+    ).map(p => p ++ CountryValue)
 
     elem
-      .firstAttr(validPath)
-      .toRight(
-        ParserError.MissingField(
-          "Contracting Authority Country",
-          Some(validPath.map(_.show).mkString("|"))
-        )
-      )
+      .firstAttrOrError(validPath, "Contracting Authority Country")
       .map(s => Country.toDomain(s))
       .pure[F]
   }
@@ -104,121 +89,103 @@ class TedExportR208[F[_]: Monad] extends XMLParser[F] {
   override def parseContractID(
       elem: Elem
   ): F[List[Either[ParserError, ContractID]]] = {
+
     val validPath = List(AwardOfContract, VeatAwardOfContact)
-    val children = validPath.flatMap(p => elem.childrenAt(p))
-    val ids: List[Option[ContractID]] = children.map(e => {
-      val lot = e.textAt(XMLPath("LOT_NUMBER")).map(ContractID(_))
-      val contract = e.textAt(XMLPath("CONTRACT_NUMBER")).map(ContractID(_))
-      contract.orElse(lot)
-    })
-    ids
-      .map(x =>
-        x.toRight(
-          ParserError.MissingField(
-            "Contract/Lot ID",
-            Some(validPath.map(_.show).mkString("|"))
-          )
-        )
+    val children = elem.childrenAtAll(validPath)
+    val paths = List(ContractNumber, LotNumber)
+
+    children
+      .map(e =>
+        e.firstTextOrError(paths, "Contract/Lot ID").map(s => ContractID(s))
       )
       .pure[F]
-
   }
 
   override def parseTenderLotTitle(
       elem: Elem
   ): F[List[Either[ParserError, Title]]] = {
     val validPath = List(ContractAwardInfo, VeatAwardInfo)
-    val children = validPath.flatMap(p => elem.childrenAt(p))
-    val titles = children.map { e =>
-      e
-        .textAt(XMLPath("TITLE_CONTRACT"))
-        .toRight(
-          ParserError
-            .MissingField("Title", Some(validPath.map(_.show).mkString("|")))
-        )
-        .map(s => Title(s))
-    }
-    titles.pure[F]
+    val children = elem.childrenAtAll(validPath)
+    val item = TitleContract
+
+    children
+      .getTextsAt(validPath, item, "Title")
+      .map(e => e.map(s => Title(s)))
+      .pure[F]
 
   }
 
   override def parseTenderLotDescription(
       elem: Elem
   ): F[List[Either[ParserError, Description]]] = {
-    val validPath = List(ContractAwardInfo, VeatAwardInfo)
-    val children = validPath.flatMap(p => elem.childrenAt(p))
-    val descriptions = children
-      .map(e =>
-        e.textAt(XMLPath("SHORT_CONTRACT_DESCRIPTION"))
-          .toRight(
-            ParserError.MissingField(
-              "Description",
-              Some(validPath.map(_.show).mkString("|"))
-            )
-          )
-          .map(s => Description(s))
-      )
 
-    descriptions.pure[F]
+    val validPath = List(ContractAwardInfo, VeatAwardInfo)
+    val children = elem.childrenAtAll(validPath)
+    val item = ShortContractDescription
+
+    children
+      .getTextsAt(validPath, item, "Description")
+      .map(e => e.map(s => Description(s)))
+      .pure[F]
 
   }
 
+  // TODO HERE
   override def parseTenderLotValue(
       elem: Elem
   ): F[List[Either[ParserError, Money]]] = {
     val validPath = List(AwardOfContract, VeatAwardOfContact)
-    val children = validPath.flatMap(p => elem.childrenAt(p))
+    val children = elem.childrenAtAll(validPath)
 
-    val values = children.map(e =>
-      e.textAt(
+    val values = children
+      .getTextsAt(
+        validPath,
         XMLPath(
           "CONTRACT_VALUE_INFORMATION",
           "COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE",
           "VALUE_COST"
-        )
-      ).toRight(
-        ParserError
-          .MissingField(
-            "Amount",
-            None /*Some(validPath.map(_.show).mkString("|"))*/
-          )
-      ).flatMap(s =>
-        Try(
-          BigDecimal(s.replace(" ", "").replace(" ", "").replace(",", "."))
-        ).toEither
-          .leftMap(t =>
-            ParserError.InvalidFormat(
-              "Amount",
-              "number",
-              s,
-              Some(validPath.map(_.show).mkString("|"))
-            )
-          )
+        ),
+        "Amount"
       )
-    )
-    val currencies = children.map(e =>
-      e.attrAt(
+      .map(either =>
+        either.flatMap(s =>
+          Try(
+            BigDecimal(s.replace(" ", "").replace(" ", "").replace(",", "."))
+          ).toEither
+            .leftMap(t =>
+              ParserError.InvalidFormat(
+                "Amount",
+                "number",
+                s,
+                Some(validPath.showAltPath())
+              )
+            )
+        )
+      )
+    val currencies = children
+      .getAttrsAt(
+        validPath,
         XMLPath(
           "CONTRACT_VALUE_INFORMATION",
           "COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE"
-        ) attr "CURRENCY"
-      ).toRight(
-        ParserError
-          .MissingField("Currency", Some(validPath.map(_.show).mkString("|")))
-      ).flatMap(s =>
-        (Currency(s.replace(" ", "").replace(",", "."))(
-          defaultMoneyContext
-        ).toEither)
-          .leftMap(t =>
-            ParserError.InvalidFormat(
-              "Currency",
-              "Number",
-              s,
-              Some(validPath.map(_.show).mkString("|"))
-            )
-          )
+        ) attr "CURRENCY",
+        "Currency"
       )
-    )
+      .map(either =>
+        either.flatMap(s =>
+          (Currency(s.replace(" ", "").replace(",", "."))(
+            defaultMoneyContext
+          ).toEither)
+            .leftMap(t =>
+              ParserError.InvalidFormat(
+                "Currency",
+                "Number",
+                s,
+                Some(validPath.map(_.show).mkString("|"))
+              )
+            )
+        )
+      )
 
     values
       .zip(currencies)
@@ -236,48 +203,33 @@ class TedExportR208[F[_]: Monad] extends XMLParser[F] {
       elem: Elem
   ): F[List[Either[ParserError, AwardedSupplierName]]] = {
     val validPath = List(AwardOfContract, VeatAwardOfContact)
-    val children = validPath.flatMap(p => elem.childrenAt(p))
+    val children = elem.childrenAtAll(validPath)
 
-    val names = children.map(e =>
-      e.textAt(
-        XMLPath(
-          "ECONOMIC_OPERATOR_NAME_ADDRESS",
-          "CONTACT_DATA_WITHOUT_RESPONSIBLE_NAME",
-          "ORGANISATION",
-          "OFFICIALNAME"
-        )
-      ).toRight(
-        ParserError.MissingField(
-          "Awarded Supplier Name",
-          Some(validPath.map(_.show).mkString("|"))
-        )
-      ).map(x => AwardedSupplierName(x))
-    )
+    children
+      .getTextsAt(
+        validPath,
+        EconomicOperator.OrganisationOfficialName,
+        "Awarded Supplier Name"
+      )
+      .map(either => either.map(s => AwardedSupplierName(s)))
+      .pure[F]
 
-    names.pure[F]
   }
 
   override def parseTenderLotAwardedSupplierCountry(
       elem: Elem
   ): F[List[Either[ParserError, Country]]] = {
     val validPath = List(AwardOfContract, VeatAwardOfContact)
-    val children = validPath.flatMap(p => elem.childrenAt(p))
+    val children = elem.childrenAtAll(validPath)
+    children
+      .getAttrsAt(
+        validPath,
+        EconomicOperator.CountryValue,
+        "Awarded Supplier Country"
+      )
+      .map(either => either.map(s => Country.toDomain(s)))
+      .pure[F]
 
-    val countries = children.map { e =>
-      e.attrAt(
-        XMLPath(
-          "ECONOMIC_OPERATOR_NAME_ADDRESS",
-          "CONTACT_DATA_WITHOUT_RESPONSIBLE_NAME",
-          "COUNTRY"
-        ) attr "VALUE"
-      ).toRight(
-        ParserError.MissingField(
-          "Awarded Supplier Country",
-          Some(validPath.map(_.show).mkString("|"))
-        )
-      ).map(s => Country.toDomain(s))
-    }
-    countries.pure[F]
   }
 
   override def parseTenderLotAwardedSupplier(
@@ -304,19 +256,12 @@ class TedExportR208[F[_]: Monad] extends XMLParser[F] {
       e: Elem
   ): F[List[Either[ParserError, Justification]]] = {
     val validPath = List(ContractAwardJustification, VeatAwardJustification)
-    val children = validPath.flatMap(p => e.childrenAt(p))
+    val children = e.childrenAtAll(validPath)
 
-    val justifications = children.map(e =>
-      e.textAt(XMLPath("REASON_CONTRACT_LAWFUL"))
-        .toRight(
-          ParserError.MissingField(
-            "Justification",
-            Some(validPath.map(_.show).mkString("|"))
-          )
-        )
-        .map(s => Justification(s))
-    )
-    justifications.pure[F]
+    children
+      .getTextsAt(validPath, JustificationReason, "Justification")
+      .map(either => either.map(s => Justification(s)))
+      .pure[F]
   }
 
 }

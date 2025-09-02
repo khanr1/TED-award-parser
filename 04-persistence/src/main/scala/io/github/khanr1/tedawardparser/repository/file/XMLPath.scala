@@ -3,6 +3,7 @@ package repository
 package file
 
 import cats.Show
+import cats.syntax.all.*
 import scala.xml.XML
 
 //Qualified Name
@@ -18,6 +19,8 @@ object QName:
 enum Segment:
   case Elem(name: QName)
   case Attr(name: QName)
+  case WhereAttrEquals(attr: QName, value: String)
+  case Index(i: Int)
 
 opaque type XMLPath = Vector[Segment]
 
@@ -48,17 +51,25 @@ object XMLPath:
 
   given Show[XMLPath] = Show.show[XMLPath](p =>
     p.map {
-      case Segment.Elem(q) => q.toString
-      case Segment.Attr(q) => "@" + q.toString
+      case Segment.Elem(q)               => q.show
+      case Segment.Attr(q)               => s"@${q.show}"
+      case Segment.Index(i)              => s"[$i]"
+      case Segment.WhereAttrEquals(q, v) => s"[${q.show}='$v']"
     }.mkString("/")
   )
 
   extension (p: XMLPath)
+
     def segments: Vector[Segment] = p
-    def /(child: String): XMLPath = p :+ Segment.Elem(QName(child))
-    def /(child: QName): XMLPath = p :+ Segment.Elem(child)
-    def attr(attr: String): XMLPath = p :+ Segment.Attr(QName(attr))
-    def attr(attr: QName): XMLPath = p :+ Segment.Attr(attr)
+    infix def /(child: String): XMLPath = p :+ Segment.Elem(QName(child))
+    infix def /(child: QName): XMLPath = p :+ Segment.Elem(child)
+    infix def attr(attr: String): XMLPath = p :+ Segment.Attr(QName(attr))
+    infix def attr(attr: QName): XMLPath = p :+ Segment.Attr(attr)
+    infix def idx(i: Int): XMLPath = p :+ Segment.Index(i)
+    infix def whereAttr(name: String, value: String): XMLPath =
+      p :+ Segment.WhereAttrEquals(QName(name), value)
+    infix def whereAttr(name: QName, value: String): XMLPath =
+      p :+ Segment.WhereAttrEquals(name, value)
 
     /** Concatenate two paths. */
     def ++(that: XMLPath): XMLPath = p ++ that
