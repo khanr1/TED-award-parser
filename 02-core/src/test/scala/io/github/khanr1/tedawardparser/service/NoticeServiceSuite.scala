@@ -43,6 +43,7 @@ object NoticeServiceSuite extends SimpleIOSuite:
     val streamElements =
       Stream(dummyNoticeWithLots, dummyNoticeWithoutLots)
     override def getAll: Stream[IO, Notice] = streamElements
+    override def getOJSID: Stream[IO, OJSNoticeID] = Stream.empty
 
   val service = NoticeService.make[IO](new InMemoryRepo)
 

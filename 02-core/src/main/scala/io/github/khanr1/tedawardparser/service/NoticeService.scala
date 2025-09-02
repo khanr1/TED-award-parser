@@ -7,6 +7,7 @@ import io.github.khanr1.tedawardparser.repository.NoticeRepository
 
 trait NoticeService[F[_]] {
   def toCSV: fs2.Pipe[F, Notice, String]
+  def getOJSID: fs2.Stream[F, OJSNoticeID]
   def getAll: fs2.Stream[F, Notice]
 }
 
@@ -72,6 +73,7 @@ object NoticeService:
           case lots => lots.map(lot => rowForLot(notice, lot))
       }
 
+      override def getOJSID: fs2.Stream[F, OJSNoticeID] = repo.getOJSID
       override def getAll: fs2.Stream[F, Notice] = repo.getAll
 
       override def toCSV: fs2.Pipe[F, Notice, String] = in => {
