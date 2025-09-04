@@ -15,7 +15,7 @@ import cats.data.EitherT
 import squants.market.*
 import squants.market.defaultMoneyContext.*
 import scala.util.Try
-import io.github.khanr1.tedawardparser.repository.xmlPath.XMLPathUtils.textAt
+//import io.github.khanr1.tedawardparser.repository.xmlPath.XMLPathUtils.textAt
 import parsers.ParserError
 
 trait XMLParser[F[_]]:

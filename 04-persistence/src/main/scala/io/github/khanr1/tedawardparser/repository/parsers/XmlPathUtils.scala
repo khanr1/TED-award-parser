@@ -1,13 +1,13 @@
 package io.github.khanr1.tedawardparser
 package repository
-package xmlPath
+package parsers
 
 import scala.xml.{Elem, Node, NodeSeq}
 import cats.syntax.all.*
-import io.github.khanr1.tedawardparser.repository.file.Matching.elemMatches
 import scala.util.CommandLineParser.ParseError
 import parsers.ParserError
-import xmlPath.{QName, Segment, XMLPath}
+//import xmlPath.{QName, Segment, XMLPath}
+import Matching.*
 
 /** Namespace bindings for resolution. Use when your XML uses prefixes. */
 final case class Ns(prefixToUri: Map[String, String]):

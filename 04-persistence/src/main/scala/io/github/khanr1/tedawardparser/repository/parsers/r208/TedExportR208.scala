@@ -1,13 +1,14 @@
 package io.github.khanr1.tedawardparser
 package repository
-package parsers.r208
+package parsers
+package r208
 
 import cats.data.EitherT
 import cats.Monad
 import cats.syntax.all.*
-import io.github.khanr1.tedawardparser.repository.xmlPath.Matching.attrValue
-import io.github.khanr1.tedawardparser.repository.file.r208.R208Path.*
-import io.github.khanr1.tedawardparser.repository.xmlPath.XMLPathUtils.*
+import io.github.khanr1.tedawardparser.repository.parsers.Matching.attrValue
+import io.github.khanr1.tedawardparser.repository.parsers.r208.R208Path.*
+import io.github.khanr1.tedawardparser.repository.parsers.XMLPathUtils.*
 import java.time.format.DateTimeFormatter
 import java.time.LocalDate
 import scala.util.Try

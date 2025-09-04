@@ -1,20 +1,21 @@
 package io.github.khanr1.tedawardparser
 package repository
-package parsers.r209
+package parsers
+package r209
 
 import cats.data.EitherT
 import cats.Monad
 import cats.syntax.all.*
-import io.github.khanr1.tedawardparser.repository.xmlPath.Matching.attrValue
-import io.github.khanr1.tedawardparser.repository.file.r209.*
-import io.github.khanr1.tedawardparser.repository.xmlPath.XMLPathUtils.*
+import io.github.khanr1.tedawardparser.repository.parsers.Matching.*
+import io.github.khanr1.tedawardparser.repository.parsers.r209.*
+import io.github.khanr1.tedawardparser.repository.parsers.XMLPathUtils.*
 import java.time.format.DateTimeFormatter
 import java.time.LocalDate
 import scala.util.Try
 import scala.xml.Elem
 import squants.market.*
 import squants.market.defaultMoneyContext.*
-import io.github.khanr1.tedawardparser.repository.file.r209.R209Path.ContractValue
+import io.github.khanr1.tedawardparser.repository.parsers.r209.R209Path.ContractValue
 import parsers.XMLParser
 import parsers.ParserError
 

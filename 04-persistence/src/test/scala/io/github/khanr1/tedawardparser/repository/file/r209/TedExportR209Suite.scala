@@ -13,7 +13,7 @@ import java.time.LocalDate
 import scala.xml.{Elem, XML}
 import squants.market.*
 import weaver.SimpleIOSuite
-import io.github.khanr1.tedawardparser.repository.file.XMLPathUtils.showAltPath
+import io.github.khanr1.tedawardparser.repository.parsers.XMLPathUtils.showAltPath
 import parsers.r209.TedExportR209
 import parsers.ParserError
 
