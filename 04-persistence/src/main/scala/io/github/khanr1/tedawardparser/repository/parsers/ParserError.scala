@@ -1,4 +1,4 @@
-package io.github.khanr1.tedawardparser.repository.file
+package io.github.khanr1.tedawardparser.repository.parsers
 
 import scala.util.control.NoStackTrace
 

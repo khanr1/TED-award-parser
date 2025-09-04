@@ -10,6 +10,7 @@ import cats.syntax.all.*
 import scala.collection.View.Elems
 import squants.Money
 import java.time.LocalDate
+import cats.data.EitherT
 
 object XMLFileRepository {
   def make[F[_]: cats.effect.Concurrent: Files](

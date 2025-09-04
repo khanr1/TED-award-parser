@@ -1,7 +1,7 @@
 package io.github.khanr1.tedawardparser
 package repository
-package file
-package r208
+package parsers.r208
+import xmlPath.XMLPath
 
 object R208Path {
 
