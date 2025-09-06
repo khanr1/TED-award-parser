@@ -221,7 +221,6 @@ class TedExportR209[F[_]: Monad] extends XMLParser[F] {
       .pure[F]
 
   }
-  // TODO
   override def parseTenderLotAwardedSupplierName(
       elem: Elem
   ): F[List[Either[ParserError, AwardedSupplierName]]] = {
