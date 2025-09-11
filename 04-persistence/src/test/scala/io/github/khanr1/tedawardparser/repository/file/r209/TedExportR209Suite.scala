@@ -8,13 +8,14 @@ import cats.syntax.all.*
 import Country.*
 import fs2.{text, Pipe}
 import fs2.io.file.{Path, Files}
-import io.github.khanr1.tedawardparser.repository.file.r209.*
 
 import java.time.LocalDate
 import scala.xml.{Elem, XML}
 import squants.market.*
 import weaver.SimpleIOSuite
-import io.github.khanr1.tedawardparser.repository.file.XMLPathUtils.showAltPath
+import io.github.khanr1.tedawardparser.repository.parsers.XMLPathUtils.showAltPath
+import parsers.r209.TedExportR209
+import parsers.ParserError
 
 object TedExportR209Suite extends SimpleIOSuite {
 
@@ -142,7 +143,10 @@ object TedExportR209Suite extends SimpleIOSuite {
             ParserError.MissingField(
               "Description",
               Some(
-                List(R209Path.ContractAwardInfo, R209Path.VeatAwardInfo)
+                List(
+                  parsers.r209.R209Path.ContractAwardInfo,
+                  parsers.r209.R209Path.VeatAwardInfo
+                )
                   .map(_.show)
                   .mkString("|")
               )
@@ -160,8 +164,8 @@ object TedExportR209Suite extends SimpleIOSuite {
           "Amount",
           Some(
             (List(
-              R209Path.ContractAwardInfo,
-              R209Path.VeatAwardInfo
+              parsers.r209.R209Path.ContractAwardInfo,
+              parsers.r209.R209Path.VeatAwardInfo
             )).showAltPath()
           )
         )
@@ -222,7 +226,7 @@ object TedExportR209Suite extends SimpleIOSuite {
     </ROOT>
     val io = parser.parseOJSNoticeID(xml)
 
-    expectMissingField(io, "OjsID", R209Path.OjsID)
+    expectMissingField(io, "OjsID", parsers.r209.R209Path.OjsID)
   }
 
   test(
@@ -237,7 +241,12 @@ object TedExportR209Suite extends SimpleIOSuite {
       </CODED_DATA_SECTION>
     </ROOT>
     val io = parser.parseOJSNoticeID(xml)
-    expectMissingField(io, "OjsID", R209Path.OjsID, " for empty value")
+    expectMissingField(
+      io,
+      "OjsID",
+      parsers.r209.R209Path.OjsID,
+      " for empty value"
+    )
   }
 
   test("Parsing the Publication Date") {
@@ -259,7 +268,11 @@ object TedExportR209Suite extends SimpleIOSuite {
     </ROOT>
     val io = parser.parsePublicationDate(xml)
 
-    expectMissingField(io, "Publication Date", R209Path.PublicationDate)
+    expectMissingField(
+      io,
+      "Publication Date",
+      parsers.r209.R209Path.PublicationDate
+    )
   }
 
   test(
@@ -276,7 +289,11 @@ object TedExportR209Suite extends SimpleIOSuite {
     </ROOT>
     val io = parser.parsePublicationDate(xml)
 
-    expectMissingField(io, "Publication Date", R209Path.PublicationDate)
+    expectMissingField(
+      io,
+      "Publication Date",
+      parsers.r209.R209Path.PublicationDate
+    )
   }
 
   test(
@@ -299,7 +316,7 @@ object TedExportR209Suite extends SimpleIOSuite {
       "Publication Date",
       "yyyyMMdd",
       "23/12/2020",
-      R209Path.PublicationDate
+      parsers.r209.R209Path.PublicationDate
     )
   }
 

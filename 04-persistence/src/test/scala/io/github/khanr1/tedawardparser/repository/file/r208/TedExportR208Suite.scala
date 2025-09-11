@@ -8,12 +8,14 @@ import cats.syntax.all.*
 import Country.*
 import fs2.{text, Pipe}
 import fs2.io.file.{Path, Files}
-import io.github.khanr1.tedawardparser.repository.file.r208.R208Path.*
+import io.github.khanr1.tedawardparser.repository.parsers.r208.R208Path.*
 import java.time.LocalDate
 import scala.xml.{Elem, XML}
 import squants.market.*
 import weaver.SimpleIOSuite
-import io.github.khanr1.tedawardparser.repository.file.XMLPathUtils.showAltPath
+import io.github.khanr1.tedawardparser.repository.parsers.XMLPathUtils.showAltPath
+import parsers.r208.TedExportR208
+import parsers.ParserError
 
 object TedExportR208Suite extends SimpleIOSuite {
 
@@ -290,7 +292,7 @@ object TedExportR208Suite extends SimpleIOSuite {
     </ROOT>
     val io = parser.parseOJSNoticeID(xml)
 
-    expectMissingField(io, "OjsID", R208Path.OjsID)
+    expectMissingField(io, "OjsID", parsers.r208.R208Path.OjsID)
   }
 
   test(
@@ -305,7 +307,12 @@ object TedExportR208Suite extends SimpleIOSuite {
       </CODED_DATA_SECTION>
     </ROOT>
     val io = parser.parseOJSNoticeID(xml)
-    expectMissingField(io, "OjsID", R208Path.OjsID, " for empty value")
+    expectMissingField(
+      io,
+      "OjsID",
+      parsers.r208.R208Path.OjsID,
+      " for empty value"
+    )
   }
 
   test("Parsing the Publication Date") {
@@ -327,7 +334,11 @@ object TedExportR208Suite extends SimpleIOSuite {
     </ROOT>
     val io = parser.parsePublicationDate(xml)
 
-    expectMissingField(io, "Publication Date", R208Path.PublicationDate)
+    expectMissingField(
+      io,
+      "Publication Date",
+      parsers.r208.R208Path.PublicationDate
+    )
   }
 
   test(
@@ -344,7 +355,11 @@ object TedExportR208Suite extends SimpleIOSuite {
     </ROOT>
     val io = parser.parsePublicationDate(xml)
 
-    expectMissingField(io, "Publication Date", R208Path.PublicationDate)
+    expectMissingField(
+      io,
+      "Publication Date",
+      parsers.r208.R208Path.PublicationDate
+    )
   }
 
   test(
@@ -367,7 +382,7 @@ object TedExportR208Suite extends SimpleIOSuite {
       "Publication Date",
       "yyyyMMdd",
       "23/12/2020",
-      R208Path.PublicationDate
+      parsers.r208.R208Path.PublicationDate
     )
   }
 

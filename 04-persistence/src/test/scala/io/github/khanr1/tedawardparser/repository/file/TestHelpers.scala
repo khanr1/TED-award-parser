@@ -10,6 +10,8 @@ import scala.xml.{XML, Elem}
 
 import weaver.Expectations.Helpers.{expect, failure}
 import weaver.Expectations
+import parsers.ParserError
+import io.github.khanr1.tedawardparser.repository.parsers.XMLPath
 
 // Ordering for comparing streams
 given ordering[A]: Ordering[Either[ParserError, A]] = Ordering.by(e =>
