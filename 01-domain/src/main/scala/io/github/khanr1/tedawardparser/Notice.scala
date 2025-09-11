@@ -17,3 +17,5 @@ object OJSNoticeID:
   extension (ojs: OJSNoticeID) def value: String = ojs
   given Eq[OJSNoticeID] = Eq.fromUniversalEquals
   given Show[OJSNoticeID] = Show.show(ojs => ojs.value)
+
+given Show[LocalDate] = Show.fromToString

@@ -52,3 +52,91 @@ trait XMLParser[F[_]]:
   def parseTenderLotJustification(
       e: Elem
   ): F[List[Either[ParserError, Justification]]]
+
+class FallBackParser[F[_]: Monad] extends XMLParser[F] {
+
+  override def dateFormatter: DateTimeFormatter =
+    DateTimeFormatter.ofPattern("yyyyMMdd")
+
+  override def parseOJSNoticeID(
+      elem: Elem
+  ): F[Either[ParserError, OJSNoticeID]] =
+    Monad[F].pure(Left(ParserError.Unknown("No parser fit for that file")))
+
+  override def parsePublicationDate(
+      elem: Elem
+  ): F[Either[ParserError, LocalDate]] =
+    Monad[F].pure(Left(ParserError.Unknown("No parser fit for that file")))
+
+  override def parseContractingAuthorityName(
+      elem: Elem
+  ): F[Either[ParserError, ContractingAuthorityName]] =
+    Monad[F].pure(Left(ParserError.Unknown("No parser fit for that file")))
+
+  override def parseContractingAuthorityCountry(
+      elem: Elem
+  ): F[Either[ParserError, Country]] =
+    Monad[F].pure(Left(ParserError.Unknown("No parser fit for that file")))
+
+  override def parseContractingAuthority(
+      elem: Elem
+  ): F[Either[ParserError, ContractingAuthority]] =
+    Monad[F].pure(Left(ParserError.Unknown("No parser fit for that file")))
+
+  override def parseContractID(
+      elem: Elem
+  ): F[List[Either[ParserError, ContractID]]] =
+    Monad[F].pure(
+      List(Left(ParserError.Unknown("No parser fit for that file")))
+    )
+
+  override def parseTenderLotTitle(
+      elem: Elem
+  ): F[List[Either[ParserError, Title]]] =
+    Monad[F].pure(
+      List(Left(ParserError.Unknown("No parser fit for that file")))
+    )
+
+  override def parseTenderLotDescription(
+      elem: Elem
+  ): F[List[Either[ParserError, Description]]] =
+    Monad[F].pure(
+      List(Left(ParserError.Unknown("No parser fit for that file")))
+    )
+
+  override def parseTenderLotValue(
+      elem: Elem
+  ): F[List[Either[ParserError, squants.Money]]] =
+    Monad[F].pure(
+      List(Left(ParserError.Unknown("No parser fit for that file")))
+    )
+
+  override def parseTenderLotAwardedSupplierName(
+      elem: Elem
+  ): F[List[Either[ParserError, AwardedSupplierName]]] =
+    Monad[F].pure(
+      List(Left(ParserError.Unknown("No parser fit for that file")))
+    )
+
+  override def parseTenderLotAwardedSupplierCountry(
+      elem: Elem
+  ): F[List[Either[ParserError, Country]]] =
+    Monad[F].pure(
+      List(Left(ParserError.Unknown("No parser fit for that file")))
+    )
+
+  override def parseTenderLotAwardedSupplier(
+      elem: Elem
+  ): F[List[Either[ParserError, AwardedSupplier]]] =
+    Monad[F].pure(
+      List(Left(ParserError.Unknown("No parser fit for that file")))
+    )
+
+  override def parseTenderLotJustification(
+      e: Elem
+  ): F[List[Either[ParserError, Justification]]] =
+    Monad[F].pure(
+      List(Left(ParserError.Unknown("No parser fit for that file")))
+    )
+
+}

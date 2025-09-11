@@ -23,65 +23,7 @@ object ParserSelect {
       elem.rootAttr("VERSION") match
         case Some(value) => new r209.TedExportR209[F]
         case None        => new r208.TedExportR208[F]
-    else
-      new XMLParser[F] {
-
-        override def dateFormatter: DateTimeFormatter = ???
-
-        override def parseOJSNoticeID(
-            elem: Elem
-        ): F[Either[ParserError, OJSNoticeID]] = ???
-
-        override def parsePublicationDate(
-            elem: Elem
-        ): F[Either[ParserError, LocalDate]] = ???
-
-        override def parseContractingAuthorityName(
-            elem: Elem
-        ): F[Either[ParserError, ContractingAuthorityName]] = ???
-
-        override def parseContractingAuthorityCountry(
-            elem: Elem
-        ): F[Either[ParserError, Country]] = ???
-
-        override def parseContractingAuthority(
-            elem: Elem
-        ): F[Either[ParserError, ContractingAuthority]] = ???
-
-        override def parseContractID(
-            elem: Elem
-        ): F[List[Either[ParserError, ContractID]]] = ???
-
-        override def parseTenderLotTitle(
-            elem: Elem
-        ): F[List[Either[ParserError, Title]]] = ???
-
-        override def parseTenderLotDescription(
-            elem: Elem
-        ): F[List[Either[ParserError, Description]]] = ???
-
-        override def parseTenderLotValue(
-            elem: Elem
-        ): F[List[Either[ParserError, Money]]] = ???
-
-        override def parseTenderLotAwardedSupplierName(
-            elem: Elem
-        ): F[List[Either[ParserError, AwardedSupplierName]]] = ???
-
-        override def parseTenderLotAwardedSupplierCountry(
-            elem: Elem
-        ): F[List[Either[ParserError, Country]]] = ???
-
-        override def parseTenderLotAwardedSupplier(
-            elem: Elem
-        ): F[List[Either[ParserError, AwardedSupplier]]] = ???
-
-        override def parseTenderLotJustification(
-            e: Elem
-        ): F[List[Either[ParserError, Justification]]] = ???
-
-      }
-
+    else new FallBackParser[F]
   }
 
 }
