@@ -27,14 +27,38 @@ private object Matching:
         val want = ns.prefixToUri.getOrElse(pfx, "")
         localOk && Option(el.namespace).contains(want)
 
-  /** Try attribute by "prefix:local" or "local" name. */
+  /** Try attribute by qualified name or by namespace URI + local name.
+    *
+    * Matching order:
+    *   1) Direct lookup using the textual qualified key (e.g., "cbc:id") when a prefix is present.
+    *   2) Namespace-aware scan: resolve the desired URI from `Ns` and scan attributes,
+    *      comparing each attribute's resolved URI and local name.
+    *   3) Fallback to unqualified local name (common for attributes serialized without a namespace).
+    */
   def attrValue(n: Node, q: QName, ns: Ns): Option[String] =
-    val key = q.prefix.fold(q.local)(p => s"$p:${q.local}")
-    n.attribute(key)
-      .map(_.text.trim)
-      .orElse(
-        n.attribute(q.local).map(_.text.trim)
-      ) // fallback when stored unqualified
+    // 1) Direct key lookup (prefix:local)
+    val direct: Option[String] =
+      q.prefix.map(pre => s"$pre:${q.local}").flatMap(k => n.attribute(k).map(_.text.trim))
+
+    // 2) Namespace-URI aware scan (robust to different prefix aliases)
+    val byUri: Option[String] = (q.prefix.flatMap(ns.prefixToUri.get), n) match
+      case (Some(wantUri), el: Elem) =>
+        def loop(md: scala.xml.MetaData): Option[String] = md match
+          case null => None
+          case pa: scala.xml.PrefixedAttribute =>
+            val sameLocal = pa.key == q.local
+            val uri = Option(el.scope).flatMap(s => Option(s.getURI(pa.pre)))
+            if sameLocal && uri.contains(wantUri) then Option(pa.value.text.trim)
+            else loop(pa.next)
+          case ua: scala.xml.UnprefixedAttribute => loop(ua.next)
+          case other => loop(other.next)
+        loop(el.attributes)
+      case _ => None
+
+    // 3) Fallback to unqualified local name
+    val unqualified: Option[String] = n.attribute(q.local).map(_.text.trim)
+
+    direct.orElse(byUri).orElse(unqualified)
 
 /** Utilities and extension methods for navigating XML using the lightweight
   * `XMLPath` DSL defined in `XMLPath.scala`.
@@ -64,8 +88,9 @@ private object Matching:
   *     the provided `Ns` mapping for that prefix.
   *   - Attributes: we try both qualified (`prefix:local`) and unqualified
   *     (`local`) forms to accommodate varying serializers.
-  *   - `WhereAttrEquals(name, value)` filters child elements by exact attribute
-  *     string equality; `Index(i)` selects the i-th candidate (0-based).
+  *   - `WhereAttrEquals(name, value)` filters the current candidate elements by
+  *     exact attribute string equality; `Index(i)` selects the i-th candidate
+  *     (0-based).
   *   - `textAt` collapses whitespace (`\s+` -> single space) and trims.
   *   - Error-returning variants surface `ParserError.MissingField` with the
   *     attempted path(s) for easier diagnostics.
@@ -198,11 +223,10 @@ object XMLPathUtils:
             )
 
           case (candidates, Segment.WhereAttrEquals(q, v)) =>
-            candidates.flatMap(n =>
-              n.child.collect {
-                case el: Elem if Matching.attrValue(el, q, ns).contains(v) => el
-              }
-            )
+            // Filter the current candidate elements by attribute equality
+            candidates.collect {
+              case el: Elem if Matching.attrValue(el, q, ns).contains(v) => el
+            }
           case (candidates, Segment.Index(i)) =>
             // keep only the i-th candidate element (0-based), if any
             val elems = candidates.collect { case el: Elem => el }
