@@ -49,14 +49,14 @@ object UBLPath {
   // ---------- Contracting Authority ----------
 
   // This is the path to all contracting authority OrgID
-  val pOrgId =
+  val pContractingOrgId =
     XMLPath(
       "cac:ContractingParty",
       "cac:Party",
       "cac:PartyIdentification",
       "cbc:ID"
     )
-  // This is the path of all the Organizations relevant for this tender (both authority and supplier)
+  // This is the path of all the Organizations relevant for this tender
   val pOrganizations =
     XMLPath(
       "ext:UBLExtensions",
@@ -66,7 +66,7 @@ object UBLPath {
       "efac:Organizations",
       "efac:Organization"
     )
-  // This is the parth in the registry where the orgID is
+  // This is the path in the registry where the orgID is
   val pOrgIdInRegistry =
     XMLPath("efac:Company", "cac:PartyIdentification", "cbc:ID")
   // This is where the name of the contracting authority is
@@ -80,5 +80,29 @@ object UBLPath {
       "cac:Country",
       "cbc:IdentificationCode"
     )
+
+  // Tenders Lot
+  val pTenderLot = XMLPath("cac:ProcurementProjectLot")
+  val pTenderLotID = XMLPath("cbc:ID")
+  val pTenderLotName = XMLPath("cac:ProcurementProject", "cbc:Name")
+  val pTenderLotDescription =
+    XMLPath("cac:ProcurementProject", "cbc:Description")
+
+  // Currency value and suppliers name
+  val pNoticeResult =
+    XMLPath(
+      "ext:UBLExtensions",
+      "ext:UBLExtension",
+      "ext:ExtensionContent",
+      "efext:EformsExtension",
+      "efac:NoticeResult"
+    )
+  val pLotResult = XMLPath("efac:LotResult")
+  val pTotalValue = XMLPath("cbc:TotalAmount")
+  val pLotTenderID = XMLPath("cbc:ID")
+
+  val pLotTender = XMLPath("efac:LotTender")
+  val pLotTenderValue = XMLPath("cac:LegalMonetaryTotal", "cbc:PayableAmount")
+  val pLotTenderingPartyID = XMLPath("efac:TenderingParty", "cbc:ID")
 
 }
