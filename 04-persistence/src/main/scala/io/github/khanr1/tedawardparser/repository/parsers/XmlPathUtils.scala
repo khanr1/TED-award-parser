@@ -29,16 +29,18 @@ private object Matching:
 
   /** Try attribute by qualified name or by namespace URI + local name.
     *
-    * Matching order:
-    *   1) Direct lookup using the textual qualified key (e.g., "cbc:id") when a prefix is present.
-    *   2) Namespace-aware scan: resolve the desired URI from `Ns` and scan attributes,
-    *      comparing each attribute's resolved URI and local name.
-    *   3) Fallback to unqualified local name (common for attributes serialized without a namespace).
+    * Matching order: 1) Direct lookup using the textual qualified key (e.g.,
+    * "cbc:id") when a prefix is present. 2) Namespace-aware scan: resolve the
+    * desired URI from `Ns` and scan attributes, comparing each attribute's
+    * resolved URI and local name. 3) Fallback to unqualified local name (common
+    * for attributes serialized without a namespace).
     */
   def attrValue(n: Node, q: QName, ns: Ns): Option[String] =
     // 1) Direct key lookup (prefix:local)
     val direct: Option[String] =
-      q.prefix.map(pre => s"$pre:${q.local}").flatMap(k => n.attribute(k).map(_.text.trim))
+      q.prefix
+        .map(pre => s"$pre:${q.local}")
+        .flatMap(k => n.attribute(k).map(_.text.trim))
 
     // 2) Namespace-URI aware scan (robust to different prefix aliases)
     val byUri: Option[String] = (q.prefix.flatMap(ns.prefixToUri.get), n) match
@@ -48,10 +50,11 @@ private object Matching:
           case pa: scala.xml.PrefixedAttribute =>
             val sameLocal = pa.key == q.local
             val uri = Option(el.scope).flatMap(s => Option(s.getURI(pa.pre)))
-            if sameLocal && uri.contains(wantUri) then Option(pa.value.text.trim)
+            if sameLocal && uri.contains(wantUri) then
+              Option(pa.value.text.trim)
             else loop(pa.next)
           case ua: scala.xml.UnprefixedAttribute => loop(ua.next)
-          case other => loop(other.next)
+          case other                             => loop(other.next)
         loop(el.attributes)
       case _ => None
 
@@ -71,10 +74,9 @@ private object Matching:
   * Key concepts
   *   - `XMLPath`: a vector of `Segment` steps (elements, an optional trailing
   *     attribute, positional index, and an attribute-equals predicate). Build
-  *     paths via the DSL (e.g., `p.idx(0)`, `p.whereAttr("id", "x")`).
-  *     Note: `XMLPath.parse` supports only element/attribute segments (with
-  *     optional namespace prefixes), not indices or predicates.
-  *     Examples:
+  *     paths via the DSL (e.g., `p.idx(0)`, `p.whereAttr("id", "x")`). Note:
+  *     `XMLPath.parse` supports only element/attribute segments (with optional
+  *     namespace prefixes), not indices or predicates. Examples:
   *     - `XMLPath.parse("a/b/c")` selects nested elements `a -> b -> c`.
   *     - `XMLPath.parse("a/b/@id")` selects attribute `id` on element `b`.
   *     - `XMLPath("a") / "b" / QName("ns", "c")` is namespace-aware.
@@ -320,10 +322,11 @@ object XMLPathUtils:
       */
     def allTextAt(
         validPath: List[XMLPath],
-        itemTag: XMLPath
+        itemTag: XMLPath,
+        ns: Ns = Ns.empty
     ): List[Option[String]] =
-      val children = validPath.flatMap(p => e.childrenAt(p))
-      children.map(elem => elem.textAt(itemTag))
+      val children = validPath.flatMap(p => e.childrenAt(p, ns))
+      children.map(elem => elem.textAt(itemTag, ns))
 
     /** Like `allTextAt`, but each missing value becomes a `ParserError`.
       *
@@ -349,9 +352,10 @@ object XMLPathUtils:
     def allTextAtOrError(
         validPath: List[XMLPath],
         itemTag: XMLPath,
-        field: String
+        field: String,
+        ns: Ns = Ns.empty
     ): List[Either[ParserError, String]] =
-      allTextAt(validPath, itemTag).map(option =>
+      allTextAt(validPath, itemTag, ns).map(option =>
         option.toRight(
           ParserError.MissingField(field, Some(validPath.showAltPath()))
         )

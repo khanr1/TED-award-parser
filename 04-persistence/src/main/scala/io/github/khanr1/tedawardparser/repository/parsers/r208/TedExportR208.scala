@@ -94,9 +94,25 @@ class TedExportR208[F[_]: Monad] extends XMLParser[F] {
     val children = elem.childrenAtAll(validPath)
     val paths = List(ContractNumber, LotNumber)
 
-    children
+    val contractID = children
       .map(e =>
-        e.firstTextOrError(paths, "Contract/Lot ID").map(s => ContractID(s))
+        e.firstTextOrError(List(ContractNumber), "Contract/Lot ID")
+          .map(s => ContractID(s))
+      )
+    val lotID = children
+      .map(e =>
+        e.firstTextOrError(List(LotNumber), "Contract/Lot ID")
+          .map(s => ContractID(s))
+      )
+    contractID
+      .zip(lotID)
+      .map(e =>
+        e match
+          case (Right(cID), Right(lID)) => Right(ContractID(s"$cID-lot:$lID"))
+          case (Left(cID), Right(lID))  => Right(ContractID(s"$lID"))
+          case (Right(cID), Left(lID))  => Right(ContractID(s"$cID"))
+          case (Left(cID), Left(lID)) =>
+            Left(ParserError.MissingField("Contract and LotID"))
       )
       .pure[F]
   }
@@ -104,7 +120,7 @@ class TedExportR208[F[_]: Monad] extends XMLParser[F] {
   override def parseTenderLotTitle(
       elem: Elem
   ): F[List[Either[ParserError, Title]]] = {
-    val validPath = List(ContractAwardInfo, VeatAwardInfo)
+    val validPath = List(AwardOfContract, ContractAwardInfo, VeatAwardInfo)
     val children = elem.childrenAtAll(validPath)
     val item = TitleContract
 

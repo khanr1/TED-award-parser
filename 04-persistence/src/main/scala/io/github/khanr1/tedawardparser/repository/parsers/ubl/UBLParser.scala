@@ -220,18 +220,78 @@ class UBLParser[F[_]: Monad] extends XMLParser[F] {
 
   override def parseTenderLotAwardedSupplierName(
       elem: Elem
-  ): F[List[Either[ParserError, AwardedSupplierName]]] = ???
+  ): F[List[Either[ParserError, AwardedSupplierName]]] = {
+    val lotResults: List[Elem] =
+      elem
+        .childrenAt(UBLPath.pNoticeResult ++ UBLPath.pLotTenderingParty, ns)
+    val TenderingPartiesOrgIDs =
+      lotResults.flatMap(x => x.textAt(UBLPath.pLotTenderingPartyOrgID, ns))
+    val organizations = elem
+      .childrenAt(UBLPath.pOrganizations, ns)
+    val orgIDs = organizations
+      .flatMap(e => e.textAt(UBLPath.pOrgIdInRegistry, ns))
+    val orgsMap = orgIDs
+      .zip(organizations.flatMap(e => e.textAt(UBLPath.pOrgNameInRegistry, ns)))
+      .toMap
+
+    TenderingPartiesOrgIDs
+      .map(x => orgsMap.get(x))
+      .map(x => x.toRight(ParserError.MissingField("Awarded Supplier Name")))
+      .map(either => either.map(AwardedSupplierName(_)))
+      .pure[F]
+
+  }
 
   override def parseTenderLotAwardedSupplierCountry(
       elem: Elem
-  ): F[List[Either[ParserError, Country]]] = ???
+  ): F[List[Either[ParserError, Country]]] = {
+    val lotResults: List[Elem] =
+      elem
+        .childrenAt(UBLPath.pNoticeResult ++ UBLPath.pLotTenderingParty, ns)
+    val TenderingPartiesOrgIDs =
+      lotResults.flatMap(x => x.textAt(UBLPath.pLotTenderingPartyOrgID, ns))
+    val organizations = elem
+      .childrenAt(UBLPath.pOrganizations, ns)
+    val orgIDs = organizations
+      .flatMap(e => e.textAt(UBLPath.pOrgIdInRegistry, ns))
+    val orgsMap = orgIDs
+      .zip(
+        organizations.flatMap(e => e.textAt(UBLPath.pOrgCountryInRegistry, ns))
+      )
+      .toMap
+
+    TenderingPartiesOrgIDs
+      .map(x => orgsMap.get(x))
+      .map(x => x.toRight(ParserError.MissingField("Awarded Supplier Name")))
+      .map(either => either.map(Country.toDomain(_)))
+      .pure[F]
+  }
 
   override def parseTenderLotAwardedSupplier(
       elem: Elem
-  ): F[List[Either[ParserError, AwardedSupplier]]] = ???
+  ): F[List[Either[ParserError, AwardedSupplier]]] = {
+    val awardedSupplierName = parseTenderLotAwardedSupplierName(elem)
+    val country = parseTenderLotAwardedSupplierCountry(elem)
+
+    (awardedSupplierName, country)
+      .mapN((l1, l2) =>
+        l1.zip(l2)
+          .map((maybeName, maybeCountry) =>
+            (maybeName, maybeCountry) match
+              case (Right(name), Right(country)) =>
+                Right(AwardedSupplier(name, country))
+              case (Left(e), _) => Left(e)
+              case (_, Left(e)) => Left(e)
+          )
+      )
+  }
 
   override def parseTenderLotJustification(
       e: Elem
-  ): F[List[Either[ParserError, Justification]]] = ???
+  ): F[List[Either[ParserError, Justification]]] =
+    List(
+      e.textAtOrError(UBLPath.pJustification, "Justification", ns)
+        .map(Justification(_))
+    ).pure[F]
 
 }

@@ -63,6 +63,9 @@ object R208Path {
       val ContractNumber = XMLPath("CONTRACT_NUMBER")
       val LotNumber = XMLPath("LOT_NUMBER")
 
+      // lot/contract Title ( used directly underAwardOfContractChildren)
+      val LotTitle = XMLPath("CONTRACT_TITLE")
+
       // awarded supplier (under AwardOfContract children)
       object EconomicOperator {
         val Base =

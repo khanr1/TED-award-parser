@@ -103,6 +103,14 @@ object UBLPath {
 
   val pLotTender = XMLPath("efac:LotTender")
   val pLotTenderValue = XMLPath("cac:LegalMonetaryTotal", "cbc:PayableAmount")
-  val pLotTenderingPartyID = XMLPath("efac:TenderingParty", "cbc:ID")
+  val pLotTenderingParty = XMLPath("efac:TenderingParty")
+  val pLotTenderingPartyOrgID =
+    XMLPath("efac:Tenderer", "cbc:ID")
+
+  val pJustification = XMLPath(
+    "cac:TenderingProcess",
+    "cac:ProcessJustification",
+    "cbc:ProcessReason"
+  )
 
 }

@@ -15,14 +15,17 @@ object ParserSelect {
 
   private val ted: String = "TED_EXPORT"
   private val version: XMLPath = XMLPath("TED_EXPORT").attr("VERSION")
+  private val ublLabel: String = "ContractAwardNotice"
 
   def detect[F[_]: Monad](elem: Elem): XMLParser[F] = {
     val isTedExport = elem.label == ted
+    val isUBL = elem.label == ublLabel
 
     if isTedExport then
       elem.rootAttr("VERSION") match
         case Some(value) => new r209.TedExportR209[F]
         case None        => new r208.TedExportR208[F]
+    else if isUBL then new ubl.UBLParser[F]
     else new FallBackParser[F]
   }
 
