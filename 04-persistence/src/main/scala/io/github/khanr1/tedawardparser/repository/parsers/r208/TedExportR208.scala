@@ -16,6 +16,7 @@ import scala.xml.Elem
 import squants.market.*
 import squants.market.defaultMoneyContext.*
 import cats.syntax.validated
+import io.github.khanr1.tedawardparser.repository.parsers.r208.R208Path.FormSection.ContractAward.LotTitle
 
 class TedExportR208[F[_]: Monad] extends XMLParser[F] {
 
@@ -120,14 +121,21 @@ class TedExportR208[F[_]: Monad] extends XMLParser[F] {
   override def parseTenderLotTitle(
       elem: Elem
   ): F[List[Either[ParserError, Title]]] = {
-    val validPath = List(AwardOfContract, ContractAwardInfo, VeatAwardInfo)
+
+    val lotTitle = elem
+      .childrenAt(AwardOfContract)
+      .map(x => x.textAtOrError(LotTitle, "Title").map(s => Title(s)))
+    val validPath = List(ContractAwardInfo, VeatAwardInfo)
     val children = elem.childrenAtAll(validPath)
     val item = TitleContract
 
-    children
-      .getTextsAt(validPath, item, "Title")
-      .map(e => e.map(s => Title(s)))
-      .pure[F]
+    if (lotTitle.length > 1 && lotTitle.forall(x => x.isRight)) then
+      lotTitle.pure[F]
+    else
+      children
+        .getTextsAt(validPath, item, "Title")
+        .map(e => e.map(s => Title(s)))
+        .pure[F]
 
   }
 
