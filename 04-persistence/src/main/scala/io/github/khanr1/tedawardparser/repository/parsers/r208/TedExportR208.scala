@@ -16,6 +16,7 @@ import scala.xml.Elem
 import squants.market.*
 import squants.market.defaultMoneyContext.*
 import cats.syntax.validated
+import io.github.khanr1.tedawardparser.repository.parsers.r208.R208Path.FormSection.ContractAward.LotTitle
 
 class TedExportR208[F[_]: Monad] extends XMLParser[F] {
 
@@ -94,9 +95,25 @@ class TedExportR208[F[_]: Monad] extends XMLParser[F] {
     val children = elem.childrenAtAll(validPath)
     val paths = List(ContractNumber, LotNumber)
 
-    children
+    val contractID = children
       .map(e =>
-        e.firstTextOrError(paths, "Contract/Lot ID").map(s => ContractID(s))
+        e.firstTextOrError(List(ContractNumber), "Contract/Lot ID")
+          .map(s => ContractID(s))
+      )
+    val lotID = children
+      .map(e =>
+        e.firstTextOrError(List(LotNumber), "Contract/Lot ID")
+          .map(s => ContractID(s))
+      )
+    contractID
+      .zip(lotID)
+      .map(e =>
+        e match
+          case (Right(cID), Right(lID)) => Right(ContractID(s"$cID-lot:$lID"))
+          case (Left(cID), Right(lID))  => Right(ContractID(s"$lID"))
+          case (Right(cID), Left(lID))  => Right(ContractID(s"$cID"))
+          case (Left(cID), Left(lID)) =>
+            Left(ParserError.MissingField("Contract and LotID"))
       )
       .pure[F]
   }
@@ -104,14 +121,21 @@ class TedExportR208[F[_]: Monad] extends XMLParser[F] {
   override def parseTenderLotTitle(
       elem: Elem
   ): F[List[Either[ParserError, Title]]] = {
+
+    val lotTitle = elem
+      .childrenAt(AwardOfContract)
+      .map(x => x.textAtOrError(LotTitle, "Title").map(s => Title(s)))
     val validPath = List(ContractAwardInfo, VeatAwardInfo)
     val children = elem.childrenAtAll(validPath)
     val item = TitleContract
 
-    children
-      .getTextsAt(validPath, item, "Title")
-      .map(e => e.map(s => Title(s)))
-      .pure[F]
+    if (lotTitle.length > 1 && lotTitle.forall(x => x.isRight)) then
+      lotTitle.pure[F]
+    else
+      children
+        .getTextsAt(validPath, item, "Title")
+        .map(e => e.map(s => Title(s)))
+        .pure[F]
 
   }
 

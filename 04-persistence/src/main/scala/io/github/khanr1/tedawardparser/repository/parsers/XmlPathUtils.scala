@@ -27,71 +27,128 @@ private object Matching:
         val want = ns.prefixToUri.getOrElse(pfx, "")
         localOk && Option(el.namespace).contains(want)
 
-  /** Try attribute by "prefix:local" or "local" name. */
+  /** Try attribute by qualified name or by namespace URI + local name.
+    *
+    * Matching order: 1) Direct lookup using the textual qualified key (e.g.,
+    * "cbc:id") when a prefix is present. 2) Namespace-aware scan: resolve the
+    * desired URI from `Ns` and scan attributes, comparing each attribute's
+    * resolved URI and local name. 3) Fallback to unqualified local name (common
+    * for attributes serialized without a namespace).
+    */
   def attrValue(n: Node, q: QName, ns: Ns): Option[String] =
-    val key = q.prefix.fold(q.local)(p => s"$p:${q.local}")
-    n.attribute(key)
-      .map(_.text.trim)
-      .orElse(
-        n.attribute(q.local).map(_.text.trim)
-      ) // fallback when stored unqualified
+    // 1) Direct key lookup (prefix:local)
+    val direct: Option[String] =
+      q.prefix
+        .map(pre => s"$pre:${q.local}")
+        .flatMap(k => n.attribute(k).map(_.text.trim))
+
+    // 2) Namespace-URI aware scan (robust to different prefix aliases)
+    val byUri: Option[String] = (q.prefix.flatMap(ns.prefixToUri.get), n) match
+      case (Some(wantUri), el: Elem) =>
+        def loop(md: scala.xml.MetaData): Option[String] = md match
+          case null => None
+          case pa: scala.xml.PrefixedAttribute =>
+            val sameLocal = pa.key == q.local
+            val uri = Option(el.scope).flatMap(s => Option(s.getURI(pa.pre)))
+            if sameLocal && uri.contains(wantUri) then
+              Option(pa.value.text.trim)
+            else loop(pa.next)
+          case ua: scala.xml.UnprefixedAttribute => loop(ua.next)
+          case other                             => loop(other.next)
+        loop(el.attributes)
+      case _ => None
+
+    // 3) Fallback to unqualified local name
+    val unqualified: Option[String] = n.attribute(q.local).map(_.text.trim)
+
+    direct.orElse(byUri).orElse(unqualified)
 
 /** Utilities and extension methods for navigating XML using the lightweight
   * `XMLPath` DSL defined in `XMLPath.scala`.
   *
   * This module provides XPath-like helpers over Scala XML (`scala.xml.Elem`),
-  * with first-class support for namespaces, attributes, basic predicates, and
-  * convenient fallbacks. It is intentionally small and predictable so that
-  * parsing logic remains explicit and testable.
+  * with first-class support for namespaces, attributes, indices, simple
+  * attribute predicates, and convenient fallbacks. It is intentionally small
+  * and predictable so that parsing logic remains explicit and testable.
   *
   * Key concepts
-  *   - `XMLPath`: a vector of `Segment` steps (elements, attribute at the end,
-  *     positional index, and a simple attribute-equals predicate). Build
-  *     complex paths via the DSL (e.g., `p.idx(0)`, `p.whereAttr("id", "x")`).
-  *     Note: `XMLPath.parse` supports only element/attribute segments (with
-  *     optional namespace prefixes), not indices or predicates. Examples:
+  *   - `XMLPath`: a vector of `Segment` steps (elements, an optional trailing
+  *     attribute, positional index, and an attribute-equals predicate). Build
+  *     paths via the DSL (e.g., `p.idx(0)`, `p.whereAttr("id", "x")`). Note:
+  *     `XMLPath.parse` supports only element/attribute segments (with optional
+  *     namespace prefixes), not indices or predicates. Examples:
   *     - `XMLPath.parse("a/b/c")` selects nested elements `a -> b -> c`.
-  *     - `XMLPath.parse("a/b/@id")` selects the attribute `id` on element `b`.
+  *     - `XMLPath.parse("a/b/@id")` selects attribute `id` on element `b`.
   *     - `XMLPath("a") / "b" / QName("ns", "c")` is namespace-aware.
   *   - `Ns`: a mapping from XML prefixes to namespace URIs used to resolve
-  *     qualified names during matching. If you do not use prefixes, pass
-  *     `Ns.empty`.
-  *
-  * Common operations
-  *   - `nodesAt(path)`: resolve the element portion of a path to matching
-  *     nodes.
-  *   - `textAt(path)`: read normalized text of the first matching node.
-  *   - `attrAt(path)`: read an attribute when the path ends with `@attr`.
-  *   - `firstText(paths)` / `firstAttr(paths)`: try alternatives until one
-  *     succeeds.
-  *   - `childrenAtWithFallback(primary, fallback)`: use fallback roots only
-  *     when primary roots yield no children.
-  *   - `extractManyWithFallback(...)` and `extractManyAttrWithFallback(...)`:
-  *     batch extraction helpers that also return `ParserError` on missing
-  *     fields.
+  *     qualified names during element matching and attribute lookups. If your
+  *     XML has no prefixes, pass `Ns.empty` and use unqualified names.
   *
   * Matching semantics and caveats
-  *   - Element matching uses local name and optional namespace URI via `Ns`.
-  *   - Attribute lookup tries both qualified (`prefix:local`) and unqualified
+  *   - Elements: we match the local name, and when a prefix is present in the
+  *     path, we also require that the element’s namespace URI equals the URI in
+  *     the provided `Ns` mapping for that prefix.
+  *   - Attributes: we try both qualified (`prefix:local`) and unqualified
   *     (`local`) forms to accommodate varying serializers.
-  *   - `WhereAttrEquals(name, value)` filters child elements by an attribute’s
-  *     exact string value.
-  *   - `Index(i)` selects the i-th matching sibling (0-based) among candidates.
+  *   - `WhereAttrEquals(name, value)` filters the current candidate elements by
+  *     exact attribute string equality; `Index(i)` selects the i-th candidate
+  *     (0-based).
   *   - `textAt` collapses whitespace (`\s+` -> single space) and trims.
   *   - Error-returning variants surface `ParserError.MissingField` with the
   *     attempted path(s) for easier diagnostics.
+  *   - Default namespaces: if your XML uses a default namespace (no prefix),
+  *     unprefixed path segments still match by local name only. To require a
+  *     specific namespace, supply a prefix in your path (e.g., `ns:Elem`) and
+  *     bind that prefix to the correct URI in `Ns`.
   *
-  * Example
+  * Examples (without namespaces)
   * {{{
-  *   import io.github.khanr1.tedawardparser.repository.parsers.*
-  *   val xml: scala.xml.Elem = // ...
-  *   val ns  = Ns(Map("ns" -> "urn:example"))
-  *   val idP = XMLPath.parse("root/ns:item/@id")
-  *   val t1  = XMLPath.parse("root/item/title")
-  *   val t2  = XMLPath.parse("root/altTitle")
+  * import io.github.khanr1.tedawardparser.repository.parsers.*
+  * val xml =
+  *   <root>
+  *     <items>
+  *       <item id="1"><title>A</title></item>
+  *       <item id="2"><title>B</title></item>
+  *     </items>
+  *     <title>Main</title>
+  *   </root>
+  * // Element selection
+  * xml.nodesAt(XMLPath.parse("root/items/item"))            // NodeSeq(<item id="1">..., <item id="2">...)
+  * // First text and alternatives
+  * xml.textAt(XMLPath.parse("root/title"))                  // Some("Main")
+  * xml.firstText(List(XMLPath.parse("root/alt"), XMLPath.parse("root/title"))) // Some("Main")
+  * // Attribute selection
+  * xml.attrAt(XMLPath.parse("root/items/item/@id"))         // Some("1") (first match)
+  * // Predicates and indices via DSL (not via parse)
+  * val firstItem = XMLPath("root", "items") / "item"      .idx(0)
+  * val item2ById = XMLPath("root", "items") / "item"      .whereAttr("id", "2")
+  * xml.textAt(firstItem / "title")                           // Some("A")
+  * xml.textAt(item2ById / "title")                          // Some("B")
+  * }}}
   *
-  *   val id: Option[String]     = xml.attrAt(idP, ns)
-  *   val title: Option[String]  = xml.firstText(List(t1, t2), ns)
+  * Examples (with namespaces)
+  * {{{
+  * import io.github.khanr1.tedawardparser.repository.parsers.*
+  * val ns = Ns(Map(
+  *   "cac" -> "urn:ex:cac",
+  *   "cbc" -> "urn:ex:cbc"
+  * ))
+  * val xml =
+  *   <r xmlns:cac="urn:ex:cac" xmlns:cbc="urn:ex:cbc">
+  *     <cac:Party>
+  *       <cac:Item cbc:id="X"><cbc:Title>Thing</cbc:Title></cac:Item>
+  *     </cac:Party>
+  *   </r>
+  * // Element selection and text
+  * xml.nodesAt(XMLPath.parse("r/cac:Party/cac:Item"), ns)          // NodeSeq(<cac:Item ...>)
+  * xml.textAt(XMLPath.parse("r/cac:Party/cac:Item/cbc:Title"), ns) // Some("Thing")
+  * // Attribute selection (qualified attribute name)
+  * xml.attrAt(XMLPath.parse("r/cac:Party/cac:Item/@cbc:id"), ns)   // Some("X")
+  * // Predicate using a qualified attribute and QName in the DSL
+  * val itemById =
+  *   (XMLPath("r") / QName("cac", "Party") / QName("cac", "Item"))
+  *     .whereAttr(QName("cbc", "id"), "X")
+  * xml.textAt(itemById / QName("cbc", "Title"), ns)               // Some("Thing")
   * }}}
   */
 object XMLPathUtils:
@@ -136,10 +193,17 @@ object XMLPathUtils:
   extension (e: Elem)
     /** Resolve element steps of a path to nodes (attributes ignored here).
       *
-      * Example:
+      * Examples (no namespaces):
       * {{{
       * val xml = <root><a><b id="1">x</b></a></root>
       * xml.nodesAt(XMLPath.parse("root/a/b")) // NodeSeq(<b id="1">x</b>)
+      * }}}
+      *
+      * Examples (with namespaces):
+      * {{{
+      * val xml = <root xmlns:ns="urn:x"><ns:a><ns:b id="1">x</ns:b></ns:a></root>
+      * val ns  = Ns(Map("ns" -> "urn:x"))
+      * xml.nodesAt(XMLPath.parse("root/ns:a/ns:b"), ns) // NodeSeq(<ns:b id="1">x</ns:b>)
       * }}}
       */
     def nodesAt(path: XMLPath, ns: Ns = Ns.empty): NodeSeq = {
@@ -161,11 +225,10 @@ object XMLPathUtils:
             )
 
           case (candidates, Segment.WhereAttrEquals(q, v)) =>
-            candidates.flatMap(n =>
-              n.child.collect {
-                case el: Elem if Matching.attrValue(el, q, ns).contains(v) => el
-              }
-            )
+            // Filter the current candidate elements by attribute equality
+            candidates.collect {
+              case el: Elem if Matching.attrValue(el, q, ns).contains(v) => el
+            }
           case (candidates, Segment.Index(i)) =>
             // keep only the i-th candidate element (0-based), if any
             val elems = candidates.collect { case el: Elem => el }
@@ -185,10 +248,17 @@ object XMLPathUtils:
 
     /** Read an attribute off the current element (no path walking).
       *
-      * Example:
+      * Examples (no namespaces):
       * {{{
       * val xml = <a id="42"/>
       * xml.rootAttr("id") // Some("42")
+      * }}}
+      *
+      * Examples (with namespaces):
+      * {{{
+      * val xml = <a xmlns:ns="urn:x" ns:id="42"/>
+      * // Attribute lookup accepts the literal qualified key
+      * xml.attribute("ns:id").map(_.text.trim) // Some("42")
       * }}}
       */
     def rootAttr(name: String): Option[String] =
@@ -196,10 +266,17 @@ object XMLPathUtils:
 
     /** First node’s normalized text at an element path. Collapses whitespace.
       *
-      * Example:
+      * Examples (no namespaces):
       * {{{
       * val xml = <root><title>  Hello\nWorld </title></root>
       * xml.textAt(XMLPath.parse("root/title")) // Some("Hello World")
+      * }}}
+      *
+      * Examples (with namespaces):
+      * {{{
+      * val xml = <r xmlns:cbc="urn:ex:cbc"><cbc:Title> Hi\nThere </cbc:Title></r>
+      * val ns  = Ns(Map("cbc" -> "urn:ex:cbc"))
+      * xml.textAt(XMLPath.parse("r/cbc:Title"), ns) // Some("Hi There")
       * }}}
       */
     def textAt(path: XMLPath, ns: Ns = Ns.empty): Option[String] =
@@ -226,24 +303,34 @@ object XMLPathUtils:
     /** For each parent path in `validPath`, collect children and read text at
       * `itemTag` under each.
       *
-      * Example:
+      * Examples (no namespaces):
       * {{{
       * val xml = <root><items><i>a</i><i>b</i></items></root>
       * val parents = List(XMLPath.parse("root/items"))
       * val itemTag = XMLPath.parse("i")
       * xml.allTextAt(parents, itemTag) // List(Some("a"), Some("b"))
       * }}}
+      *
+      * Examples (with namespaces):
+      * {{{
+      * val xml = <r xmlns:ns="u"><ns:items><ns:i>a</ns:i><ns:i>b</ns:i></ns:items></r>
+      * val ns  = Ns(Map("ns" -> "u"))
+      * val parents = List(XMLPath.parse("r/ns:items"))
+      * val itemTag = XMLPath.parse("ns:i")
+      * xml.allTextAt(parents, itemTag) // List(Some("a"), Some("b"))
+      * }}}
       */
     def allTextAt(
         validPath: List[XMLPath],
-        itemTag: XMLPath
+        itemTag: XMLPath,
+        ns: Ns = Ns.empty
     ): List[Option[String]] =
-      val children = validPath.flatMap(p => e.childrenAt(p))
-      children.map(elem => elem.textAt(itemTag))
+      val children = validPath.flatMap(p => e.childrenAt(p, ns))
+      children.map(elem => elem.textAt(itemTag, ns))
 
     /** Like `allTextAt`, but each missing value becomes a `ParserError`.
       *
-      * Example:
+      * Examples (no namespaces):
       * {{{
       * val xml = <root><items><i>a</i><i/></items></root>
       * val parents = List(XMLPath.parse("root/items"))
@@ -251,13 +338,24 @@ object XMLPathUtils:
       * xml.allTextAtOrError(parents, itemTag, field = "item")
       * // List(Right("a"), Left(MissingField("item", Some("root/items"))))
       * }}}
+      *
+      * Examples (with namespaces):
+      * {{{
+      * val xml = <r xmlns:ns="u"><ns:items><ns:i>a</ns:i><ns:i/></ns:items></r>
+      * val ns  = Ns(Map("ns" -> "u"))
+      * val parents = List(XMLPath.parse("r/ns:items"))
+      * val itemTag = XMLPath.parse("ns:i")
+      * xml.allTextAtOrError(parents, itemTag, field = "item")
+      * // List(Right("a"), Left(MissingField("item", Some("r/ns:items"))))
+      * }}}
       */
     def allTextAtOrError(
         validPath: List[XMLPath],
         itemTag: XMLPath,
-        field: String
+        field: String,
+        ns: Ns = Ns.empty
     ): List[Either[ParserError, String]] =
-      allTextAt(validPath, itemTag).map(option =>
+      allTextAt(validPath, itemTag, ns).map(option =>
         option.toRight(
           ParserError.MissingField(field, Some(validPath.showAltPath()))
         )
@@ -265,10 +363,17 @@ object XMLPathUtils:
 
     /** Attribute value when path ends with `@attr`.
       *
-      * Example:
+      * Examples (no namespaces):
       * {{{
       * val xml = <root><a id="7"/></root>
       * xml.attrAt(XMLPath.parse("root/a/@id")) // Some("7")
+      * }}}
+      *
+      * Examples (with namespaces):
+      * {{{
+      * val xml = <r xmlns:cbc="urn:ex:cbc"><a cbc:id="7"/></r>
+      * val ns  = Ns(Map("cbc" -> "urn:ex:cbc"))
+      * xml.attrAt(XMLPath.parse("r/a/@cbc:id"), ns) // Some("7")
       * }}}
       */
     def attrAt(path: XMLPath, ns: Ns = Ns.empty): Option[String] =
@@ -278,10 +383,17 @@ object XMLPathUtils:
 
     /** Children elements at the element path.
       *
-      * Example:
+      * Examples (no namespaces):
       * {{{
       * val xml = <root><a><b/><b/></a></root>
       * xml.childrenAt(XMLPath.parse("root/a")) // List(<b/>, <b/>)
+      * }}}
+      *
+      * Examples (with namespaces):
+      * {{{
+      * val xml = <r xmlns:ns="urn:x"><ns:a><ns:b/><ns:b/></ns:a></r>
+      * val ns  = Ns(Map("ns" -> "urn:x"))
+      * xml.childrenAt(XMLPath.parse("r/ns:a"), ns) // List(<ns:b/>, <ns:b/>)
       * }}}
       */
     def childrenAt(path: XMLPath, ns: Ns = Ns.empty): List[Elem] =
@@ -289,11 +401,19 @@ object XMLPathUtils:
 
     /** All child elements directly under any of the `under` paths.
       *
-      * Example:
+      * Examples (no namespaces):
       * {{{
       * val xml = <r><xs><x/><x/></xs><ys><y/></ys></r>
       * xml.selectUnder(List(XMLPath.parse("r/xs"), XMLPath.parse("r/ys")))
       * // List(<x/>, <x/>, <y/>)
+      * }}}
+      *
+      * Examples (with namespaces):
+      * {{{
+      * val xml = <r xmlns:ns="u"><ns:xs><ns:x/><ns:x/></ns:xs><ns:ys><ns:y/></ns:ys></r>
+      * val ns  = Ns(Map("ns" -> "u"))
+      * xml.selectUnder(List(XMLPath.parse("r/ns:xs"), XMLPath.parse("r/ns:ys")), ns)
+      * // List(<ns:x/>, <ns:x/>, <ns:y/>)
       * }}}
       */
     def selectUnder(under: List[XMLPath], ns: Ns = Ns.empty): List[Elem] =
@@ -301,12 +421,21 @@ object XMLPathUtils:
 
     /** First successful text among alternative paths.
       *
-      * Example:
+      * Examples (no namespaces):
       * {{{
       * val xml = <r><title2>T</title2></r>
       * val t1 = XMLPath.parse("r/title")
       * val t2 = XMLPath.parse("r/title2")
       * xml.firstText(List(t1, t2)) // Some("T")
+      * }}}
+      *
+      * Examples (with namespaces):
+      * {{{
+      * val xml = <r xmlns:cbc="u"><cbc:T2>T</cbc:T2></r>
+      * val ns  = Ns(Map("cbc" -> "u"))
+      * val p1  = XMLPath.parse("r/cbc:T1")
+      * val p2  = XMLPath.parse("r/cbc:T2")
+      * xml.firstText(List(p1, p2), ns) // Some("T")
       * }}}
       */
     def firstText(paths: List[XMLPath], ns: Ns = Ns.empty): Option[String] =
@@ -314,11 +443,19 @@ object XMLPathUtils:
 
     /** First successful text among alternative paths or `ParserError`.
       *
-      * Example:
+      * Examples (no namespaces):
       * {{{
       * val xml = <r/>
       * xml.firstTextOrError(List(XMLPath.parse("r/title")), "title")
       * // Left(MissingField("title", Some("r/title")))
+      * }}}
+      *
+      * Examples (with namespaces):
+      * {{{
+      * val xml = <r xmlns:cbc="u"/>
+      * val ns  = Ns(Map("cbc" -> "u"))
+      * xml.firstTextOrError(List(XMLPath.parse("r/cbc:Title")), "Title", ns)
+      * // Left(MissingField("Title", Some("r/cbc:Title")))
       * }}}
       */
     def firstTextOrError(
@@ -332,10 +469,17 @@ object XMLPathUtils:
 
     /** First successful attribute among alternative `@attr` paths.
       *
-      * Example:
+      * Examples (no namespaces):
       * {{{
       * val xml = <r><a id="1"/></r>
       * xml.firstAttr(List(XMLPath.parse("r/a/@id"))) // Some("1")
+      * }}}
+      *
+      * Examples (with namespaces):
+      * {{{
+      * val xml = <r xmlns:cbc="u"><a cbc:id="1"/></r>
+      * val ns  = Ns(Map("cbc" -> "u"))
+      * xml.firstAttr(List(XMLPath.parse("r/a/@cbc:id")), ns) // Some("1")
       * }}}
       */
     def firstAttr(paths: List[XMLPath], ns: Ns = Ns.empty): Option[String] =
@@ -343,11 +487,19 @@ object XMLPathUtils:
 
     /** First successful attribute among alternative `@attr` paths, else error.
       *
-      * Example:
+      * Examples (no namespaces):
       * {{{
       * val xml = <r/>
       * xml.firstAttrOrError(List(XMLPath.parse("r/a/@id")), "id")
       * // Left(MissingField("id", Some("r/a/@id")))
+      * }}}
+      *
+      * Examples (with namespaces):
+      * {{{
+      * val xml = <r xmlns:cbc="u"/>
+      * val ns  = Ns(Map("cbc" -> "u"))
+      * xml.firstAttrOrError(List(XMLPath.parse("r/a/@cbc:id")), "id", ns)
+      * // Left(MissingField("id", Some("r/a/@cbc:id")))
       * }}}
       */
     def firstAttrOrError(
@@ -361,11 +513,19 @@ object XMLPathUtils:
 
     /** Collect child elements for each path, concatenated.
       *
-      * Example:
+      * Examples (no namespaces):
       * {{{
       * val xml = <r><xs><x/></xs><ys><y/></ys></r>
       * xml.childrenAtAll(List(XMLPath.parse("r/xs"), XMLPath.parse("r/ys")))
       * // List(<x/>, <y/>)
+      * }}}
+      *
+      * Examples (with namespaces):
+      * {{{
+      * val xml = <r xmlns:ns="u"><ns:xs><ns:x/></ns:xs><ns:ys><ns:y/></ns:ys></r>
+      * val ns  = Ns(Map("ns" -> "u"))
+      * xml.childrenAtAll(List(XMLPath.parse("r/ns:xs"), XMLPath.parse("r/ns:ys")), ns)
+      * // List(<ns:x/>, <ns:y/>)
       * }}}
       */
     def childrenAtAll(paths: List[XMLPath], ns: Ns = Ns.empty): List[Elem] =
@@ -373,12 +533,21 @@ object XMLPathUtils:
 
     /** Try primary roots; if empty, try fallback roots (ONLY fallback).
       *
-      * Example:
+      * Examples (no namespaces):
       * {{{
       * val xml = <r><fallback><i/></fallback></r>
       * val prim = List(XMLPath.parse("r/primary"))
       * val fb   = List(XMLPath.parse("r/fallback"))
       * xml.childrenAtWithFallback(prim, fb) // List(<i/>)
+      * }}}
+      *
+      * Examples (with namespaces):
+      * {{{
+      * val xml = <r xmlns:ns="u"><ns:fb><i/></ns:fb></r>
+      * val ns  = Ns(Map("ns" -> "u"))
+      * val prim = List(XMLPath.parse("r/ns:prim"))
+      * val fb   = List(XMLPath.parse("r/ns:fb"))
+      * xml.childrenAtWithFallback(prim, fb, ns) // List(<i/>)
       * }}}
       */
     def childrenAtWithFallback(
@@ -392,13 +561,25 @@ object XMLPathUtils:
     /** Extract many text values from item paths under parent roots, with
       * fallback between primary and fallback root sets.
       *
-      * Example:
+      * Examples (no namespaces):
       * {{{
       * val xml = <r><fb><t>a</t><t>b</t></fb></r>
       * val primRoots = List(XMLPath.parse("r/prim"))
       * val fbRoots   = List(XMLPath.parse("r/fb"))
       * val item      = XMLPath.parse("t")
       * xml.extractManyWithFallback(primRoots, fbRoots, item, item, "t")
+      * // List(Right("a"), Right("b"))
+      * }}}
+      *
+      * Examples (with namespaces):
+      * {{{
+      * val xml = <r xmlns:ns="u"><ns:fb><ns:t>a</ns:t><ns:t>b</ns:t></ns:fb></r>
+      * val ns  = Ns(Map("ns" -> "u"))
+      * val primRoots = List(XMLPath.parse("r/ns:prim"))
+      * val fbRoots   = List(XMLPath.parse("r/ns:fb"))
+      * val primItem  = XMLPath.parse("ns:t")
+      * val fbItem    = XMLPath.parse("ns:t")
+      * xml.extractManyWithFallback(primRoots, fbRoots, primItem, fbItem, "t", ns)
       * // List(Right("a"), Right("b"))
       * }}}
       */
@@ -431,13 +612,24 @@ object XMLPathUtils:
       * `item` path should end with `@attr`. The `attrName` parameter is
       * informational; attribute selection is determined by `item`.
       *
-      * Example:
+      * Examples (no namespaces):
       * {{{
       * val xml = <r><fb><a id="1"/><a id="2"/></fb></r>
       * val primRoots = List(XMLPath.parse("r/prim"))
       * val fbRoots   = List(XMLPath.parse("r/fb"))
       * val item      = XMLPath.parse("a/@id")
       * xml.extractManyAttrWithFallback(primRoots, fbRoots, item, item, "id", "id")
+      * // List(Right("1"), Right("2"))
+      * }}}
+      *
+      * Examples (with namespaces):
+      * {{{
+      * val xml = <r xmlns:cbc="u"><fb><a cbc:id="1"/><a cbc:id="2"/></fb></r>
+      * val ns  = Ns(Map("cbc" -> "u"))
+      * val primRoots = List(XMLPath.parse("r/prim"))
+      * val fbRoots   = List(XMLPath.parse("r/fb"))
+      * val item      = XMLPath.parse("a/@cbc:id")
+      * xml.extractManyAttrWithFallback(primRoots, fbRoots, item, item, "id", "id", ns)
       * // List(Right("1"), Right("2"))
       * }}}
       */
@@ -472,12 +664,21 @@ object XMLPathUtils:
       * produce `ParserError.MissingField` with the attempted paths for easier
       * diagnostics.
       *
-      * Example:
+      * Examples (no namespaces):
       * {{{
       * val parents = List(<p><t>a</t></p>, <p/>)
       * val item    = XMLPath.parse("t")
       * parents.getTextsAt(List(XMLPath.parse("root")), item, "t")
       * // List(Right("a"), Left(MissingField("t", Some("root"))))
+      * }}}
+      *
+      * Examples (with namespaces):
+      * {{{
+      * val ns  = Ns(Map("ns" -> "u"))
+      * val parents = List(<p xmlns:ns="u"><ns:t>a</ns:t></p>, <p xmlns:ns="u"/>)
+      * val item    = XMLPath.parse("ns:t")
+      * parents.getTextsAt(List(XMLPath.parse("root/ns:p")), item, "t", ns)
+      * // List(Right("a"), Left(MissingField("t", Some("root/ns:p"))))
       * }}}
       */
     def getTextsAt(
@@ -494,12 +695,21 @@ object XMLPathUtils:
     /** For each parent element in the list, read attribute at `item` (must end
       * with `@attr`). Missing values produce a `ParserError`.
       *
-      * Example:
+      * Examples (no namespaces):
       * {{{
       * val parents = List(<p id="1"/>, <p/>)
       * val item    = XMLPath.parse("@id")
       * parents.getAttrsAt(List(XMLPath.parse("root")), item, "id")
       * // List(Right("1"), Left(MissingField("id", Some("root"))))
+      * }}}
+      *
+      * Examples (with namespaces):
+      * {{{
+      * val ns      = Ns(Map("cbc" -> "u"))
+      * val parents = List(<p xmlns:cbc="u" cbc:id="1"/>, <p xmlns:cbc="u"/>)
+      * val item    = XMLPath.parse("@cbc:id")
+      * parents.getAttrsAt(List(XMLPath.parse("root/p")), item, "id", ns)
+      * // List(Right("1"), Left(MissingField("id", Some("root/p"))))
       * }}}
       */
     def getAttrsAt(
