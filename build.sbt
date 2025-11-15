@@ -102,7 +102,7 @@ lazy val main =
   project
     .in(file("05-main"))
     .dependsOn(delivery % Cctt)
-    .dependsOn(core % Cctt)
+    .dependsOn(persistence % Cctt)
     .settings(testDependencies)
 
 lazy val frontend =
