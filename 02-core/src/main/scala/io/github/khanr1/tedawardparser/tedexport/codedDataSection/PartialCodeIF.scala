@@ -1,6 +1,6 @@
 package io.github.khanr1.tedawardparser
 package tedexport
-package shared
+package codedDataSection
 
 import io.github.khanr1.tedawardparser.common.Date
 import scala.util.control.NoStackTrace

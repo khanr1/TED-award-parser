@@ -1,15 +1,15 @@
-package io.github.khanr1.tedawardparser.repository.parsers.tedexport.shared
+package io.github.khanr1.tedawardparser.repository.parsers.tedexport.codedDataSection
 
 import cats.syntax.all.*
 import io.github.khanr1.tedawardparser.common.Country
-import io.github.khanr1.tedawardparser.repository.parsers.ParserError
-import io.github.khanr1.tedawardparser.repository.parsers.XMLDecoder
-import io.github.khanr1.tedawardparser.repository.parsers.XMLPath
-import io.github.khanr1.tedawardparser.repository.parsers.XMLPathUtils.attrAt
-import io.github.khanr1.tedawardparser.repository.parsers.XMLPathUtils.childrenAt
-import io.github.khanr1.tedawardparser.repository.parsers.XMLPathUtils.textAt
-import io.github.khanr1.tedawardparser.repository.parsers.XMLPathUtils.textAtOrError
-import io.github.khanr1.tedawardparser.tedexport.shared.*
+import io.github.khanr1.tedawardparser.repository.parsers.*
+import io.github.khanr1.tedawardparser.repository.parsers.XMLPathUtils.{
+  attrAt,
+  childrenAt,
+  textAt,
+  textAtOrError
+}
+import io.github.khanr1.tedawardparser.tedexport.codedDataSection.*
 
 import scala.xml.Elem
 import squants.market.*

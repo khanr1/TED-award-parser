@@ -1,6 +1,6 @@
 package io.github.khanr1.tedawardparser
 package tedexport
-package shared
+package codedDataSection
 
 final case class CodedDataSection(
     officialJournalReference: OfficialJournalReference,

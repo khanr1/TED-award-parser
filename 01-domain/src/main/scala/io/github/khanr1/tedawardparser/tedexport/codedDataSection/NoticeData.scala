@@ -1,5 +1,5 @@
 package io.github.khanr1.tedawardparser.tedexport
-package shared
+package codedDataSection
 
 import io.github.khanr1.tedawardparser.Country
 

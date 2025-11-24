@@ -2,28 +2,20 @@ package io.github.khanr1.tedawardparser
 package repository
 package parsers
 package tedexport
-package shared
+package codedDataSection
 
 import cats.syntax.all.*
 
-import io.github.khanr1.tedawardparser.tedexport.shared.PartialCodeIF
-import scala.xml.Elem
-import io.github.khanr1.tedawardparser.repository.parsers.XMLPathUtils.textAtOrError
 import io.github.khanr1.tedawardparser.common.Date
-import io.github.khanr1.tedawardparser.repository.parsers.XMLPathUtils.textAt
-import io.github.khanr1.tedawardparser.tedexport.shared.AuthorityType
+import io.github.khanr1.tedawardparser.repository.parsers.XMLPathUtils.{
+  attrAt,
+  textAtOrError,
+  textAt
+}
+import io.github.khanr1.tedawardparser.tedexport.codedDataSection.*
+
 import scala.xml.dtd.DocType
-import io.github.khanr1.tedawardparser.tedexport.shared.DocumentType
-import io.github.khanr1.tedawardparser.tedexport.shared.ContractNature
-import io.github.khanr1.tedawardparser.tedexport.shared.ProcedureType
-import io.github.khanr1.tedawardparser.tedexport.shared.RegulationScope
-import io.github.khanr1.tedawardparser.tedexport.shared.BidType
-import io.github.khanr1.tedawardparser.tedexport.shared.AwardCriterion
-import io.github.khanr1.tedawardparser.tedexport.shared.MainActivity
-import io.github.khanr1.tedawardparser.tedexport.shared.HeadingCode
-import io.github.khanr1.tedawardparser.tedexport.shared.InitiatorCode
-import io.github.khanr1.tedawardparser.repository.parsers.XMLPathUtils.attrAt
-import io.github.khanr1.tedawardparser.tedexport.shared.Directive
+import scala.xml.Elem
 
 object PartialCodeIFDataDecoder {
 

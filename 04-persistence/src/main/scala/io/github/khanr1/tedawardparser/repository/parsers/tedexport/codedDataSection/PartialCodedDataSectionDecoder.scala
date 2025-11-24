@@ -2,15 +2,16 @@ package io.github.khanr1.tedawardparser
 package repository
 package parsers
 package tedexport
-package shared
+package codedDataSection
 
 import scala.xml.Elem
-import io.github.khanr1.tedawardparser.tedexport.shared.*
-import io.github.khanr1.tedawardparser.repository.parsers.tedexport.shared.PartialOfficialJournalReferenceDecoder.given
-import io.github.khanr1.tedawardparser.repository.parsers.tedexport.shared.PartialNoticeDataDecoder.given
-import io.github.khanr1.tedawardparser.repository.parsers.tedexport.shared.PartialCodeIFDataDecoder.given
+import common.*
+import io.github.khanr1.tedawardparser.tedexport.codedDataSection.*
+import io.github.khanr1.tedawardparser.repository.parsers.tedexport.codedDataSection.PartialOfficialJournalReferenceDecoder.given
+import io.github.khanr1.tedawardparser.repository.parsers.tedexport.codedDataSection.PartialNoticeDataDecoder.given
+import io.github.khanr1.tedawardparser.repository.parsers.tedexport.codedDataSection.PartialCodeIFDataDecoder.given
 
-import io.github.khanr1.tedawardparser.tedexport.shared.PartialOfficialJournalReference
+import io.github.khanr1.tedawardparser.tedexport.codedDataSection.PartialOfficialJournalReference
 import io.github.khanr1.tedawardparser.models.PartialNotice
 
 object PartialCodedDataSectionDecoder {

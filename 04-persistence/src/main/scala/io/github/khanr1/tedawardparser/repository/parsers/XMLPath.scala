@@ -24,10 +24,12 @@ import scala.xml.XML
   *     `XMLPathUtils.nodesAt(..., ns)` that consult the `Ns` mapping).
   *
   * Examples
-  * {{{
+ *
+  * ```scala
   * QName("id").toString            // "id"
   * QName("cbc", "Title").toString  // "cbc:Title"
-  * }}}
+ *
+  * ```
   */
 final case class QName(prefix: Option[String], local: String):
   override def toString(): String = prefix.fold(local)(p => s"$p:$local")
@@ -48,7 +50,8 @@ object QName:
   *   - `Index(i)`: select the i-th candidate among siblings (0-based).
   *
   * Examples
-  * {{{
+ *
+  * ```scala
   * import io.github.khanr1.tedawardparser.repository.parsers.*
   * // Unqualified
   * val p1 = XMLPath("root") / "items" / "item"          // Elem,Elem,Elem
@@ -58,7 +61,8 @@ object QName:
   * // With namespaces (qualify using QName)
   * val p4 = (XMLPath("r") / QName("cac", "Party") / QName("cac", "Item"))
   * val p5 = (p4 / QName("cbc", "Title")).attr(QName("cbc", "lang"))
-  * }}}
+ *
+  * ```
   */
 enum Segment:
   case Elem(name: QName)
@@ -80,22 +84,26 @@ enum Segment:
   *     `Ns` mapping.
   *
   * Examples (without namespaces)
-  * {{{
+ *
+  * ```scala
   * import io.github.khanr1.tedawardparser.repository.parsers.*
   * val p  = XMLPath("root", "items", "item")             // root/items/item
   * val pA = p.attr("id")                                   // root/items/item/@id
   * val pT = (p.idx(0) / "title")                          // root/items/item/[0]/title
   * val pF = (p.whereAttr("type", "primary") / "title")   // root/items/item[type='primary']/title
-  * }}}
+ *
+  * ```
   *
   * Examples (with namespaces)
-  * {{{
+ *
+  * ```scala
   * import io.github.khanr1.tedawardparser.repository.parsers.*
   * val item = XMLPath("r") / QName("cac", "Party") / QName("cac", "Item")
   * val titl = item / QName("cbc", "Title")
   * val lang = titl.attr(QName("cbc", "languageID"))        // r/cac:Party/cac:Item/cbc:Title/@cbc:languageID
   * val filt = item.whereAttr(QName("cbc", "id"), "X")     // r/cac:Party/cac:Item[cbc:id='X']
-  * }}}
+ *
+  * ```
   */
 opaque type XMLPath = Vector[Segment]
 
@@ -108,14 +116,18 @@ object XMLPath:
   /** Construct a simple element path from a head element and 0+ child names.
     *
     * Examples (no namespaces):
-    * {{{
+ *
+    * ```scala
     * val p: XMLPath = XMLPath("root", "a", "b") // root/a/b
-    * }}}
+ *
+    * ```
     *
     * Examples (with namespaces via `QName`):
-    * {{{
+ *
+    * ```scala
     * val p = (XMLPath("r") / QName("ns", "A") / QName("ns", "B")) // r/ns:A/ns:B
-    * }}}
+ *
+    * ```
     */
   def apply(first: String, rest: String*): XMLPath =
     val head = splitQName(first)
@@ -133,11 +145,13 @@ object XMLPath:
     *     (`idx`, `whereAttr`).
     *
     * Examples
-    * {{{
+ *
+    * ```scala
     * XMLPath.parse("root/items/item")              // Elem segments only
     * XMLPath.parse("root/items/item/@id")          // Trailing attribute
     * XMLPath.parse("r/cac:Party/cac:Item/@cbc:id") // Namespaced segments
-    * }}}
+ *
+    * ```
     */
   def parse(s: String): XMLPath = {
     val parts: Vector[String] = s.split('/').toVector.filter(x => x.nonEmpty)
@@ -174,30 +188,36 @@ object XMLPath:
     /** Append an element by local name.
       *
       * Examples:
-      * {{{
+ *
+      * ```scala
       * XMLPath("root") / "a" / "b"              // root/a/b
-      * }}}
+ *
+      * ```
       */
     infix def /(child: String): XMLPath = p :+ Segment.Elem(QName(child))
 
     /** Append an element by qualified name.
       *
       * Examples (with namespaces):
-      * {{{
+ *
+      * ```scala
       * XMLPath("r") / QName("cac", "Party") / QName("cac", "Item")
       * // r/cac:Party/cac:Item
-      * }}}
+ *
+      * ```
       */
     infix def /(child: QName): XMLPath = p :+ Segment.Elem(child)
 
     /** Append an attribute segment (to be used as the final step).
       *
       * Examples:
-      * {{{
+ *
+      * ```scala
       * XMLPath("a", "b").attr("id")                     // a/b/@id
       * (XMLPath("r") / QName("cbc", "Title")).attr(QName("cbc", "lang"))
       * // r/cbc:Title/@cbc:lang
-      * }}}
+ *
+      * ```
       */
     infix def attr(attr: String): XMLPath = p :+ Segment.Attr(QName(attr))
 
@@ -207,9 +227,11 @@ object XMLPath:
     /** Select the i-th matching sibling (0-based) among current candidates.
       *
       * Examples:
-      * {{{
+ *
+      * ```scala
       * (XMLPath("root") / "items" / "item").idx(0)     // root/items/item/[0]
-      * }}}
+ *
+      * ```
       */
     infix def idx(i: Int): XMLPath = p :+ Segment.Index(i)
 
@@ -217,11 +239,13 @@ object XMLPath:
       * (XPath-style predicate applied to the preceding step).
       *
       * Examples:
-      * {{{
+ *
+      * ```scala
       * XMLPath("items").whereAttr("type", "primary")        // items[type='primary']
       * (XMLPath("r") / QName("cac", "Item")).whereAttr(QName("cbc", "id"), "X")
       * // r/cac:Item[cbc:id='X']
-      * }}}
+ *
+      * ```
       */
     infix def whereAttr(name: String, value: String): XMLPath =
       p :+ Segment.WhereAttrEquals(QName(name), value)

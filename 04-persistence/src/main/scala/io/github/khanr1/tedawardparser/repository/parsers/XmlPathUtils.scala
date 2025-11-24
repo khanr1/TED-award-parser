@@ -102,7 +102,8 @@ private object Matching:
   *     bind that prefix to the correct URI in `Ns`.
   *
   * Examples (without namespaces)
-  * {{{
+ *
+  * ```scala
   * import io.github.khanr1.tedawardparser.repository.parsers.*
   * val xml =
   *   <root>
@@ -124,10 +125,12 @@ private object Matching:
   * val item2ById = XMLPath("root", "items") / "item"      .whereAttr("id", "2")
   * xml.textAt(firstItem / "title")                           // Some("A")
   * xml.textAt(item2ById / "title")                          // Some("B")
-  * }}}
+ *
+  * ```
   *
   * Examples (with namespaces)
-  * {{{
+ *
+  * ```scala
   * import io.github.khanr1.tedawardparser.repository.parsers.*
   * val ns = Ns(Map(
   *   "cac" -> "urn:ex:cac",
@@ -149,7 +152,8 @@ private object Matching:
   *   (XMLPath("r") / QName("cac", "Party") / QName("cac", "Item"))
   *     .whereAttr(QName("cbc", "id"), "X")
   * xml.textAt(itemById / QName("cbc", "Title"), ns)               // Some("Thing")
-  * }}}
+ *
+  * ```
   */
 object XMLPathUtils:
 
@@ -157,12 +161,14 @@ object XMLPathUtils:
     /** True if the path ends with an attribute segment.
       *
       * Example:
-      * {{{
+ *
+      * ```scala
       * val p1 = XMLPath.parse("a/b")
       * val p2 = XMLPath.parse("a/b/@id")
       * p1.isAttrPath // false
       * p2.isAttrPath // true
-      * }}}
+ *
+      * ```
       */
     def isAttrPath: Boolean =
       p.segments.lastOption.exists(_.isInstanceOf[Segment.Attr])
@@ -171,10 +177,12 @@ object XMLPathUtils:
       * present).
       *
       * Example:
-      * {{{
+ *
+      * ```scala
       * val p  = XMLPath.parse("a/b/@id")
       * val es = p.elementPrefix // Vector(Elem(QName(None,"a")), Elem(QName(None,"b")))
-      * }}}
+ *
+      * ```
       */
     def elementPrefix: Vector[Segment] =
       if isAttrPath then p.segments.dropRight(1) else p.segments
@@ -182,10 +190,12 @@ object XMLPathUtils:
     /** The attribute qualified-name when the path ends with `@attr`.
       *
       * Example:
-      * {{{
+ *
+      * ```scala
       * XMLPath.parse("a/b/@id").attrQName.map(_.local) // Some("id")
       * XMLPath.parse("a/b").attrQName                 // None
-      * }}}
+ *
+      * ```
       */
     def attrQName: Option[QName] =
       p.segments.lastOption.collect { case Segment.Attr(q) => q }
@@ -194,17 +204,21 @@ object XMLPathUtils:
     /** Resolve element steps of a path to nodes (attributes ignored here).
       *
       * Examples (no namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <root><a><b id="1">x</b></a></root>
       * xml.nodesAt(XMLPath.parse("root/a/b")) // NodeSeq(<b id="1">x</b>)
-      * }}}
+ *
+      * ```
       *
       * Examples (with namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <root xmlns:ns="urn:x"><ns:a><ns:b id="1">x</ns:b></ns:a></root>
       * val ns  = Ns(Map("ns" -> "urn:x"))
       * xml.nodesAt(XMLPath.parse("root/ns:a/ns:b"), ns) // NodeSeq(<ns:b id="1">x</ns:b>)
-      * }}}
+ *
+      * ```
       */
     def nodesAt(path: XMLPath, ns: Ns = Ns.empty): NodeSeq = {
       // 1) Detect if the *last* segment is an attribute; if so, we'll handle it after walking
@@ -216,26 +230,33 @@ object XMLPathUtils:
         path.segments.dropRight(if lastAttr.isDefined then 1 else 0)
       // 3) Walk the DOM starting with the current element as the only candidate
       val walked: NodeSeq =
-        walkSegments.foldLeft(NodeSeq.fromSeq(Seq(e: Node))) {
-          case (candidates, Segment.Elem(q)) =>
-            candidates.flatMap(n =>
-              n.child.collect {
-                case el: Elem if elemMatches(el, q, ns) => el
-              }
-            )
+        walkSegments.zipWithIndex.foldLeft(NodeSeq.fromSeq(Seq(e: Node))) {
+          case (candidates, (Segment.Elem(q), idx)) =>
+            // Allow the first segment to match the current element (absolute-style paths),
+            // otherwise match against children (relative-style paths).
+            val selfMatches: Seq[Elem] =
+              candidates.collect { case el: Elem if elemMatches(el, q, ns) => el }
+            val childMatches: Seq[Elem] =
+              candidates.flatMap(n =>
+                n.child.collect { case el: Elem if elemMatches(el, q, ns) => el }
+              )
+            val matched =
+              if idx == 0 && selfMatches.nonEmpty then selfMatches
+              else childMatches
+            NodeSeq.fromSeq(matched)
 
-          case (candidates, Segment.WhereAttrEquals(q, v)) =>
+          case (candidates, (Segment.WhereAttrEquals(q, v), _)) =>
             // Filter the current candidate elements by attribute equality
             candidates.collect {
               case el: Elem if Matching.attrValue(el, q, ns).contains(v) => el
             }
-          case (candidates, Segment.Index(i)) =>
+          case (candidates, (Segment.Index(i), _)) =>
             // keep only the i-th candidate element (0-based), if any
             val elems = candidates.collect { case el: Elem => el }
             if i >= 0 && i < elems.length then NodeSeq.fromSeq(Seq(elems(i)))
             else NodeSeq.Empty
 
-          case (candidates, _: Segment.Attr) =>
+          case (candidates, (_: Segment.Attr, _)) =>
             // Attr at non-terminal position is ignored here; terminal Attr is handled below
             candidates
         }
@@ -249,35 +270,47 @@ object XMLPathUtils:
     /** Read an attribute off the current element (no path walking).
       *
       * Examples (no namespaces):
-      * {{{
-      * val xml = <a id="42"/>
-      * xml.rootAttr("id") // Some("42")
-      * }}}
-      *
-      * Examples (with namespaces):
-      * {{{
-      * val xml = <a xmlns:ns="urn:x" ns:id="42"/>
-      * // Attribute lookup accepts the literal qualified key
-      * xml.attribute("ns:id").map(_.text.trim) // Some("42")
-      * }}}
-      */
+ *
+ * ```scala
+ * val xml = <root id="42"/>
+ * xml.rootAttr("id") // Some("42")
+ *
+ * ```
+ *
+ * Examples (with namespaces):
+ *
+ * ```scala
+ * val xml = <root xmlns:ns="urn:x" ns:id="42"/>
+ * // Attribute lookup accepts the literal qualified key
+ * xml.attribute("ns:id").map(_.text.trim) // Some("42")
+ *
+ * ```
+ */
     def rootAttr(name: String): Option[String] =
       e.attribute(name).map(_.text.trim).filter(_.nonEmpty)
 
     /** First node’s normalized text at an element path. Collapses whitespace.
       *
       * Examples (no namespaces):
-      * {{{
-      * val xml = <root><title>  Hello\nWorld </title></root>
+ *
+      * ```scala
+      * val xml =
+      *   <root>
+      *     <title>  Hello
+      *       World </title>
+      *   </root>
       * xml.textAt(XMLPath.parse("root/title")) // Some("Hello World")
-      * }}}
+ *
+      * ```
       *
       * Examples (with namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <r xmlns:cbc="urn:ex:cbc"><cbc:Title> Hi\nThere </cbc:Title></r>
       * val ns  = Ns(Map("cbc" -> "urn:ex:cbc"))
       * xml.textAt(XMLPath.parse("r/cbc:Title"), ns) // Some("Hi There")
-      * }}}
+ *
+      * ```
       */
     def textAt(path: XMLPath, ns: Ns = Ns.empty): Option[String] =
       nodesAt(path, ns).headOption
@@ -287,11 +320,13 @@ object XMLPathUtils:
     /** First node’s normalized text at element path or `ParserError`.
       *
       * Example:
-      * {{{
+ *
+      * ```scala
       * val xml = <root/>
       * xml.textAtOrError(XMLPath.parse("root/title"), field = "title")
       * // Left(ParserError.MissingField("title", Some("root/title")))
-      * }}}
+ *
+      * ```
       */
     def textAtOrError(
         path: XMLPath,
@@ -304,21 +339,25 @@ object XMLPathUtils:
       * `itemTag` under each.
       *
       * Examples (no namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <root><items><i>a</i><i>b</i></items></root>
       * val parents = List(XMLPath.parse("root/items"))
       * val itemTag = XMLPath.parse("i")
       * xml.allTextAt(parents, itemTag) // List(Some("a"), Some("b"))
-      * }}}
+ *
+      * ```
       *
       * Examples (with namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <r xmlns:ns="u"><ns:items><ns:i>a</ns:i><ns:i>b</ns:i></ns:items></r>
       * val ns  = Ns(Map("ns" -> "u"))
       * val parents = List(XMLPath.parse("r/ns:items"))
       * val itemTag = XMLPath.parse("ns:i")
       * xml.allTextAt(parents, itemTag) // List(Some("a"), Some("b"))
-      * }}}
+ *
+      * ```
       */
     def allTextAt(
         validPath: List[XMLPath],
@@ -331,23 +370,27 @@ object XMLPathUtils:
     /** Like `allTextAt`, but each missing value becomes a `ParserError`.
       *
       * Examples (no namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <root><items><i>a</i><i/></items></root>
       * val parents = List(XMLPath.parse("root/items"))
       * val itemTag = XMLPath.parse("i")
       * xml.allTextAtOrError(parents, itemTag, field = "item")
       * // List(Right("a"), Left(MissingField("item", Some("root/items"))))
-      * }}}
+ *
+      * ```
       *
       * Examples (with namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <r xmlns:ns="u"><ns:items><ns:i>a</ns:i><ns:i/></ns:items></r>
       * val ns  = Ns(Map("ns" -> "u"))
       * val parents = List(XMLPath.parse("r/ns:items"))
       * val itemTag = XMLPath.parse("ns:i")
       * xml.allTextAtOrError(parents, itemTag, field = "item")
       * // List(Right("a"), Left(MissingField("item", Some("r/ns:items"))))
-      * }}}
+ *
+      * ```
       */
     def allTextAtOrError(
         validPath: List[XMLPath],
@@ -364,17 +407,21 @@ object XMLPathUtils:
     /** Attribute value when path ends with `@attr`.
       *
       * Examples (no namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <root><a id="7"/></root>
       * xml.attrAt(XMLPath.parse("root/a/@id")) // Some("7")
-      * }}}
+ *
+      * ```
       *
       * Examples (with namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <r xmlns:cbc="urn:ex:cbc"><a cbc:id="7"/></r>
       * val ns  = Ns(Map("cbc" -> "urn:ex:cbc"))
       * xml.attrAt(XMLPath.parse("r/a/@cbc:id"), ns) // Some("7")
-      * }}}
+ *
+      * ```
       */
     def attrAt(path: XMLPath, ns: Ns = Ns.empty): Option[String] =
       path.attrQName.flatMap { q =>
@@ -384,37 +431,48 @@ object XMLPathUtils:
     /** Children elements at the element path.
       *
       * Examples (no namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <root><a><b/><b/></a></root>
       * xml.childrenAt(XMLPath.parse("root/a")) // List(<b/>, <b/>)
-      * }}}
+ *
+      * ```
       *
       * Examples (with namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <r xmlns:ns="urn:x"><ns:a><ns:b/><ns:b/></ns:a></r>
       * val ns  = Ns(Map("ns" -> "urn:x"))
       * xml.childrenAt(XMLPath.parse("r/ns:a"), ns) // List(<ns:b/>, <ns:b/>)
-      * }}}
+ *
+      * ```
       */
     def childrenAt(path: XMLPath, ns: Ns = Ns.empty): List[Elem] =
-      nodesAt(path, ns).collect { case el: Elem => el }.toList
+      nodesAt(path, ns)
+        .collect { case el: Elem => el.child.collect { case c: Elem => c } }
+        .flatten
+        .toList
 
     /** All child elements directly under any of the `under` paths.
       *
       * Examples (no namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <r><xs><x/><x/></xs><ys><y/></ys></r>
       * xml.selectUnder(List(XMLPath.parse("r/xs"), XMLPath.parse("r/ys")))
       * // List(<x/>, <x/>, <y/>)
-      * }}}
+ *
+      * ```
       *
       * Examples (with namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <r xmlns:ns="u"><ns:xs><ns:x/><ns:x/></ns:xs><ns:ys><ns:y/></ns:ys></r>
       * val ns  = Ns(Map("ns" -> "u"))
       * xml.selectUnder(List(XMLPath.parse("r/ns:xs"), XMLPath.parse("r/ns:ys")), ns)
       * // List(<ns:x/>, <ns:x/>, <ns:y/>)
-      * }}}
+ *
+      * ```
       */
     def selectUnder(under: List[XMLPath], ns: Ns = Ns.empty): List[Elem] =
       under.flatMap(p => e.childrenAt(p, ns))
@@ -422,21 +480,25 @@ object XMLPathUtils:
     /** First successful text among alternative paths.
       *
       * Examples (no namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <r><title2>T</title2></r>
       * val t1 = XMLPath.parse("r/title")
       * val t2 = XMLPath.parse("r/title2")
       * xml.firstText(List(t1, t2)) // Some("T")
-      * }}}
+ *
+      * ```
       *
       * Examples (with namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <r xmlns:cbc="u"><cbc:T2>T</cbc:T2></r>
       * val ns  = Ns(Map("cbc" -> "u"))
       * val p1  = XMLPath.parse("r/cbc:T1")
       * val p2  = XMLPath.parse("r/cbc:T2")
       * xml.firstText(List(p1, p2), ns) // Some("T")
-      * }}}
+ *
+      * ```
       */
     def firstText(paths: List[XMLPath], ns: Ns = Ns.empty): Option[String] =
       paths.iterator.map(textAt(_, ns)).collectFirst { case Some(v) => v }
@@ -444,19 +506,23 @@ object XMLPathUtils:
     /** First successful text among alternative paths or `ParserError`.
       *
       * Examples (no namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <r/>
       * xml.firstTextOrError(List(XMLPath.parse("r/title")), "title")
       * // Left(MissingField("title", Some("r/title")))
-      * }}}
+ *
+      * ```
       *
       * Examples (with namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <r xmlns:cbc="u"/>
       * val ns  = Ns(Map("cbc" -> "u"))
       * xml.firstTextOrError(List(XMLPath.parse("r/cbc:Title")), "Title", ns)
       * // Left(MissingField("Title", Some("r/cbc:Title")))
-      * }}}
+ *
+      * ```
       */
     def firstTextOrError(
         paths: List[XMLPath],
@@ -470,17 +536,21 @@ object XMLPathUtils:
     /** First successful attribute among alternative `@attr` paths.
       *
       * Examples (no namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <r><a id="1"/></r>
       * xml.firstAttr(List(XMLPath.parse("r/a/@id"))) // Some("1")
-      * }}}
+ *
+      * ```
       *
       * Examples (with namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <r xmlns:cbc="u"><a cbc:id="1"/></r>
       * val ns  = Ns(Map("cbc" -> "u"))
       * xml.firstAttr(List(XMLPath.parse("r/a/@cbc:id")), ns) // Some("1")
-      * }}}
+ *
+      * ```
       */
     def firstAttr(paths: List[XMLPath], ns: Ns = Ns.empty): Option[String] =
       paths.iterator.map(attrAt(_, ns)).collectFirst { case Some(v) => v }
@@ -488,19 +558,23 @@ object XMLPathUtils:
     /** First successful attribute among alternative `@attr` paths, else error.
       *
       * Examples (no namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <r/>
       * xml.firstAttrOrError(List(XMLPath.parse("r/a/@id")), "id")
       * // Left(MissingField("id", Some("r/a/@id")))
-      * }}}
+ *
+      * ```
       *
       * Examples (with namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <r xmlns:cbc="u"/>
       * val ns  = Ns(Map("cbc" -> "u"))
       * xml.firstAttrOrError(List(XMLPath.parse("r/a/@cbc:id")), "id", ns)
       * // Left(MissingField("id", Some("r/a/@cbc:id")))
-      * }}}
+ *
+      * ```
       */
     def firstAttrOrError(
         paths: List[XMLPath],
@@ -514,19 +588,23 @@ object XMLPathUtils:
     /** Collect child elements for each path, concatenated.
       *
       * Examples (no namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <r><xs><x/></xs><ys><y/></ys></r>
       * xml.childrenAtAll(List(XMLPath.parse("r/xs"), XMLPath.parse("r/ys")))
       * // List(<x/>, <y/>)
-      * }}}
+ *
+      * ```
       *
       * Examples (with namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <r xmlns:ns="u"><ns:xs><ns:x/></ns:xs><ns:ys><ns:y/></ns:ys></r>
       * val ns  = Ns(Map("ns" -> "u"))
       * xml.childrenAtAll(List(XMLPath.parse("r/ns:xs"), XMLPath.parse("r/ns:ys")), ns)
       * // List(<ns:x/>, <ns:y/>)
-      * }}}
+ *
+      * ```
       */
     def childrenAtAll(paths: List[XMLPath], ns: Ns = Ns.empty): List[Elem] =
       paths.flatMap(e.childrenAt(_, ns))
@@ -534,21 +612,25 @@ object XMLPathUtils:
     /** Try primary roots; if empty, try fallback roots (ONLY fallback).
       *
       * Examples (no namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <r><fallback><i/></fallback></r>
       * val prim = List(XMLPath.parse("r/primary"))
       * val fb   = List(XMLPath.parse("r/fallback"))
       * xml.childrenAtWithFallback(prim, fb) // List(<i/>)
-      * }}}
+ *
+      * ```
       *
       * Examples (with namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <r xmlns:ns="u"><ns:fb><i/></ns:fb></r>
       * val ns  = Ns(Map("ns" -> "u"))
       * val prim = List(XMLPath.parse("r/ns:prim"))
       * val fb   = List(XMLPath.parse("r/ns:fb"))
       * xml.childrenAtWithFallback(prim, fb, ns) // List(<i/>)
-      * }}}
+ *
+      * ```
       */
     def childrenAtWithFallback(
         primary: List[XMLPath],
@@ -562,17 +644,20 @@ object XMLPathUtils:
       * fallback between primary and fallback root sets.
       *
       * Examples (no namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <r><fb><t>a</t><t>b</t></fb></r>
       * val primRoots = List(XMLPath.parse("r/prim"))
       * val fbRoots   = List(XMLPath.parse("r/fb"))
       * val item      = XMLPath.parse("t")
       * xml.extractManyWithFallback(primRoots, fbRoots, item, item, "t")
       * // List(Right("a"), Right("b"))
-      * }}}
+ *
+      * ```
       *
       * Examples (with namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <r xmlns:ns="u"><ns:fb><ns:t>a</ns:t><ns:t>b</ns:t></ns:fb></r>
       * val ns  = Ns(Map("ns" -> "u"))
       * val primRoots = List(XMLPath.parse("r/ns:prim"))
@@ -581,7 +666,8 @@ object XMLPathUtils:
       * val fbItem    = XMLPath.parse("ns:t")
       * xml.extractManyWithFallback(primRoots, fbRoots, primItem, fbItem, "t", ns)
       * // List(Right("a"), Right("b"))
-      * }}}
+ *
+      * ```
       */
     def extractManyWithFallback(
         primaryRoots: List[XMLPath],
@@ -613,17 +699,20 @@ object XMLPathUtils:
       * informational; attribute selection is determined by `item`.
       *
       * Examples (no namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <r><fb><a id="1"/><a id="2"/></fb></r>
       * val primRoots = List(XMLPath.parse("r/prim"))
       * val fbRoots   = List(XMLPath.parse("r/fb"))
       * val item      = XMLPath.parse("a/@id")
       * xml.extractManyAttrWithFallback(primRoots, fbRoots, item, item, "id", "id")
       * // List(Right("1"), Right("2"))
-      * }}}
+ *
+      * ```
       *
       * Examples (with namespaces):
-      * {{{
+ *
+      * ```scala
       * val xml = <r xmlns:cbc="u"><fb><a cbc:id="1"/><a cbc:id="2"/></fb></r>
       * val ns  = Ns(Map("cbc" -> "u"))
       * val primRoots = List(XMLPath.parse("r/prim"))
@@ -631,7 +720,8 @@ object XMLPathUtils:
       * val item      = XMLPath.parse("a/@cbc:id")
       * xml.extractManyAttrWithFallback(primRoots, fbRoots, item, item, "id", "id", ns)
       * // List(Right("1"), Right("2"))
-      * }}}
+ *
+      * ```
       */
     def extractManyAttrWithFallback(
         primaryRoots: List[XMLPath],
@@ -665,21 +755,25 @@ object XMLPathUtils:
       * diagnostics.
       *
       * Examples (no namespaces):
-      * {{{
+ *
+      * ```scala
       * val parents = List(<p><t>a</t></p>, <p/>)
       * val item    = XMLPath.parse("t")
       * parents.getTextsAt(List(XMLPath.parse("root")), item, "t")
       * // List(Right("a"), Left(MissingField("t", Some("root"))))
-      * }}}
+ *
+      * ```
       *
       * Examples (with namespaces):
-      * {{{
+ *
+      * ```scala
       * val ns  = Ns(Map("ns" -> "u"))
       * val parents = List(<p xmlns:ns="u"><ns:t>a</ns:t></p>, <p xmlns:ns="u"/>)
       * val item    = XMLPath.parse("ns:t")
       * parents.getTextsAt(List(XMLPath.parse("root/ns:p")), item, "t", ns)
       * // List(Right("a"), Left(MissingField("t", Some("root/ns:p"))))
-      * }}}
+ *
+      * ```
       */
     def getTextsAt(
         paths: List[XMLPath],
@@ -696,21 +790,25 @@ object XMLPathUtils:
       * with `@attr`). Missing values produce a `ParserError`.
       *
       * Examples (no namespaces):
-      * {{{
+ *
+      * ```scala
       * val parents = List(<p id="1"/>, <p/>)
       * val item    = XMLPath.parse("@id")
       * parents.getAttrsAt(List(XMLPath.parse("root")), item, "id")
       * // List(Right("1"), Left(MissingField("id", Some("root"))))
-      * }}}
+ *
+      * ```
       *
       * Examples (with namespaces):
-      * {{{
+ *
+      * ```scala
       * val ns      = Ns(Map("cbc" -> "u"))
       * val parents = List(<p xmlns:cbc="u" cbc:id="1"/>, <p xmlns:cbc="u"/>)
       * val item    = XMLPath.parse("@cbc:id")
       * parents.getAttrsAt(List(XMLPath.parse("root/p")), item, "id", ns)
       * // List(Right("1"), Left(MissingField("id", Some("root/p"))))
-      * }}}
+ *
+      * ```
       */
     def getAttrsAt(
         paths: List[XMLPath],
@@ -727,9 +825,11 @@ object XMLPathUtils:
     /** Show alternative paths as a single string (newline by default).
       *
       * Example:
-      * {{{
+ *
+      * ```scala
       * List(XMLPath.parse("a/b"), XMLPath.parse("x/y")).showAltPath()
       * // "a/b\nx/y"
-      * }}}
+ *
+      * ```
       */
     def showAltPath(sep: String = "\n") = paths.map(p => p.show).mkString(sep)

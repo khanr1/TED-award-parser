@@ -2,19 +2,17 @@ package io.github.khanr1.tedawardparser
 package repository
 package parsers
 package tedexport
-package shared
+package codedDataSection
 
 import io.github.khanr1.tedawardparser.repository.parsers.{
   ParserError,
   XMLDecoder
 }
 import cats.syntax.all.*
-import io.github.khanr1.tedawardparser.repository.parsers.XMLPathUtils.textAtOrError
-import io.github.khanr1.tedawardparser.tedexport.shared.PartialOfficialJournalReference
-import scala.xml.Elem
-import io.github.khanr1.tedawardparser.tedexport.shared.JournalSeries
-import io.github.khanr1.tedawardparser.tedexport.shared.JournalNumber
 import io.github.khanr1.tedawardparser.common.Date
+import io.github.khanr1.tedawardparser.repository.parsers.XMLPathUtils.textAtOrError
+import io.github.khanr1.tedawardparser.tedexport.codedDataSection.*
+import scala.xml.Elem
 //import io.github.khanr1.tedawardparser.repository.parsers.r208.R208Path.PublicationDate
 
 object PartialOfficialJournalReferenceDecoder:
