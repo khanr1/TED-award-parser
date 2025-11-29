@@ -1,5 +1,7 @@
 package io.github.khanr1.tedawardparser
 
+import common.*
+
 import cats.{Show, Eq}
 
 final case class AwardedSupplier(

@@ -1,7 +1,7 @@
 package io.github.khanr1.tedawardparser.tedexport
 package codedDataSection
 
-import io.github.khanr1.tedawardparser.Country
+import io.github.khanr1.tedawardparser.common.*
 
 import squants.market.Money
 import cats.Show

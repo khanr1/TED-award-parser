@@ -1,6 +1,7 @@
 package io.github.khanr1.tedawardparser
 
 import cats.{Eq, Show}
+import common.*
 
 final case class ContractingAuthority(
     name: ContractingAuthorityName,
