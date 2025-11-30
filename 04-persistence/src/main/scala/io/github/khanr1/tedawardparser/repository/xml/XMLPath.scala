@@ -1,6 +1,6 @@
 package io.github.khanr1.tedawardparser
 package repository
-package parsers
+package xml
 
 import cats.Show
 import cats.syntax.all.*
