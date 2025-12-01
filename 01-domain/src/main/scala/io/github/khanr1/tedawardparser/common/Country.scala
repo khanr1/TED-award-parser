@@ -1,5 +1,5 @@
 package io.github.khanr1.tedawardparser
-package tedexport.common
+package common
 
 import cats.Show
 
