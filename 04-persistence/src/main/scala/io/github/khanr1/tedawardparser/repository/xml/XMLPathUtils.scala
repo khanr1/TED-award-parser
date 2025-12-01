@@ -8,6 +8,7 @@ import scala.util.CommandLineParser.ParseError
 import xml.ParserError
 //import xmlPath.{QName, Segment, XMLPath}
 import Matching.*
+import cats.data.ValidatedNel
 
 /** Namespace bindings for resolution. Use when your XML uses prefixes. */
 final case class Ns(prefixToUri: Map[String, String]):
@@ -343,7 +344,9 @@ object XMLPathUtils:
         field: String,
         ns: Ns = Ns.empty
     ): Either[ParserError, String] =
-      textAt(path, ns).toRight(ParserError.MissingField(field, Some(path.show)))
+      textAt(path, ns).toRight(
+        ParserError.MissingField(field, Some(path.show))
+      )
 
     /** For each parent path in `validPath`, collect children and read text at
       * `itemTag` under each.
