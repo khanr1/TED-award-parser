@@ -454,10 +454,7 @@ object XMLPathUtils:
       * ```
       */
     def childrenAt(path: XMLPath, ns: Ns = Ns.empty): List[Elem] =
-      nodesAt(path, ns)
-        .collect { case el: Elem => el.child.collect { case c: Elem => c } }
-        .flatten
-        .toList
+      nodesAt(path, ns).collect { case el: Elem => el }.toList
 
     /** All child elements directly under any of the `under` paths.
       *

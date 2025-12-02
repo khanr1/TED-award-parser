@@ -26,7 +26,7 @@ object CodedDataSectionPath {
   object NoticeDataPath {
     val root: XMLPath = CodedDataSectionPath.root / "NOTICE_DATA"
     val ojsNumberPath = root / "NO_DOC_OJS"
-    val documentURIPath = root / "URI_LIST" / "URI_DOC"
+    val documentURIPath = root / "URI_LIST" // / "URI_DOC"
     val languagePath = root / "LG_ORIG"
     val buyerCountryPath = root / "ISO_COUNTRY" attr ("VALUE")
     val buyerURLPath = root / "IA_URL_GENERAL"
