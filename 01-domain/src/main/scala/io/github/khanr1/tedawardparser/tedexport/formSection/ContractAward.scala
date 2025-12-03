@@ -3,9 +3,9 @@ package tedExport
 package formSection
 
 final case class ContractAward(
-    contractingAuthority: ContractingAuthorityPath,
+    contractingAuthority: ContractingAuthority,
     objectOfContract: ObjectContract,
     procedure: Procedure,
     awardContracts: List[AwardContract],
-    complementaryInformaiton: ComplementaryInformatio
+    complementaryInformaiton: ComplementaryInformation
 )
