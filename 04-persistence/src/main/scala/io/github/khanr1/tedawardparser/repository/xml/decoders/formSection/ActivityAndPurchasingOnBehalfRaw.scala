@@ -7,6 +7,7 @@ import io.github.khanr1.tedawardparser.repository.xml.XMLPathUtils.*
 import io.github.khanr1.tedawardparser.repository.xpath.FormSectionPathR208.F03
 import cats.syntax.all.*
 import io.github.khanr1.tedawardparser.repository.xpath.FormSectionPathR209
+import io.github.khanr1.tedawardparser.repository.xpath.FormSectionPathR208
 
 final case class ActivityAndPurchasingOnBehalfRaw(
     contractingAuthorityType: Either[ParserError, String],
@@ -19,7 +20,10 @@ object ActivityAndPurchasingOnBehalfR208Decoder {
     new XMLDecoder[ActivityAndPurchasingOnBehalfRaw] {
 
       override def decode(e: Elem): ActivityAndPurchasingOnBehalfRaw = {
-        val path = e.nodesAt(F03.root).headOption.map(x => x.label) match
+        val path = e
+          .nodesAt(FormSectionPathR208.F03.root)
+          .headOption
+          .map(x => x.label) match
           case Some("FD_CONTRACT_AWARD") =>
             io.github.khanr1.tedawardparser.repository.xpath.FormSectionPathR208.F03.ContractingAuthorityPath.ActivityAndPurchasingOnBehalfPath
           case _ =>
