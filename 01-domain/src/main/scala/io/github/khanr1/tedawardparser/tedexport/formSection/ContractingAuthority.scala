@@ -12,8 +12,7 @@ final case class ContractingAuthority(
     country: Country,
     pointOfContact: PointOfContact,
     phone: Phone,
-    email: Email,
-    activityAndPurchasingOnBehalf: ActivityAndPurchasingOnBehalf
+    email: Email
 )
 
 final case class ActivityAndPurchasingOnBehalf(

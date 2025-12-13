@@ -6,6 +6,13 @@ import scala.util.control.NoStackTrace
 
 enum ParserError(val message: String, val path: Option[String])
     extends NoStackTrace:
+
+  // String = this match
+//     case MissingField(field, at)                   => "Missing"
+//     case InvalidFormat(field, expected, found, at) => "Invalid Format"
+//     case MultipleValues(field, at)                 => "To many values"
+//     case UnexpectedNode(node, at)                  => "Unexpected Node"
+//     case Unknown(why, at)                          => "Unknown"
   override def toString(): String = this.message
 
   /** A required field is absent at the expected location. */

@@ -3,69 +3,35 @@ package repository
 package xpath
 
 import io.github.khanr1.tedawardparser.repository.xml.XMLPath
+import io.github.khanr1.tedawardparser.tedExport.formSection.ActivityAndPurchasingOnBehalf
 
-trait FormSectionPath {
-  val root: XMLPath
-  trait F03Path:
-    def contractingAutorityPath:ContractingAuthorityPath
-    def objectContractPath: ObjectContractPath
-    def procedurePath : ProcedurePath
-    def awardOfcontractPath:AwardOfContractPath
-    def ComplementaryInformationPath:ComplementaryInformationPath
+trait FormSectionPath:
+    val root:XMLPath
 
-    trait ContractingAuthorityPath:
-        val root: XMLPath
-        val officialNamePath :XMLPath
-        val nationalIDPath :XMLPath
-        val addressPath :XMLPath
-        val townPath :XMLPath
-        val postalCodePath :XMLPath
-        val countryPath :XMLPath
-        val pointOfContactPath :XMLPath
-        val phonePath :XMLPath
-        val emailPath :XMLPath
+trait F03:
+    val root:XMLPath
+    def ContractingAuthorityPath:ContractingAuthorityPath
 
-    trait ObjectContractPath:
-        def awardNoticeInformationPath:AwardNoticeInformationPath
-        def totalFinalValuePath:TotalFinalValuePath
+trait F15:
+    val root: XMLPath
+    def ContractingAuthorityPath:ContractingAuthorityPath
 
-        trait AwardNoticeInformationPath:
-            val titlePath:XMLPath
-            val locationPath:XMLPath
-            val shorContractDescriptionPath:XMLPath
+trait ContractingAuthorityPath:
+    val root :XMLPath 
+    val officialNamePath :XMLPath
+    val nationalIDPath :XMLPath
+    val addressPath :XMLPath
+    val townPath :XMLPath
+    val postalCodePath :XMLPath
+    val countryPath :XMLPath
+    val pointOfContactPath :XMLPath
+    val phonePath :XMLPath
+    val emailPath :XMLPath
 
-        trait TotalFinalValuePath:
-            val currencyPath:XMLPath
-            val valuePath:XMLPath
-    trait ProcedurePath
-    trait AwardOfContractPath:
-        val root:XMLPath
-        val contactNumberPath:XMLPath
-        val lotNumberPath: XMLPath
-        val contractTitlePath:XMLPath
-        val numberOfOfferReceivedPath:XMLPath
-        def awardedContractorPath:AwardedContractorPath
-        def contractValueInformationPath:ContractValueInformationPath 
-
-        trait AwardedContractorPath:
-            val rootPath :XMLPath
-            val officialnamePath :XMLPath
-            val addressPath: XMLPath
-            val townPath:XMLPath
-            val postalCodePath:XMLPath
-            val CountryPath: XMLPath
-
-        trait ContractValueInformationPath
-
-
-
-    trait ComplementaryInformationPath
-
-
-
-
-}
-
-
-
+trait ActivityAndPurchasingOnBehalfPath extends ContractingAuthorityPath:
+    val contractingAuthorityTypePath : XMLPath
+    val contractingAuthorityTypePath2 : XMLPath
+    val ContractingAuthorityActivityPath: XMLPath
+    val ContractingAuthorityActivityPath2: XMLPath
+    val pathToInfo: XMLPath
 
