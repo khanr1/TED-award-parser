@@ -1,3 +1,10 @@
 package io.github.khanr1.tedawardparser.tedExport.formSection
 
-final case class ObjectContract()
+import squants.market.Money
+import io.github.khanr1.tedawardparser.tedExport.types.*
+
+final case class ObjectContract(
+    titleOfContract: Title,
+    contractDescription: Description,
+    totalValue: Money
+)
