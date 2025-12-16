@@ -61,6 +61,20 @@ object FormSectionPathR209 extends FormSectionPath {
 
     }
 
+    object ContractAwardObjectInformationPath
+        extends ContractAwardObjectInformationPath {
+
+      override val root: XMLPath = F03.root / "OBJECT_CONTRACT"
+
+      override val titlePath: XMLPath = root / "TITLE"
+
+      override val descriptionPath: XMLPath =
+        root / "SHORT_DESCR"
+
+      override val valuePath: XMLPath = root / "VAL_TOTAL"
+
+      override val currencyPath: XMLPath = root / "VAL_TOTAL" attr ("CURRENCY")
+    }
   }
   object F15 extends F15 {
 
@@ -119,6 +133,19 @@ object FormSectionPathR209 extends FormSectionPath {
 
     }
 
+    object ContractAwardObjectInformationPath
+        extends ContractAwardObjectInformationPath {
+
+      override val root: XMLPath = F15.root / "OBJECT_CONTRACT"
+
+      override val titlePath: XMLPath = root / "TITLE"
+
+      override val descriptionPath: XMLPath = root / "SHORT_DESCR"
+
+      override val valuePath: XMLPath = root / "VAL_TOTAL"
+
+      override val currencyPath: XMLPath = root / "VAL_TOTAL" attr ("CURRENCY")
+    }
   }
 
 }

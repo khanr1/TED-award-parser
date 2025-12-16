@@ -35,3 +35,11 @@ trait ActivityAndPurchasingOnBehalfPath extends ContractingAuthorityPath:
     val ContractingAuthorityActivityPath2: XMLPath
     val pathToInfo: XMLPath
 
+trait ContractAwardObjectInformationPath:
+    val root : XMLPath
+    val titlePath: XMLPath
+    val descriptionPath: XMLPath
+    val valuePath:XMLPath
+    val currencyPath: XMLPath
+
+

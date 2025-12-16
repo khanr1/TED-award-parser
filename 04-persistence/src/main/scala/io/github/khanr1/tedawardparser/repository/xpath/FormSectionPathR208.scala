@@ -12,6 +12,7 @@ object FormSectionPathR208 extends FormSectionPath {
       FormSectionPathR208.root / "CONTRACT_AWARD" / "FD_CONTRACT_AWARD"
 
     object ContractingAuthorityPath extends ContractingAuthorityPath {
+
       override val root: XMLPath =
         F03.root / "CONTRACTING_AUTHORITY_INFORMATION_CONTRACT_AWARD" / "NAME_ADDRESSES_CONTACT_CONTRACT_AWARD" / "CA_CE_CONCESSIONAIRE_PROFILE"
       override val officialNamePath: XMLPath =
@@ -64,6 +65,26 @@ object FormSectionPathR208 extends FormSectionPath {
         override val emailPath: XMLPath =
           pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY" / "E_MAILS" / "E_MAIL"
       }
+
+    }
+
+    object ContractAwardObjectInformationPath
+        extends ContractAwardObjectInformationPath {
+
+      override val root: XMLPath =
+        F03.root / "OBJECT_CONTRACT_INFORMATION_CONTRACT_AWARD_NOTICE"
+
+      override val titlePath: XMLPath =
+        root / "DESCRIPTION_AWARD_NOTICE_INFORMATION" / "TITLE_CONTRACT"
+
+      override val descriptionPath: XMLPath =
+        root / "DESCRIPTION_AWARD_NOTICE_INFORMATION" / "SHORT_CONTRACT_DESCRIPTION"
+
+      override val valuePath: XMLPath =
+        root / "TOTAL_FINAL_VALUE" / "COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE" / "VALUE_COST"
+
+      override val currencyPath: XMLPath =
+        root / "TOTAL_FINAL_VALUE" / "COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE" attr ("CURRENCY")
 
     }
 
@@ -129,6 +150,23 @@ object FormSectionPathR208 extends FormSectionPath {
           pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY" / "E_MAILS" / "E_MAIL"
       }
 
+    }
+
+    object ContractAwardObjectInformationPath
+        extends ContractAwardObjectInformationPath {
+
+      override val root: XMLPath = F15.root / "OBJECT_VEAT"
+
+      override val titlePath: XMLPath =
+        root / "DESCRIPTION_VEAT" / "TITLE_CONTRACT"
+
+      override val descriptionPath: XMLPath =
+        root / "DESCRIPTION_VEAT" / "SHORT_CONTRACT_DESCRIPTION"
+
+      override val valuePath: XMLPath =
+        root / "TOTAL_FINAL_VALUE" / "COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE" / "VALUE_COST"
+      override val currencyPath =
+        root / "TOTAL_FINAL_VALUE" / "COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE" attr ("CURRENCY")
     }
 
   }
