@@ -88,6 +88,27 @@ object FormSectionPathR208 extends FormSectionPath {
 
     }
 
+    object AwardContractPath extends AwardContractPath {
+
+      override val root: XMLPath = F03.root / "AWARD_OF_CONTRACT"
+
+      override val contractNumberPath: XMLPath = root / "CONTRACT_NUMBER"
+
+      override val contractTitlePath: XMLPath = root / "CONTRACT_TITLE"
+
+      override val lotNumberPath: XMLPath = root / "LOT_NUMBER"
+
+      override val awardDatePath: XMLPath = root / "CONTRACT_AWARD_DATE"
+
+      override val contractorPath: XMLPath =
+        root / "ECONOMIC_OPERATOR_NAME_ADDRESS" / "CONTACT_DATA_WITHOUT_RESPONSIBLE_NAME"
+
+      override val contractValueCurrencyPath: XMLPath =
+        root / "CONTRACT_VALUE_INFORMATION" / "COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE"
+      override val contractValueAmountPath: XMLPath =
+        contractValueCurrencyPath / "VALUE_COST"
+
+    }
   }
   object F15 extends F15 {
 

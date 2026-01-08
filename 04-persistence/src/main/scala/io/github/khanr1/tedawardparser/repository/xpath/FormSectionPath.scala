@@ -42,4 +42,26 @@ trait ContractAwardObjectInformationPath:
     val valuePath:XMLPath
     val currencyPath: XMLPath
 
+trait AwardContractPath:
+    val root: XMLPath
+    val contractNumberPath:XMLPath
+    val contractTitlePath:XMLPath
+    val lotNumberPath:XMLPath
+    val awardDatePath : XMLPath
+    val contractorPath:XMLPath
+    val contractValueCurrencyPath: XMLPath
+    val contractValueAmountPath: XMLPath
+
+trait ContractorPath:
+    val root:XMLPath
+    val officialNamePath :XMLPath
+    val nationalIDPath :XMLPath
+    val addressPath :XMLPath
+    val townPath :XMLPath
+    val postalCodePath :XMLPath
+    val countryPath :XMLPath
+    val pointOfContactPath :XMLPath
+    val phonePath :XMLPath
+    val emailPath :XMLPath
+
 

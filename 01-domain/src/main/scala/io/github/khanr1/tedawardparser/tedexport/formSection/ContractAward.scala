@@ -5,7 +5,6 @@ package formSection
 final case class ContractAward(
     contractingAuthority: ContractingAuthority,
     objectOfContract: ObjectContract,
-    procedure: Procedure,
     awardContracts: List[AwardContract],
     complementaryInformaiton: ComplementaryInformation
 )
