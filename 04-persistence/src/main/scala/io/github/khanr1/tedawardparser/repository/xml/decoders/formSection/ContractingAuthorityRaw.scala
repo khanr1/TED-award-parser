@@ -120,3 +120,37 @@ object ContractingAuthorityDecoder209:
           emails
         )
     }
+
+object ContractingAuthorityDecoderR208F02:
+  given XMLDecoder[ContractingAuthorityRaw] =
+    new XMLDecoder[ContractingAuthorityRaw]:
+      override def decode(e: Elem): ContractingAuthorityRaw =
+        val path = FormSectionPathR208.F02.ContractingAuthorityPath
+        ContractingAuthorityRaw(
+          e.textAtOrError(path.officialNamePath, "Official Name"),
+          e.textAtOrError(path.nationalIDPath, "National ID"),
+          e.textAtOrError(path.addressPath, "Address"),
+          e.textAtOrError(path.townPath, "Town"),
+          e.textAtOrError(path.postalCodePath, "Postal Code"),
+          e.attrAt(path.countryPath).toRight(ParserError.MissingField("Country", Some(path.countryPath.show))),
+          e.textAtOrError(path.pointOfContactPath, "Point of Contact"),
+          e.textAtOrError(path.phonePath, "Phone Number"),
+          e.textAtOrError(path.emailPath, "Emails")
+        )
+
+object ContractingAuthorityDecoderR209F02:
+  given XMLDecoder[ContractingAuthorityRaw] =
+    new XMLDecoder[ContractingAuthorityRaw]:
+      override def decode(e: Elem): ContractingAuthorityRaw =
+        val path = FormSectionPathR209.F02.ContractingAuthorityPath
+        ContractingAuthorityRaw(
+          e.textAtOrError(path.officialNamePath, "Official Name"),
+          e.textAtOrError(path.nationalIDPath, "National ID"),
+          e.textAtOrError(path.addressPath, "Address"),
+          e.textAtOrError(path.townPath, "Town"),
+          e.textAtOrError(path.postalCodePath, "Postal Code"),
+          e.attrAt(path.countryPath).toRight(ParserError.MissingField("Country", Some(path.countryPath.show))),
+          e.textAtOrError(path.pointOfContactPath, "Point of Contact"),
+          e.textAtOrError(path.phonePath, "Phone Number"),
+          e.textAtOrError(path.emailPath, "Emails")
+        )

@@ -7,8 +7,8 @@ import squants.Money
 final case class AwardContract(
     contractNumber: Option[ContractNumber],
     lotNumber: Option[LotNumber],
-    contractTitle: Title,
-    awardDate: Date,
-    contractor: Contractor,
+    contractTitle: Option[Title],
+    awardDate: Option[Date],
+    contractor: Option[Contractor],
     contractValue: Option[Money]
 )

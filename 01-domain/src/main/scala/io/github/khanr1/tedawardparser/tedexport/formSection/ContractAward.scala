@@ -6,5 +6,5 @@ final case class ContractAward(
     contractingAuthority: ContractingAuthority,
     objectOfContract: ObjectContract,
     awardContracts: List[AwardContract],
-    complementaryInformaiton: ComplementaryInformation
+    complementaryInformartion: ComplementaryInformation
 )

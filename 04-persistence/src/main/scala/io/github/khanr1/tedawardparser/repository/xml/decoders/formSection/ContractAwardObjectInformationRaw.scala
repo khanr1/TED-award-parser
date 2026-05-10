@@ -143,3 +143,25 @@ object ContractAwardObjectInformationDecoder209:
       }
 
     }
+
+object ContractAwardObjectInformationDecoderR208F02:
+  given XMLDecoder[ContractAwardObjectInformationRaw] =
+    new XMLDecoder[ContractAwardObjectInformationRaw]:
+      override def decode(e: Elem): ContractAwardObjectInformationRaw =
+        val path = FormSectionPathR208.F02.ContractAwardObjectInformationPath
+        ContractAwardObjectInformationRaw(
+          e.textAtOrError(path.titlePath, "Contract Title"),
+          e.textAtOrError(path.descriptionPath, "Description"),
+          Left(ParserError.MissingField("Value", None))
+        )
+
+object ContractAwardObjectInformationDecoderR209F02:
+  given XMLDecoder[ContractAwardObjectInformationRaw] =
+    new XMLDecoder[ContractAwardObjectInformationRaw]:
+      override def decode(e: Elem): ContractAwardObjectInformationRaw =
+        val path = FormSectionPathR209.F02.ContractAwardObjectInformationPath
+        ContractAwardObjectInformationRaw(
+          e.textAtOrError(path.titlePath, "Contract Title"),
+          e.textAtOrError(path.descriptionPath, "Description"),
+          Left(ParserError.MissingField("Value", None))
+        )
