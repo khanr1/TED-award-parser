@@ -87,8 +87,8 @@ object NoticeMapper:
   private def mapContractingAuthority(raw: ContractingAuthorityRaw): ContractingAuthority =
     ContractingAuthority(
       name           = Name(str(raw.name)),
-      NationalID     = NationalID(str(raw.NationalID)),
-      adress         = Address(str(raw.adress)),
+      nationalID     = NationalID(str(raw.nationalID)),
+      address        = Address(str(raw.address)),
       town           = Town(str(raw.town)),
       postalCode     = PostalCode(str(raw.postalCode)),
       country        = Country.toDomain(str(raw.country)),
@@ -113,8 +113,8 @@ object NoticeMapper:
       contractor     = opt(raw.contractorName).map(name =>
         Contractor(
           name           = Name(name),
-          NationalID     = NationalID(opt(raw.contractorNationalID).getOrElse("")),
-          adress         = Address(opt(raw.contractorAddress).getOrElse("")),
+          nationalID     = NationalID(opt(raw.contractorNationalID).getOrElse("")),
+          address        = Address(opt(raw.contractorAddress).getOrElse("")),
           town           = Town(opt(raw.contractorTown).getOrElse("")),
           postalCode     = PostalCode(opt(raw.contractorPostalCode).getOrElse("")),
           country        = Country.toDomain(raw.contractorCountry.getOrElse("")),

@@ -108,69 +108,60 @@ enum Segment:
 opaque type XMLPath = Vector[Segment]
 
 object XMLPath:
-  def splitQName(s: String): (Option[String], String) =
+  private def splitQName(s: String): (Option[String], String) =
     s.indexOf(':') match
       case -1 => (None, s)
       case i  => (Some(s.substring(0, i)), s.substring(i + 1))
 
-  /** Construct a simple element path from a head element and 0+ child names.
+  /** Construct a simple element path from one or more element names.
+    *
+    * Each name may carry a namespace prefix (`"ns:Local"`); the prefix is
+    * parsed and stored in the resulting [[QName]].
     *
     * Examples (no namespaces):
- *
+    *
     * ```scala
     * val p: XMLPath = XMLPath("root", "a", "b") // root/a/b
- *
     * ```
     *
     * Examples (with namespaces via `QName`):
- *
+    *
     * ```scala
     * val p = (XMLPath("r") / QName("ns", "A") / QName("ns", "B")) // r/ns:A/ns:B
- *
     * ```
     */
   def apply(first: String, rest: String*): XMLPath =
-    val head = splitQName(first)
-    val tail = rest.toVector.map(x => splitQName(x))
-    Segment.Elem(QName(head._1, head._2)) +: tail.map(s =>
-      Segment.Elem(QName(s._1, s._2))
-    )
+    (first +: rest).toVector.map { s =>
+      val (p, l) = splitQName(s)
+      Segment.Elem(QName(p, l))
+    }
 
-  /** Parse simple strings like "a/b/c", "a/b/@id", or "ns:a/ns:b/@ns:id".
+  /** Parse a slash-separated path string into segments.
     *
-    * What it supports
-    *   - Element and attribute segments, optionally prefixed (e.g. `cbc:Title`,
-    *     `@cbc:id`).
-    *   - Does NOT parse indices or predicates; add those via the DSL methods
-    *     (`idx`, `whereAttr`).
+    * Supports element and attribute segments with optional namespace prefixes
+    * (e.g. `cbc:Title`, `@cbc:id`). Indices and attribute-predicate steps are
+    * not parseable via this method — add them with the DSL combinators (`idx`,
+    * `whereAttr`) after parsing.
     *
     * Examples
- *
+    *
     * ```scala
     * XMLPath.parse("root/items/item")              // Elem segments only
     * XMLPath.parse("root/items/item/@id")          // Trailing attribute
     * XMLPath.parse("r/cac:Party/cac:Item/@cbc:id") // Namespaced segments
- *
     * ```
     */
-  def parse(s: String): XMLPath = {
-    val parts: Vector[String] = s.split('/').toVector.filter(x => x.nonEmpty)
-    val segmemts = parts.map { s =>
-      s match
-        case a if a.startsWith("@") => {
-          val raw = a.drop(1)
-          raw.split(':') match
-            case Array(p, l) => Segment.Attr(QName(Some(p), l))
-            case Array(l)    => Segment.Attr(QName(l))
-        }
-        case e =>
-          e.split(':') match
-            case Array(p, l) => Segment.Elem(QName(Some(p), l))
-            case Array(l)    => Segment.Elem(QName(l))
-
+  def parse(s: String): XMLPath =
+    s.split('/').toVector.filter(_.nonEmpty).map {
+      case a if a.startsWith("@") =>
+        a.drop(1).split(':') match
+          case Array(p, l) => Segment.Attr(QName(Some(p), l))
+          case Array(l)    => Segment.Attr(QName(l))
+      case e =>
+        e.split(':') match
+          case Array(p, l) => Segment.Elem(QName(Some(p), l))
+          case Array(l)    => Segment.Elem(QName(l))
     }
-    segmemts
-  }
 
   given Show[XMLPath] = Show.show[XMLPath](p =>
     p.map {

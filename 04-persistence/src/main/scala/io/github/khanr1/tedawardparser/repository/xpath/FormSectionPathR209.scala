@@ -3,6 +3,17 @@ package xpath
 
 import io.github.khanr1.tedawardparser.repository.xml.XMLPath
 
+/** XPath constants for the TED R209 form-section structure.
+  *
+  * R209 uses the 2014 EU directive XML schema. Element names are shorter and
+  * follow a different hierarchy than [[FormSectionPathR208]]. Award elements
+  * appear as `AWARD_CONTRACT` children directly under the form root.
+  *
+  * Sub-objects:
+  *   - [[F03]] — Contract Award Notice (Form F03_2014)
+  *   - [[F15]] — Voluntary Ex Ante Transparency Notice (Form F15_2014)
+  *   - [[F02]] — Contract Notice (Form F02_2014, used as a reference form only)
+  */
 object FormSectionPathR209 extends FormSectionPath {
 
   override val root: XMLPath = XMLPath("FORM_SECTION")
@@ -67,26 +78,22 @@ object FormSectionPathR209 extends FormSectionPath {
         override val contractingAuthorityTypePath2 =
           root / "CA_TYPE_OTHER" attr ("VALUE")
 
-        override val ContractingAuthorityActivityPath =
+        override val contractingAuthorityActivityPath =
           root / "CA_ACTIVITY" attr ("VALUE")
-        override val ContractingAuthorityActivityPath2 =
+        override val contractingAuthorityActivityPath2 =
           root / "CA_ACTIVITY_OTHER" attr ("VALUE")
 
-        override val pathToInfo = XMLPath("")
-
-        override val officialNamePath: XMLPath =
-          XMLPath("")
-        override val nationalIDPath: XMLPath =
-          XMLPath("")
-        override val addressPath: XMLPath =
-          XMLPath("")
-        override val townPath: XMLPath =
-          XMLPath("")
-        override val postalCodePath: XMLPath = XMLPath("")
-        override val countryPath: XMLPath = XMLPath("")
-        override val pointOfContactPath: XMLPath = XMLPath("")
-        override val phonePath: XMLPath = XMLPath("")
-        override val emailPath: XMLPath = XMLPath("")
+        // R209 F03 does not have a purchasing-on-behalf block
+        override val pathToInfo            = XMLPath("")
+        override val officialNamePath      = XMLPath("")
+        override val nationalIDPath        = XMLPath("")
+        override val addressPath           = XMLPath("")
+        override val townPath              = XMLPath("")
+        override val postalCodePath        = XMLPath("")
+        override val countryPath           = XMLPath("")
+        override val pointOfContactPath    = XMLPath("")
+        override val phonePath             = XMLPath("")
+        override val emailPath             = XMLPath("")
       }
 
     }
@@ -181,26 +188,22 @@ object FormSectionPathR209 extends FormSectionPath {
         override val contractingAuthorityTypePath2 =
           root / "CA_TYPE_OTHER" attr ("VALUE")
 
-        override val ContractingAuthorityActivityPath =
+        override val contractingAuthorityActivityPath =
           root / "CA_ACTIVITY" attr ("VALUE")
-        override val ContractingAuthorityActivityPath2 =
+        override val contractingAuthorityActivityPath2 =
           root / "CA_ACTIVITY_OTHER" attr ("VALUE")
 
-        override val pathToInfo = XMLPath("")
-
-        override val officialNamePath: XMLPath =
-          XMLPath("")
-        override val nationalIDPath: XMLPath =
-          XMLPath("")
-        override val addressPath: XMLPath =
-          XMLPath("")
-        override val townPath: XMLPath =
-          XMLPath("")
-        override val postalCodePath: XMLPath = XMLPath("")
-        override val countryPath: XMLPath = XMLPath("")
-        override val pointOfContactPath: XMLPath = XMLPath("")
-        override val phonePath: XMLPath = XMLPath("")
-        override val emailPath: XMLPath = XMLPath("")
+        // R209 F15 does not have a purchasing-on-behalf block
+        override val pathToInfo            = XMLPath("")
+        override val officialNamePath      = XMLPath("")
+        override val nationalIDPath        = XMLPath("")
+        override val addressPath           = XMLPath("")
+        override val townPath              = XMLPath("")
+        override val postalCodePath        = XMLPath("")
+        override val countryPath           = XMLPath("")
+        override val pointOfContactPath    = XMLPath("")
+        override val phonePath             = XMLPath("")
+        override val emailPath             = XMLPath("")
       }
 
     }

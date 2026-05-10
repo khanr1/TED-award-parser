@@ -3,6 +3,17 @@ package xpath
 
 import io.github.khanr1.tedawardparser.repository.xml.XMLPath
 
+/** XPath constants for the TED R208 form-section structure.
+  *
+  * R208 is the older TED schema (pre-2014 EU directives). The XML uses
+  * verbose element names and wraps awards in `FD_CONTRACT_AWARD` /
+  * `FD_VOLUNTARY_EX_ANTE_TRANSPARENCY_NOTICE` containers.
+  *
+  * Sub-objects:
+  *   - [[F03]] — Contract Award Notice (Form F03)
+  *   - [[F15]] — Voluntary Ex Ante Transparency Notice (Form F15)
+  *   - [[F02]] — Contract Notice (Form F02, used as a reference form only)
+  */
 object FormSectionPathR208 extends FormSectionPath {
 
   override val root: XMLPath = XMLPath("FORM_SECTION")
@@ -38,32 +49,26 @@ object FormSectionPathR208 extends FormSectionPath {
         override val contractingAuthorityTypePath2 =
           root / "TYPE_AND_ACTIVITIES" / "TYPE_OF_CONTRACTING_AUTHORITY_OTHER" attr ("VALUE")
 
-        override val ContractingAuthorityActivityPath =
+        override val contractingAuthorityActivityPath =
           root / "TYPE_AND_ACTIVITIES" / "TYPE_OF_ACTIVITY" attr ("VALUE")
-        override val ContractingAuthorityActivityPath2 =
+        override val contractingAuthorityActivityPath2 =
           root / "TYPE_AND_ACTIVITIES" / "TYPE_OF_ACTIVITY_OTHER" attr ("VALUE")
 
         override val pathToInfo =
           root / "PURCHASING_ON_BEHALF" / "PURCHASING_ON_BEHALF_YES"
 
-        override val officialNamePath: XMLPath =
-          pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY" / "ORGANISATION" / "OFFICIALNAME"
-        override val nationalIDPath: XMLPath =
-          pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY" / "ORGANISATION" / "NATIONALID"
-        override val addressPath: XMLPath =
-          pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY" / "ADDRESS"
-        override val townPath: XMLPath =
-          pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY" / "TOWN"
-        override val postalCodePath: XMLPath =
-          pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY" / "POSTAL_CODE"
-        override val countryPath: XMLPath =
-          pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY" / "COUNTRY" attr ("VALUE")
-        override val pointOfContactPath: XMLPath =
-          pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY" / "CONTACT_POINT"
-        override val phonePath: XMLPath =
-          pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY" / "PHONE"
-        override val emailPath: XMLPath =
-          pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY" / "E_MAILS" / "E_MAIL"
+        private val onBehalf =
+          pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY"
+
+        override val officialNamePath: XMLPath   = onBehalf / "ORGANISATION" / "OFFICIALNAME"
+        override val nationalIDPath: XMLPath     = onBehalf / "ORGANISATION" / "NATIONALID"
+        override val addressPath: XMLPath        = onBehalf / "ADDRESS"
+        override val townPath: XMLPath           = onBehalf / "TOWN"
+        override val postalCodePath: XMLPath     = onBehalf / "POSTAL_CODE"
+        override val countryPath: XMLPath        = onBehalf / "COUNTRY" attr ("VALUE")
+        override val pointOfContactPath: XMLPath = onBehalf / "CONTACT_POINT"
+        override val phonePath: XMLPath          = onBehalf / "PHONE"
+        override val emailPath: XMLPath          = onBehalf / "E_MAILS" / "E_MAIL"
       }
 
     }
@@ -237,32 +242,26 @@ object FormSectionPathR208 extends FormSectionPath {
         override val contractingAuthorityTypePath2 =
           root / "TYPE_AND_ACTIVITIES" / "TYPE_OF_CONTRACTING_AUTHORITY_OTHER" attr ("VALUE")
 
-        override val ContractingAuthorityActivityPath =
+        override val contractingAuthorityActivityPath =
           root / "TYPE_AND_ACTIVITIES" / "TYPE_OF_ACTIVITY" attr ("VALUE")
-        override val ContractingAuthorityActivityPath2 =
+        override val contractingAuthorityActivityPath2 =
           root / "TYPE_AND_ACTIVITIES" / "TYPE_OF_ACTIVITY_OTHER" attr ("VALUE")
 
         override val pathToInfo =
           root / "PURCHASING_ON_BEHALF" / "PURCHASING_ON_BEHALF_YES"
 
-        override val officialNamePath: XMLPath =
-          pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY" / "ORGANISATION" / "OFFICIALNAME"
-        override val nationalIDPath: XMLPath =
-          pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY" / "ORGANISATION" / "NATIONALID"
-        override val addressPath: XMLPath =
-          pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY" / "ADDRESS"
-        override val townPath: XMLPath =
-          pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY" / "TOWN"
-        override val postalCodePath: XMLPath =
-          pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY" / "POSTAL_CODE"
-        override val countryPath: XMLPath =
-          pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY" / "COUNTRY" attr ("VALUE")
-        override val pointOfContactPath: XMLPath =
-          pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY" / "CONTACT_POINT"
-        override val phonePath: XMLPath =
-          pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY" / "PHONE"
-        override val emailPath: XMLPath =
-          pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY" / "E_MAILS" / "E_MAIL"
+        private val onBehalf =
+          pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY"
+
+        override val officialNamePath: XMLPath   = onBehalf / "ORGANISATION" / "OFFICIALNAME"
+        override val nationalIDPath: XMLPath     = onBehalf / "ORGANISATION" / "NATIONALID"
+        override val addressPath: XMLPath        = onBehalf / "ADDRESS"
+        override val townPath: XMLPath           = onBehalf / "TOWN"
+        override val postalCodePath: XMLPath     = onBehalf / "POSTAL_CODE"
+        override val countryPath: XMLPath        = onBehalf / "COUNTRY" attr ("VALUE")
+        override val pointOfContactPath: XMLPath = onBehalf / "CONTACT_POINT"
+        override val phonePath: XMLPath          = onBehalf / "PHONE"
+        override val emailPath: XMLPath          = onBehalf / "E_MAILS" / "E_MAIL"
       }
 
     }

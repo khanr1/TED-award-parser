@@ -11,8 +11,8 @@ import io.github.khanr1.tedawardparser.repository.xpath.FormSectionPathR208
 
 final case class ActivityAndPurchasingOnBehalfRaw(
     contractingAuthorityType: Either[ParserError, String],
-    ContractingAuthorityActivity: Either[ParserError, String],
-    PurchasingInBehafl: Option[ContractingAuthorityRaw]
+    contractingAuthorityActivity: Either[ParserError, String],
+    purchasingOnBehalf: Option[ContractingAuthorityRaw]
 ) extends Raw
 
 object ActivityAndPurchasingOnBehalfR208Decoder {
@@ -32,23 +32,20 @@ object ActivityAndPurchasingOnBehalfR208Decoder {
         import path.*
 
         val contractingAuthorityType =
-          e.attrAt(
-            path.contractingAuthorityTypePath
-          ).orElse(e.attrAt(path.contractingAuthorityTypePath2))
+          e.attrAt(path.contractingAuthorityTypePath)
+            .orElse(e.attrAt(path.contractingAuthorityTypePath2))
             .toRight(
               ParserError.MissingField(
                 "Contracting Authority Type",
-                Some(
-                  path.contractingAuthorityTypePath.show
-                )
+                Some(path.contractingAuthorityTypePath.show)
               )
             )
         val contractingAuthorityActivity =
-          e.attrAt(path.ContractingAuthorityActivityPath)
-            .orElse(e.attrAt(path.ContractingAuthorityActivityPath2))
+          e.attrAt(path.contractingAuthorityActivityPath)
+            .orElse(e.attrAt(path.contractingAuthorityActivityPath2))
             .toRight(
               ParserError.MissingField(
-                "Contracting Authority Type",
+                "Contracting Authority Activity",
                 Some(contractingAuthorityTypePath.show)
               )
             )
@@ -60,28 +57,22 @@ object ActivityAndPurchasingOnBehalfR208Decoder {
               .map(_.label)
               .headOption == Some("PURCHASING_ON_BEHALF_YES")
           )
-          then {
-
+          then
             Some(
               ContractingAuthorityRaw(
-                name = e.textAtOrError(path.officialNamePath, "Name"),
-                NationalID = e
-                  .textAtOrError(path.nationalIDPath, "National ID"),
-                adress = e.textAtOrError(path.addressPath, "Address"),
-                town = e.textAtOrError(path.townPath, "Town"),
-                postalCode = e
-                  .textAtOrError(path.postalCodePath, "Postal Code"),
-                country = e
-                  .attrAt(path.countryPath)
-                  .toRight(ParserError.MissingField("Country")),
-                pointOfContact = e
-                  .textAtOrError(path.pointOfContactPath, "Point Of Contact"),
-                phone = e.textAtOrError(path.phonePath, "Phone"),
-                email = e
-                  .textAtOrError(path.emailPath, "Emails")
+                name           = e.textAtOrError(path.officialNamePath, "Name"),
+                nationalID     = e.textAtOrError(path.nationalIDPath, "National ID"),
+                address        = e.textAtOrError(path.addressPath, "Address"),
+                town           = e.textAtOrError(path.townPath, "Town"),
+                postalCode     = e.textAtOrError(path.postalCodePath, "Postal Code"),
+                country        = e.attrAt(path.countryPath)
+                                   .toRight(ParserError.MissingField("Country")),
+                pointOfContact = e.textAtOrError(path.pointOfContactPath, "Point Of Contact"),
+                phone          = e.textAtOrError(path.phonePath, "Phone"),
+                email          = e.textAtOrError(path.emailPath, "Emails")
               )
             )
-          } else None
+          else None
 
         ActivityAndPurchasingOnBehalfRaw(
           contractingAuthorityType,
@@ -112,23 +103,20 @@ object ActivityAndPurchasingOnBehalfR209Decoder {
         import path.*
 
         val contractingAuthorityType =
-          e.attrAt(
-            path.contractingAuthorityTypePath
-          ).orElse(e.attrAt(path.contractingAuthorityTypePath2))
+          e.attrAt(path.contractingAuthorityTypePath)
+            .orElse(e.attrAt(path.contractingAuthorityTypePath2))
             .toRight(
               ParserError.MissingField(
                 "Contracting Authority Type",
-                Some(
-                  path.contractingAuthorityTypePath.show
-                )
+                Some(path.contractingAuthorityTypePath.show)
               )
             )
         val contractingAuthorityActivity =
-          e.attrAt(path.ContractingAuthorityActivityPath)
-            .orElse(e.attrAt(path.ContractingAuthorityActivityPath2))
+          e.attrAt(path.contractingAuthorityActivityPath)
+            .orElse(e.attrAt(path.contractingAuthorityActivityPath2))
             .toRight(
               ParserError.MissingField(
-                "Contracting Authority Type",
+                "Contracting Authority Activity",
                 Some(contractingAuthorityTypePath.show)
               )
             )
@@ -140,28 +128,22 @@ object ActivityAndPurchasingOnBehalfR209Decoder {
               .map(_.label)
               .headOption == Some("PURCHASING_ON_BEHALF_YES")
           )
-          then {
-
+          then
             Some(
               ContractingAuthorityRaw(
-                name = e.textAtOrError(path.officialNamePath, "Name"),
-                NationalID = e
-                  .textAtOrError(path.nationalIDPath, "National ID"),
-                adress = e.textAtOrError(path.addressPath, "Address"),
-                town = e.textAtOrError(path.townPath, "Town"),
-                postalCode = e
-                  .textAtOrError(path.postalCodePath, "Postal Code"),
-                country = e
-                  .attrAt(path.countryPath)
-                  .toRight(ParserError.MissingField("Country")),
-                pointOfContact = e
-                  .textAtOrError(path.pointOfContactPath, "Point Of Contact"),
-                phone = e.textAtOrError(path.phonePath, "Phone"),
-                email = e
-                  .textAtOrError(path.emailPath, "Emails")
+                name           = e.textAtOrError(path.officialNamePath, "Name"),
+                nationalID     = e.textAtOrError(path.nationalIDPath, "National ID"),
+                address        = e.textAtOrError(path.addressPath, "Address"),
+                town           = e.textAtOrError(path.townPath, "Town"),
+                postalCode     = e.textAtOrError(path.postalCodePath, "Postal Code"),
+                country        = e.attrAt(path.countryPath)
+                                   .toRight(ParserError.MissingField("Country")),
+                pointOfContact = e.textAtOrError(path.pointOfContactPath, "Point Of Contact"),
+                phone          = e.textAtOrError(path.phonePath, "Phone"),
+                email          = e.textAtOrError(path.emailPath, "Emails")
               )
             )
-          } else None
+          else None
 
         ActivityAndPurchasingOnBehalfRaw(
           contractingAuthorityType,

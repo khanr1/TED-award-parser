@@ -138,8 +138,8 @@ object Notice:
       n.formType.toString,
       // ContractingAuthority
       ca.contractingAuthority.name.value,
-      ca.contractingAuthority.NationalID.value,
-      ca.contractingAuthority.adress.value,
+      ca.contractingAuthority.nationalID.value,
+      ca.contractingAuthority.address.value,
       ca.contractingAuthority.town.value,
       ca.contractingAuthority.postalCode.value,
       ca.contractingAuthority.country.toString,
@@ -163,8 +163,8 @@ object Notice:
     c.fold(List.fill(9)("")) { ct =>
       List(
         ct.name.value,
-        ct.NationalID.value,
-        ct.adress.value,
+        ct.nationalID.value,
+        ct.address.value,
         ct.town.value,
         ct.postalCode.value,
         ct.country.toString,

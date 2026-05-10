@@ -4,11 +4,8 @@ package xml
 
 import scala.xml.{Elem, Node, NodeSeq}
 import cats.syntax.all.*
-import scala.util.CommandLineParser.ParseError
 import xml.ParserError
-//import xmlPath.{QName, Segment, XMLPath}
 import Matching.*
-import cats.data.ValidatedNel
 
 /** Namespace bindings for resolution. Use when your XML uses prefixes. */
 final case class Ns(prefixToUri: Map[String, String]):
@@ -844,4 +841,4 @@ object XMLPathUtils:
       * // "a/b\nx/y"
       * ```
       */
-    def showAltPath(sep: String = "\n") = paths.map(p => p.show).mkString(sep)
+    def showAltPath(sep: String = "\n"): String = paths.map(_.show).mkString(sep)

@@ -77,11 +77,11 @@ object NoticeDataRaw:
               )
             )
           val currency: Either[ParserError, String] = x
-            .attrAt(CodedDataSectionPath.NoticeDataPath.currenctyPath)
+            .attrAt(CodedDataSectionPath.NoticeDataPath.currencyPath)
             .toRight(
               ParserError.MissingField(
                 "Currency",
-                Some(CodedDataSectionPath.NoticeDataPath.currenctyPath.show)
+                Some(CodedDataSectionPath.NoticeDataPath.currencyPath.show)
               )
             )
             .flatMap(s =>

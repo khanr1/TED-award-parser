@@ -5,8 +5,8 @@ import io.github.khanr1.tedawardparser.tedExport.types.*
 
 final case class Contractor(
     name: Name,
-    NationalID: NationalID,
-    adress: Address,
+    nationalID: NationalID,
+    address: Address,
     town: Town,
     postalCode: PostalCode,
     country: Country,
