@@ -1,5 +1,5 @@
 package io.github.khanr1.tedawardparser
-package tedexport
+package tedExport
 package codedDataSection
 
 final case class CodedDataSection(
