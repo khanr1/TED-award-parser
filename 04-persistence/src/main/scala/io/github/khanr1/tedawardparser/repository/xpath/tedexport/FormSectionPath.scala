@@ -1,6 +1,6 @@
 package io.github.khanr1.tedawardparser
 package repository
-package xpath
+package xpath.tedexport
 
 import io.github.khanr1.tedawardparser.repository.xml.XMLPath
 

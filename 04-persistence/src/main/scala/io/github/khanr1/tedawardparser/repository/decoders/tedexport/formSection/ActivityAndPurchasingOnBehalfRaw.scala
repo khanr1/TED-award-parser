@@ -1,13 +1,13 @@
-package io.github.khanr1.tedawardparser.repository.xml
-package decoders
-package formSection
+package io.github.khanr1.tedawardparser.repository.decoders
+package tedexport.formSection
 
 import scala.xml.Elem
+import io.github.khanr1.tedawardparser.repository.xml.{ParserError, Raw, XMLDecoder}
 import io.github.khanr1.tedawardparser.repository.xml.XMLPathUtils.*
-import io.github.khanr1.tedawardparser.repository.xpath.FormSectionPathR208.F03
+import io.github.khanr1.tedawardparser.repository.xpath.tedexport.FormSectionPathR208.F03
 import cats.syntax.all.*
-import io.github.khanr1.tedawardparser.repository.xpath.FormSectionPathR209
-import io.github.khanr1.tedawardparser.repository.xpath.FormSectionPathR208
+import io.github.khanr1.tedawardparser.repository.xpath.tedexport.FormSectionPathR209
+import io.github.khanr1.tedawardparser.repository.xpath.tedexport.FormSectionPathR208
 
 final case class ActivityAndPurchasingOnBehalfRaw(
     contractingAuthorityType: Either[ParserError, String],
@@ -25,9 +25,9 @@ object ActivityAndPurchasingOnBehalfR208Decoder {
           .headOption
           .map(x => x.label) match
           case Some("FD_CONTRACT_AWARD") =>
-            io.github.khanr1.tedawardparser.repository.xpath.FormSectionPathR208.F03.ContractingAuthorityPath.ActivityAndPurchasingOnBehalfPath
+            FormSectionPathR208.F03.ContractingAuthorityPath.ActivityAndPurchasingOnBehalfPath
           case _ =>
-            io.github.khanr1.tedawardparser.repository.xpath.FormSectionPathR208.F15.ContractingAuthorityPath.ActivityAndPurchasingOnBehalfPath
+            FormSectionPathR208.F15.ContractingAuthorityPath.ActivityAndPurchasingOnBehalfPath
 
         import path.*
 
@@ -60,16 +60,20 @@ object ActivityAndPurchasingOnBehalfR208Decoder {
           then
             Some(
               ContractingAuthorityRaw(
-                name           = e.textAtOrError(path.officialNamePath, "Name"),
-                nationalID     = e.textAtOrError(path.nationalIDPath, "National ID"),
-                address        = e.textAtOrError(path.addressPath, "Address"),
-                town           = e.textAtOrError(path.townPath, "Town"),
-                postalCode     = e.textAtOrError(path.postalCodePath, "Postal Code"),
-                country        = e.attrAt(path.countryPath)
-                                   .toRight(ParserError.MissingField("Country")),
-                pointOfContact = e.textAtOrError(path.pointOfContactPath, "Point Of Contact"),
-                phone          = e.textAtOrError(path.phonePath, "Phone"),
-                email          = e.textAtOrError(path.emailPath, "Emails")
+                name = e.textAtOrError(path.officialNamePath, "Name"),
+                nationalID =
+                  e.textAtOrError(path.nationalIDPath, "National ID"),
+                address = e.textAtOrError(path.addressPath, "Address"),
+                town = e.textAtOrError(path.townPath, "Town"),
+                postalCode =
+                  e.textAtOrError(path.postalCodePath, "Postal Code"),
+                country = e
+                  .attrAt(path.countryPath)
+                  .toRight(ParserError.MissingField("Country")),
+                pointOfContact =
+                  e.textAtOrError(path.pointOfContactPath, "Point Of Contact"),
+                phone = e.textAtOrError(path.phonePath, "Phone"),
+                email = e.textAtOrError(path.emailPath, "Emails")
               )
             )
           else None
@@ -96,9 +100,9 @@ object ActivityAndPurchasingOnBehalfR209Decoder {
           .headOption
           .map(x => x.label) match
           case Some("F03_2014") =>
-            io.github.khanr1.tedawardparser.repository.xpath.FormSectionPathR209.F03.ContractingAuthorityPath.ActivityAndPurchasingOnBehalfPath
+            FormSectionPathR209.F03.ContractingAuthorityPath.ActivityAndPurchasingOnBehalfPath
           case _ =>
-            io.github.khanr1.tedawardparser.repository.xpath.FormSectionPathR209.F15.ContractingAuthorityPath.ActivityAndPurchasingOnBehalfPath
+            FormSectionPathR209.F15.ContractingAuthorityPath.ActivityAndPurchasingOnBehalfPath
 
         import path.*
 
@@ -131,16 +135,20 @@ object ActivityAndPurchasingOnBehalfR209Decoder {
           then
             Some(
               ContractingAuthorityRaw(
-                name           = e.textAtOrError(path.officialNamePath, "Name"),
-                nationalID     = e.textAtOrError(path.nationalIDPath, "National ID"),
-                address        = e.textAtOrError(path.addressPath, "Address"),
-                town           = e.textAtOrError(path.townPath, "Town"),
-                postalCode     = e.textAtOrError(path.postalCodePath, "Postal Code"),
-                country        = e.attrAt(path.countryPath)
-                                   .toRight(ParserError.MissingField("Country")),
-                pointOfContact = e.textAtOrError(path.pointOfContactPath, "Point Of Contact"),
-                phone          = e.textAtOrError(path.phonePath, "Phone"),
-                email          = e.textAtOrError(path.emailPath, "Emails")
+                name = e.textAtOrError(path.officialNamePath, "Name"),
+                nationalID =
+                  e.textAtOrError(path.nationalIDPath, "National ID"),
+                address = e.textAtOrError(path.addressPath, "Address"),
+                town = e.textAtOrError(path.townPath, "Town"),
+                postalCode =
+                  e.textAtOrError(path.postalCodePath, "Postal Code"),
+                country = e
+                  .attrAt(path.countryPath)
+                  .toRight(ParserError.MissingField("Country")),
+                pointOfContact =
+                  e.textAtOrError(path.pointOfContactPath, "Point Of Contact"),
+                phone = e.textAtOrError(path.phonePath, "Phone"),
+                email = e.textAtOrError(path.emailPath, "Emails")
               )
             )
           else None

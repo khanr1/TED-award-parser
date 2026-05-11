@@ -1,9 +1,10 @@
 package io.github.khanr1.tedawardparser.repository
-package xml
-package decoders.codedDataSection
+package decoders.tedexport.codedDataSection
 
 import scala.xml.Elem
+import io.github.khanr1.tedawardparser.repository.xml.{ParserError, Raw, XMLDecoder}
 import io.github.khanr1.tedawardparser.repository.xml.XMLPathUtils.*
+import io.github.khanr1.tedawardparser.repository.xpath.tedexport.CodedDataSectionPath
 import cats.data.ValidatedNel
 import cats.syntax.all.*
 import cats.syntax.ior
@@ -22,16 +23,16 @@ object OfficialJournalReferenceRaw:
           e: Elem
       ): OfficialJournalReferenceRaw = {
         val journalSeries = e.textAtOrError(
-          xpath.CodedDataSectionPath.OfficialJournalReferencePath.journalSeriesPath,
+          CodedDataSectionPath.OfficialJournalReferencePath.journalSeriesPath,
           "Journal Serie"
         )
         val journalNumber = e.textAtOrError(
-          xpath.CodedDataSectionPath.OfficialJournalReferencePath.journalNumberPath,
+          CodedDataSectionPath.OfficialJournalReferencePath.journalNumberPath,
           "Journal Number"
         )
 
         val date = e.textAtOrError(
-          xpath.CodedDataSectionPath.OfficialJournalReferencePath.publicationDatePath,
+          CodedDataSectionPath.OfficialJournalReferencePath.publicationDatePath,
           "Publication Date"
         )
 

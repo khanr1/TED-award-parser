@@ -1,13 +1,13 @@
 package io.github.khanr1.tedawardparser
 package repository
-package xml
 package decoders
-package formSection
+package tedexport.formSection
 
 import scala.xml.Elem
 import cats.syntax.all.*
+import io.github.khanr1.tedawardparser.repository.xml.{ParserError, Raw, XMLDecoder}
 import io.github.khanr1.tedawardparser.repository.xml.XMLPathUtils.*
-import io.github.khanr1.tedawardparser.repository.xpath.{
+import io.github.khanr1.tedawardparser.repository.xpath.tedexport.{
   FormSectionPathR208,
   FormSectionPathR209
 }
@@ -28,9 +28,9 @@ object ContractAwardObjectInformationDecoder208:
           .headOption
           .map(x => x.label) match
           case Some("FD_CONTRACT_AWARD") =>
-            io.github.khanr1.tedawardparser.repository.xpath.FormSectionPathR208.F03.ContractAwardObjectInformationPath
+            FormSectionPathR208.F03.ContractAwardObjectInformationPath
           case _ =>
-            io.github.khanr1.tedawardparser.repository.xpath.FormSectionPathR208.F15.ContractAwardObjectInformationPath
+            FormSectionPathR208.F15.ContractAwardObjectInformationPath
 
         import path.*
 
@@ -91,9 +91,9 @@ object ContractAwardObjectInformationDecoder209:
           .headOption
           .map(x => x.label) match
           case Some("F03_2014") =>
-            io.github.khanr1.tedawardparser.repository.xpath.FormSectionPathR209.F03.ContractAwardObjectInformationPath
+            FormSectionPathR209.F03.ContractAwardObjectInformationPath
           case _ =>
-            io.github.khanr1.tedawardparser.repository.xpath.FormSectionPathR209.F15.ContractAwardObjectInformationPath
+            FormSectionPathR209.F15.ContractAwardObjectInformationPath
 
         import path.*
 

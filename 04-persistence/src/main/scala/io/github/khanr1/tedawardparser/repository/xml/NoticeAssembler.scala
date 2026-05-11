@@ -4,9 +4,9 @@ package xml
 
 import scala.xml.Elem
 import io.github.khanr1.tedawardparser.repository.xml.XMLPathUtils.*
-import io.github.khanr1.tedawardparser.repository.xml.decoders.codedDataSection.*
-import io.github.khanr1.tedawardparser.repository.xml.decoders.formSection.*
-import io.github.khanr1.tedawardparser.repository.xpath.{
+import io.github.khanr1.tedawardparser.repository.decoders.tedexport.codedDataSection.*
+import io.github.khanr1.tedawardparser.repository.decoders.tedexport.formSection.*
+import io.github.khanr1.tedawardparser.repository.xpath.tedexport.{
   FormSectionPathR208,
   FormSectionPathR209
 }

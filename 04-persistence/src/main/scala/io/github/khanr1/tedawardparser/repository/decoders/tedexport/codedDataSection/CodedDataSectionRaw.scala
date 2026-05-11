@@ -1,10 +1,10 @@
 package io.github.khanr1.tedawardparser
 package repository
-package xml
 package decoders
-package codedDataSection
+package tedexport.codedDataSection
 
 import scala.xml.Elem
+import io.github.khanr1.tedawardparser.repository.xml.{Raw, XMLDecoder}
 
 final case class CodedDataSectionRaw(
     officialJournalReference: OfficialJournalReferenceRaw,

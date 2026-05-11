@@ -1,12 +1,22 @@
 package io.github.khanr1.tedawardparser.repository
-package xpath
+package xpath.tedexport
 
 import io.github.khanr1.tedawardparser.repository.xml.XMLPath
+import io.github.khanr1.tedawardparser.repository.xpath.tedexport.{
+  ActivityAndPurchasingOnBehalfPath,
+  AwardContractPath,
+  ComplementaryInformationPath,
+  ContractAwardObjectInformationPath,
+  ContractingAuthorityPath,
+  F03,
+  F15,
+  FormSectionPath
+}
 
 /** XPath constants for the TED R208 form-section structure.
   *
-  * R208 is the older TED schema (pre-2014 EU directives). The XML uses
-  * verbose element names and wraps awards in `FD_CONTRACT_AWARD` /
+  * R208 is the older TED schema (pre-2014 EU directives). The XML uses verbose
+  * element names and wraps awards in `FD_CONTRACT_AWARD` /
   * `FD_VOLUNTARY_EX_ANTE_TRANSPARENCY_NOTICE` containers.
   *
   * Sub-objects:
@@ -60,15 +70,17 @@ object FormSectionPathR208 extends FormSectionPath {
         private val onBehalf =
           pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY"
 
-        override val officialNamePath: XMLPath   = onBehalf / "ORGANISATION" / "OFFICIALNAME"
-        override val nationalIDPath: XMLPath     = onBehalf / "ORGANISATION" / "NATIONALID"
-        override val addressPath: XMLPath        = onBehalf / "ADDRESS"
-        override val townPath: XMLPath           = onBehalf / "TOWN"
-        override val postalCodePath: XMLPath     = onBehalf / "POSTAL_CODE"
-        override val countryPath: XMLPath        = onBehalf / "COUNTRY" attr ("VALUE")
+        override val officialNamePath: XMLPath =
+          onBehalf / "ORGANISATION" / "OFFICIALNAME"
+        override val nationalIDPath: XMLPath =
+          onBehalf / "ORGANISATION" / "NATIONALID"
+        override val addressPath: XMLPath = onBehalf / "ADDRESS"
+        override val townPath: XMLPath = onBehalf / "TOWN"
+        override val postalCodePath: XMLPath = onBehalf / "POSTAL_CODE"
+        override val countryPath: XMLPath = onBehalf / "COUNTRY" attr ("VALUE")
         override val pointOfContactPath: XMLPath = onBehalf / "CONTACT_POINT"
-        override val phonePath: XMLPath          = onBehalf / "PHONE"
-        override val emailPath: XMLPath          = onBehalf / "E_MAILS" / "E_MAIL"
+        override val phonePath: XMLPath = onBehalf / "PHONE"
+        override val emailPath: XMLPath = onBehalf / "E_MAILS" / "E_MAIL"
       }
 
     }
@@ -100,22 +112,28 @@ object FormSectionPathR208 extends FormSectionPath {
       override val root: XMLPath = XMLPath("AWARD_OF_CONTRACT")
 
       override val contractNumberPath: XMLPath = root / "CONTRACT_NUMBER"
-      override val contractTitlePath: XMLPath  = root / "CONTRACT_TITLE" / "P"
-      override val lotNumberPath: XMLPath      = root / "LOT_NUMBER"
-      override val awardDatePath: XMLPath      = root / "CONTRACT_AWARD_DATE"
+      override val contractTitlePath: XMLPath = root / "CONTRACT_TITLE" / "P"
+      override val lotNumberPath: XMLPath = root / "LOT_NUMBER"
+      override val awardDatePath: XMLPath = root / "CONTRACT_AWARD_DATE"
 
       private val contractorBase: XMLPath =
         root / "ECONOMIC_OPERATOR_NAME_ADDRESS" / "CONTACT_DATA_WITHOUT_RESPONSIBLE_NAME"
 
-      override val contractorNamePath:         XMLPath = contractorBase / "ORGANISATION" / "OFFICIALNAME"
-      override val contractorNationalIDPath:   XMLPath = contractorBase / "ORGANISATION" / "NATIONALID"
-      override val contractorAddressPath:      XMLPath = contractorBase / "ADDRESS"
-      override val contractorTownPath:         XMLPath = contractorBase / "TOWN"
-      override val contractorPostalCodePath:   XMLPath = contractorBase / "POSTAL_CODE"
-      override val contractorCountryPath:      XMLPath = contractorBase / "COUNTRY" attr ("VALUE")
-      override val contractorPointOfContactPath: XMLPath = contractorBase / "CONTACT_POINT"
-      override val contractorPhonePath:        XMLPath = contractorBase / "PHONE"
-      override val contractorEmailPath:        XMLPath = contractorBase / "E_MAILS" / "E_MAIL"
+      override val contractorNamePath: XMLPath =
+        contractorBase / "ORGANISATION" / "OFFICIALNAME"
+      override val contractorNationalIDPath: XMLPath =
+        contractorBase / "ORGANISATION" / "NATIONALID"
+      override val contractorAddressPath: XMLPath = contractorBase / "ADDRESS"
+      override val contractorTownPath: XMLPath = contractorBase / "TOWN"
+      override val contractorPostalCodePath: XMLPath =
+        contractorBase / "POSTAL_CODE"
+      override val contractorCountryPath: XMLPath =
+        contractorBase / "COUNTRY" attr ("VALUE")
+      override val contractorPointOfContactPath: XMLPath =
+        contractorBase / "CONTACT_POINT"
+      override val contractorPhonePath: XMLPath = contractorBase / "PHONE"
+      override val contractorEmailPath: XMLPath =
+        contractorBase / "E_MAILS" / "E_MAIL"
 
       override val contractValueCurrencyPath: XMLPath =
         root / "CONTRACT_VALUE_INFORMATION" / "COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE"
@@ -156,26 +174,30 @@ object FormSectionPathR208 extends FormSectionPath {
       override val root: XMLPath =
         F02.root / "CONTRACTING_AUTHORITY_INFORMATION" / "NAME_ADDRESSES_CONTACT_CONTRACT" / "CA_CE_CONCESSIONAIRE_PROFILE"
 
-      override val officialNamePath: XMLPath = root / "ORGANISATION" / "OFFICIALNAME"
-      override val nationalIDPath: XMLPath   = root / "ORGANISATION" / "NATIONALID"
-      override val addressPath: XMLPath      = root / "ADDRESS"
-      override val townPath: XMLPath         = root / "TOWN"
-      override val postalCodePath: XMLPath   = root / "POSTAL_CODE"
-      override val countryPath: XMLPath      = root / "COUNTRY" attr ("VALUE")
+      override val officialNamePath: XMLPath =
+        root / "ORGANISATION" / "OFFICIALNAME"
+      override val nationalIDPath: XMLPath =
+        root / "ORGANISATION" / "NATIONALID"
+      override val addressPath: XMLPath = root / "ADDRESS"
+      override val townPath: XMLPath = root / "TOWN"
+      override val postalCodePath: XMLPath = root / "POSTAL_CODE"
+      override val countryPath: XMLPath = root / "COUNTRY" attr ("VALUE")
       override val pointOfContactPath: XMLPath = root / "CONTACT_POINT"
-      override val phonePath: XMLPath        = root / "PHONE"
-      override val emailPath: XMLPath        = root / "E_MAILS" / "E_MAIL"
+      override val phonePath: XMLPath = root / "PHONE"
+      override val emailPath: XMLPath = root / "E_MAILS" / "E_MAIL"
     }
 
-    object ContractAwardObjectInformationPath extends ContractAwardObjectInformationPath {
+    object ContractAwardObjectInformationPath
+        extends ContractAwardObjectInformationPath {
 
       private val descRoot: XMLPath =
         F02.root / "OBJECT_CONTRACT_INFORMATION" / "DESCRIPTION_CONTRACT_INFORMATION"
 
-      override val root: XMLPath        = descRoot
-      override val titlePath: XMLPath   = descRoot / "TITLE_CONTRACT" / "P"
-      override val descriptionPath: XMLPath = descRoot / "SHORT_CONTRACT_DESCRIPTION"
-      override val valuePath: XMLPath   = XMLPath("")
+      override val root: XMLPath = descRoot
+      override val titlePath: XMLPath = descRoot / "TITLE_CONTRACT" / "P"
+      override val descriptionPath: XMLPath =
+        descRoot / "SHORT_CONTRACT_DESCRIPTION"
+      override val valuePath: XMLPath = XMLPath("")
       override val currencyPath: XMLPath = XMLPath("")
     }
   }
@@ -190,29 +212,34 @@ object FormSectionPathR208 extends FormSectionPath {
       override val root: XMLPath = XMLPath("AWARD_OF_CONTRACT_DEFENCE")
 
       override val contractNumberPath: XMLPath = root / "CONTRACT_NUMBER"
-      override val contractTitlePath: XMLPath  = root / "CONTRACT_TITLE" / "P"
-      override val lotNumberPath: XMLPath      = root / "LOT_NUMBER"
-      override val awardDatePath: XMLPath      = root / "CONTRACT_AWARD_DATE"
+      override val contractTitlePath: XMLPath = root / "CONTRACT_TITLE" / "P"
+      override val lotNumberPath: XMLPath = root / "LOT_NUMBER"
+      override val awardDatePath: XMLPath = root / "CONTRACT_AWARD_DATE"
 
       private val contractorBase: XMLPath =
         root / "ECONOMIC_OPERATOR_NAME_ADDRESS" / "CONTACT_DATA_WITHOUT_RESPONSIBLE_NAME"
 
-      override val contractorNamePath:         XMLPath = contractorBase / "ORGANISATION" / "OFFICIALNAME"
-      override val contractorNationalIDPath:   XMLPath = contractorBase / "ORGANISATION" / "NATIONALID"
-      override val contractorAddressPath:      XMLPath = contractorBase / "ADDRESS"
-      override val contractorTownPath:         XMLPath = contractorBase / "TOWN"
-      override val contractorPostalCodePath:   XMLPath = contractorBase / "POSTAL_CODE"
-      override val contractorCountryPath:      XMLPath = contractorBase / "COUNTRY" attr ("VALUE")
-      override val contractorPointOfContactPath: XMLPath = contractorBase / "CONTACT_POINT"
-      override val contractorPhonePath:        XMLPath = contractorBase / "PHONE"
-      override val contractorEmailPath:        XMLPath = contractorBase / "E_MAILS" / "E_MAIL"
+      override val contractorNamePath: XMLPath =
+        contractorBase / "ORGANISATION" / "OFFICIALNAME"
+      override val contractorNationalIDPath: XMLPath =
+        contractorBase / "ORGANISATION" / "NATIONALID"
+      override val contractorAddressPath: XMLPath = contractorBase / "ADDRESS"
+      override val contractorTownPath: XMLPath = contractorBase / "TOWN"
+      override val contractorPostalCodePath: XMLPath =
+        contractorBase / "POSTAL_CODE"
+      override val contractorCountryPath: XMLPath =
+        contractorBase / "COUNTRY" attr ("VALUE")
+      override val contractorPointOfContactPath: XMLPath =
+        contractorBase / "CONTACT_POINT"
+      override val contractorPhonePath: XMLPath = contractorBase / "PHONE"
+      override val contractorEmailPath: XMLPath =
+        contractorBase / "E_MAILS" / "E_MAIL"
 
       override val contractValueCurrencyPath: XMLPath =
         root / "CONTRACT_VALUE_INFORMATION" / "COSTS_RANGE_AND_CURRENCY_WITH_VAT_RATE"
       override val contractValueAmountPath: XMLPath =
         contractValueCurrencyPath / "VALUE_COST"
     }
-
 
     object ContractingAuthorityPath extends ContractingAuthorityPath {
 
@@ -253,15 +280,17 @@ object FormSectionPathR208 extends FormSectionPath {
         private val onBehalf =
           pathToInfo / "CONTACT_DATA_OTHER_BEHALF_CONTRACTING_AUTORITHY"
 
-        override val officialNamePath: XMLPath   = onBehalf / "ORGANISATION" / "OFFICIALNAME"
-        override val nationalIDPath: XMLPath     = onBehalf / "ORGANISATION" / "NATIONALID"
-        override val addressPath: XMLPath        = onBehalf / "ADDRESS"
-        override val townPath: XMLPath           = onBehalf / "TOWN"
-        override val postalCodePath: XMLPath     = onBehalf / "POSTAL_CODE"
-        override val countryPath: XMLPath        = onBehalf / "COUNTRY" attr ("VALUE")
+        override val officialNamePath: XMLPath =
+          onBehalf / "ORGANISATION" / "OFFICIALNAME"
+        override val nationalIDPath: XMLPath =
+          onBehalf / "ORGANISATION" / "NATIONALID"
+        override val addressPath: XMLPath = onBehalf / "ADDRESS"
+        override val townPath: XMLPath = onBehalf / "TOWN"
+        override val postalCodePath: XMLPath = onBehalf / "POSTAL_CODE"
+        override val countryPath: XMLPath = onBehalf / "COUNTRY" attr ("VALUE")
         override val pointOfContactPath: XMLPath = onBehalf / "CONTACT_POINT"
-        override val phonePath: XMLPath          = onBehalf / "PHONE"
-        override val emailPath: XMLPath          = onBehalf / "E_MAILS" / "E_MAIL"
+        override val phonePath: XMLPath = onBehalf / "PHONE"
+        override val emailPath: XMLPath = onBehalf / "E_MAILS" / "E_MAIL"
       }
 
     }

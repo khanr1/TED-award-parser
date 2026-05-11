@@ -1,13 +1,12 @@
 package io.github.khanr1.tedawardparser
 package repository
-package xml
 package decoders
-package codedDataSection
+package tedexport.codedDataSection
 
 import scala.xml.Elem
-import io.github.khanr1.tedawardparser.repository.xpath.CodedDataSectionPath
-import io.github.khanr1.tedawardparser.repository.xml.XMLPathUtils.textAtOrError
-import io.github.khanr1.tedawardparser.repository.xml.XMLPathUtils.attrAt
+import io.github.khanr1.tedawardparser.repository.xml.{ParserError, Raw, XMLDecoder}
+import io.github.khanr1.tedawardparser.repository.xml.XMLPathUtils.*
+import io.github.khanr1.tedawardparser.repository.xpath.tedexport.CodedDataSectionPath
 import cats.syntax.all.*
 
 final case class CodeIFRaw(

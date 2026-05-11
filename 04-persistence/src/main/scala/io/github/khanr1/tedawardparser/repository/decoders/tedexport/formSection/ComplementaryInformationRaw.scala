@@ -1,10 +1,13 @@
-package io.github.khanr1.tedawardparser.repository.xml
-package decoders
-package formSection
+package io.github.khanr1.tedawardparser.repository.decoders
+package tedexport.formSection
 
 import scala.xml.Elem
+import io.github.khanr1.tedawardparser.repository.xml.{ParserError, Raw, XMLDecoder}
 import io.github.khanr1.tedawardparser.repository.xml.XMLPathUtils.*
-import io.github.khanr1.tedawardparser.repository.xpath.{FormSectionPathR208, FormSectionPathR209}
+import io.github.khanr1.tedawardparser.repository.xpath.tedexport.{
+  FormSectionPathR208,
+  FormSectionPathR209
+}
 
 final case class ComplementaryInformationRaw(
     additionalInformation: Either[ParserError, String],
@@ -20,7 +23,10 @@ object ComplementaryInformationDecoderR208F03:
       override def decode(e: Elem): ComplementaryInformationRaw =
         val path = FormSectionPathR208.F03.ComplementaryInformationPath
         ComplementaryInformationRaw(
-          e.textAtOrError(path.additionalInformationPath, "Additional Information"),
+          e.textAtOrError(
+            path.additionalInformationPath,
+            "Additional Information"
+          ),
           e.textAt(path.relatesToEuProjectYesPath),
           e.textAtOrError(path.noticeDispatchDatePath, "Dispatch Date"),
           e.textAtOrError(path.appealBodyNamePath, "Appeal Body Name"),
@@ -33,7 +39,10 @@ object ComplementaryInformationDecoderR208F15:
       override def decode(e: Elem): ComplementaryInformationRaw =
         val path = FormSectionPathR208.F15.ComplementaryInformationPath
         ComplementaryInformationRaw(
-          e.textAtOrError(path.additionalInformationPath, "Additional Information"),
+          e.textAtOrError(
+            path.additionalInformationPath,
+            "Additional Information"
+          ),
           e.textAt(path.relatesToEuProjectYesPath),
           e.textAtOrError(path.noticeDispatchDatePath, "Dispatch Date"),
           e.textAtOrError(path.appealBodyNamePath, "Appeal Body Name"),
@@ -46,7 +55,10 @@ object ComplementaryInformationDecoderR209F03:
       override def decode(e: Elem): ComplementaryInformationRaw =
         val path = FormSectionPathR209.F03.ComplementaryInformationPath
         ComplementaryInformationRaw(
-          e.textAtOrError(path.additionalInformationPath, "Additional Information"),
+          e.textAtOrError(
+            path.additionalInformationPath,
+            "Additional Information"
+          ),
           None,
           e.textAtOrError(path.noticeDispatchDatePath, "Dispatch Date"),
           e.textAtOrError(path.appealBodyNamePath, "Appeal Body Name"),
@@ -59,7 +71,10 @@ object ComplementaryInformationDecoderR209F15:
       override def decode(e: Elem): ComplementaryInformationRaw =
         val path = FormSectionPathR209.F15.ComplementaryInformationPath
         ComplementaryInformationRaw(
-          e.textAtOrError(path.additionalInformationPath, "Additional Information"),
+          e.textAtOrError(
+            path.additionalInformationPath,
+            "Additional Information"
+          ),
           None,
           e.textAtOrError(path.noticeDispatchDatePath, "Dispatch Date"),
           e.textAtOrError(path.appealBodyNamePath, "Appeal Body Name"),

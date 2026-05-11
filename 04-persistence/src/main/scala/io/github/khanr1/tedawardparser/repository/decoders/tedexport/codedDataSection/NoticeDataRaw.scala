@@ -1,10 +1,10 @@
-package io.github.khanr1.tedawardparser.repository.xml.decoders.codedDataSection
+package io.github.khanr1.tedawardparser.repository.decoders.tedexport.codedDataSection
 
 import io.github.khanr1.tedawardparser.repository.xml.*
 
 import scala.xml.Elem
 import io.github.khanr1.tedawardparser.repository.xml.XMLPathUtils.*
-import io.github.khanr1.tedawardparser.repository.xpath.CodedDataSectionPath
+import io.github.khanr1.tedawardparser.repository.xpath.tedexport.CodedDataSectionPath
 
 import cats.syntax.all.*
 
